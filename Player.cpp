@@ -27,3 +27,52 @@ Player::Player(std::string name) :
 {
 }
 
+void Player::setName(const std::string& name)
+{
+	m_name = name;
+}
+
+const std::string& Player::getName()
+{
+	return m_name;
+}
+
+void Player::setScore(const uint16_t& score)
+{
+	m_score = score;
+}
+
+const uint16_t& Player::getScore()
+{
+	return m_score;
+}
+
+void Player::setDrawOrNot(const bool& drawOrNot)
+{
+	m_drawOrNot = drawOrNot;
+}
+
+const bool& Player::getDrawOrNot()
+{
+	return m_drawOrNot;
+}
+
+void Player::setRank(const uint16_t rank)
+{
+	m_rank = rank;
+}
+
+const uint16_t& Player::getRank()
+{
+	return m_rank;
+}
+
+void Player::setColor(const std::string& color)
+{
+	m_color = color;
+}
+
+const std::string& Player::getColor()
+{
+	return m_color;
+}
