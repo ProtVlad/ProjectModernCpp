@@ -9,6 +9,12 @@ class Game
 public:
 	Game(uint16_t timer, uint16_t m_indexDrawer, uint16_t m_round,
 		std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat);
+	const uint16_t getTimer();
+	const std::vector<std::string>& getWordList();
+	const std::vector<std::string>& getWordChoices();
+	const Chat& getChat();
+	const uint16_t getIndexDrawer();
+	const uint16_t getRound();
 private:
 	uint16_t m_timer;
 	uint16_t m_indexDrawer;
