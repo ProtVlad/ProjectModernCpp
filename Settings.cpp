@@ -24,6 +24,20 @@ uint16_t Settings::getNumberPlayers()
 	return m_numberPlayers;
 }
 
+void Settings::setTime(uint16_t time)
+{
+	m_time == time;
+}
+
+void Settings::setLanguage(const std::string& language)
+{
+	m_language = language;
+}
+
+void Settings::setNumberPlayers(uint16_t numberPlayers)
+{
+	m_numberPlayers = numberPlayers;
+}
 
 
 
