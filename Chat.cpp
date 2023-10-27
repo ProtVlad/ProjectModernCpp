@@ -9,6 +9,27 @@ Chat::Chat(std::vector<std::string> guesses, std::vector<std::pair<Player, std::
 	m_playerList(playerList),
 	m_rightWord(rightWord)
 {
+}
+
+const std::vector<std::string>& Chat::getGuesses()
+{
+	return m_guesses;
+}
+
+const std::vector<Player>& Chat::getPlayerList()
+{
+	return m_playerList;
+}
+
+const std::string& Chat::getRightWord()
+{
+	return m_rightWord;
+}
+
+void Chat::setPlayerActivity(std::vector<std::pair<Player, std::string>> playerActivity)
+{
+	m_playerActivity = playerActivity;
+}
 
 Chat::~Chat()
 {
