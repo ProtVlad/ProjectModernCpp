@@ -39,3 +39,35 @@ const uint16_t Game::getRound()
 {
 	return m_round;
 }
+
+uint16_t Game::setTimer(const uint16_t timer)
+{
+	m_timer = timer;
+}
+
+std::vector<std::string>& Game::setWordList(const std::vector<std::string>& wordList)
+{
+	m_wordList = wordList;
+}
+
+std::vector<std::string>& Game::setWordChoices(const std::vector<std::string>& wordChoices)
+{
+	m_wordChoices = wordChoices;
+}
+
+Chat& Game::setChat(const Chat& chat)
+{
+	m_chat = chat;
+}
+
+uint16_t Game::setIndexDrawer(const uint16_t indexDrawer)
+{
+	m_indexDrawer = indexDrawer;
+}
+
+uint16_t Game::setRound(const uint16_t round)
+{
+	m_round = round;
+}
+
+
