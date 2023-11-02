@@ -6,15 +6,17 @@ Player::Player()
 	m_score = 0;
 	m_drawOrNot = false;
 	m_rank = 0;
-	m_color = "white";
+	m_color = ConvertStringToColor("White");
+	m_opinion = ConvertStringToOpinion("NoOpinion");
 }
 
-Player::Player(std::string name, uint16_t score, bool drawOrNot, uint16_t rank, std::string color) :
+Player::Player(std::string name, uint16_t score, bool drawOrNot, uint16_t rank, Color color, Opinion opinion) :
 	m_name(name),
 	m_score(score),
 	m_drawOrNot(drawOrNot),
 	m_rank(rank),
-	m_color(color)
+	m_color(color),
+	m_opinion(opinion)
 {
 }
 
@@ -23,7 +25,8 @@ Player::Player(std::string name) :
 	m_score(0),
 	m_drawOrNot(false),
 	m_rank(0),
-	m_color("white")
+	m_color(ConvertStringToColor("White")),
+	m_opinion(ConvertStringToOpinion("NoOpinion"))
 {
 }
 
@@ -37,42 +40,64 @@ const std::string& Player::getName()
 	return m_name;
 }
 
-void Player::setScore(const uint16_t& score)
+void Player::setScore(uint16_t score)
 {
 	m_score = score;
 }
 
-const uint16_t& Player::getScore()
+uint16_t Player::getScore()
 {
 	return m_score;
 }
 
-void Player::setDrawOrNot(const bool& drawOrNot)
+void Player::setDrawOrNot(bool drawOrNot)
 {
 	m_drawOrNot = drawOrNot;
 }
 
-const bool& Player::getDrawOrNot()
+bool Player::getDrawOrNot()
 {
 	return m_drawOrNot;
 }
 
-void Player::setRank(const uint16_t& rank)
+
+void Player::setRank(uint16_t rank)
 {
 	m_rank = rank;
 }
 
-const uint16_t& Player::getRank()
+uint16_t Player::getRank()
 {
 	return m_rank;
 }
 
-void Player::setColor(const std::string& color)
+void Player::setColor(Color color)
 {
 	m_color = color;
 }
 
-const std::string& Player::getColor()
+Color Player::getColor() const
 {
 	return m_color;
 }
+
+void Player::setOpinion(Opinion opinion)
+{
+	m_opinion = opinion;
+}
+
+Opinion Player::getOpinion() const
+{
+	return m_opinion;
+}
+
+void Player::setAnswerTime(uint16_t answerTime)
+{
+	m_answerTime = answerTime;
+}
+
+uint16_t Player::getAnswerTime()
+{
+	return m_answerTime;
+}
+
