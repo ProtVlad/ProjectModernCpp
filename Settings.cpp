@@ -5,7 +5,7 @@ Settings::Settings(uint16_t time,
 	uint16_t numberPlayers):
 	m_time(time),
 	m_language(language),
-	m_numberPlayers(numberPlayers)
+	m_maxNumberPlayers(numberPlayers)
 {
 }
 
@@ -19,9 +19,19 @@ const std::string& Settings::getLanguage()
 	return m_language;
 }
 
-uint16_t Settings::getNumberPlayers()
+uint16_t Settings::getMaxNumberPlayers()
 {
-	return m_numberPlayers;
+	return m_maxNumberPlayers;
+}
+
+uint16_t Settings::getDrawtime()
+{
+	return m_drawtime;
+}
+
+uint16_t Settings::getMaxClues()
+{
+	return m_maxClues;
 }
 
 void Settings::setTime(uint16_t time)
@@ -36,7 +46,7 @@ void Settings::setLanguage(const std::string& language)
 
 void Settings::setNumberPlayers(uint16_t numberPlayers)
 {
-	m_numberPlayers = numberPlayers;
+	m_maxNumberPlayers = numberPlayers;
 }
 
 
