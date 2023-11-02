@@ -35,7 +35,7 @@ const uint16_t Game::getIndexDrawer()
 	return m_indexDrawer;
 }
 
-const uint16_t Game::getRound()
+const std::vector<Round>& Game::getRounds()
 {
 	return m_round;
 }
@@ -65,9 +65,17 @@ void Game::setIndexDrawer(const uint16_t indexDrawer)
 	m_indexDrawer = indexDrawer;
 }
 
-void Game::setRound(const uint16_t round)
+void Game::setRounds(const std::vector<Round>& round)
 {
 	m_round = round;
+}
+
+uint16_t Game::totalScore(Player player, const uint16_t maxRounds)
+{
+	uint16_t score=0;
+	for (uint16_t round=0;round<maxRounds;round++)
+		score += player.getScore()[round];
+	return score;
 }
 
 
