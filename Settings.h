@@ -15,7 +15,7 @@ public:
 	void setLanguage(const std::string& language);
 	void setNumberPlayers(uint16_t maxNumberPlayers);
 	void setMaxClues(uint16_t maxClues);
-	void setDrawtime();
+	void setDrawtime(uint16_t drawtime);
 
 private:
 	uint16_t m_time;
