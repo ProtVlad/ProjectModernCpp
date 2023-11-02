@@ -1,9 +1,9 @@
 #include "Chat.h"
 #include "Player.h"
 
-Chat::Chat(std::vector<std::string> guesses, std::vector<std::pair<Player, std::string>> playerActivity,
+Chat::Chat(std::string guess, std::vector<std::pair<Player, std::string>> playerActivity,
 	bool right, bool close, std::vector<Player> playerList, std::string rightWord) :
-	m_guesses(guesses),
+	m_guess(guess),
 	m_playerActivity(playerActivity),
 	m_right(right),
 	m_close(close),
@@ -12,9 +12,9 @@ Chat::Chat(std::vector<std::string> guesses, std::vector<std::pair<Player, std::
 {
 }
 
-const std::vector<std::string>& Chat::getGuesses()
+const std::string& Chat::getGuess()
 {
-	return m_guesses;
+	return m_guess;
 }
 
 const std::vector<Player>& Chat::getPlayerList()
@@ -32,9 +32,21 @@ void Chat::setPlayerActivity(std::vector<std::pair<Player, std::string>> playerA
 	m_playerActivity = playerActivity;
 }
 
+void Chat::ShowOpinion(Player player)
+{
+	if (player.getOpinion() == ConvertStringToOpinion("Like"))
+		std::cout << player.getName() << " liked the drawing";
+	if (player.getOpinion() == ConvertStringToOpinion("Dislike"))
+		std::cout << player.getName() << " disliked the drawing";
+}
+
+void Chat::ShowGuess(Player player, std::string guess)
+{
+	std::cout << player.getName() << ": " << guess;
+}
+
 Chat::~Chat()
 {
-	m_guesses.clear();
 	m_playerActivity.clear();
 	m_playerList.clear();
 }
