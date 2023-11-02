@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include "Player.h"
 
 #pragma once
 class Chat

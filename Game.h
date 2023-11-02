@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include "Chat.h"
 
 class Game
 {
@@ -15,12 +16,12 @@ public:
 	const Chat& getChat();
 	const uint16_t getIndexDrawer();
 	const uint16_t getRound();
-	uint16_t setTimer(const uint16_t timer);
-	std::vector<std::string>& setWordList(const std::vector<std::string>& wordList);
-	std::vector<std::string>& setWordChoices(const std::vector<std::string>& wordChoices);
-	Chat& setChat(const Chat& chat);
-	uint16_t setIndexDrawer(const uint16_t indexDrawer);
-	uint16_t setRound(const uint16_t round);
+	void setTimer(const uint16_t timer);
+	void setWordList(const std::vector<std::string>& wordList);
+	void setWordChoices(const std::vector<std::string>& wordChoices);
+	void setChat(const Chat& chat);
+	void setIndexDrawer(const uint16_t indexDrawer);
+	void setRound(const uint16_t round);
 private:
 	uint16_t m_timer;
 	uint16_t m_indexDrawer;

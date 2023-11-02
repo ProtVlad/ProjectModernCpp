@@ -57,7 +57,7 @@ const bool& Player::getDrawOrNot()
 	return m_drawOrNot;
 }
 
-void Player::setRank(const uint16_t rank)
+void Player::setRank(const uint16_t& rank)
 {
 	m_rank = rank;
 }

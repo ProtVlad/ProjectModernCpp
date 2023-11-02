@@ -1,4 +1,5 @@
 #include "Chat.h"
+#include "Player.h"
 
 Chat::Chat(std::vector<std::string> guesses, std::vector<std::pair<Player, std::string>> playerActivity,
 	bool right, bool close, std::vector<Player> playerList, std::string rightWord) :
