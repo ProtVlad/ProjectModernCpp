@@ -49,6 +49,16 @@ void Settings::setNumberPlayers(uint16_t numberPlayers)
 	m_maxNumberPlayers = numberPlayers;
 }
 
+void Settings::setMaxClues(uint16_t maxClues)
+{
+	m_maxClues = maxClues;
+}
+
+void Settings::setDrawtime(uint16_t drawtime)
+{
+	m_drawtime = drawtime;
+}
+
 
 
 
