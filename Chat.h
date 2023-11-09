@@ -16,7 +16,10 @@ public:
 	void setPlayerActivity(std::vector<std::pair<Player, std::string>> playerActivity);
 	void ShowOpinion(Player player);
 	void ShowGuess(Player player, std::string guess);
+	bool isClose();
+	bool isRight();
 	~Chat();
+	int calculateScore(Player player, uint16_t maxTime);
 
 private:
 	std::string m_guess;
