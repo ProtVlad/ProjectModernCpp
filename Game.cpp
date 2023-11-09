@@ -70,12 +70,17 @@ void Game::readWordList(std::ifstream& file)
 	}
 }
 
-uint16_t Game::totalScore(Player player, const uint16_t maxRounds)
+std::vector<uint16_t> Game::totalScore(const std::vector<std::vector<uint16_t>>& playerScores)
 {
-	uint16_t score=0;
-	for (uint16_t round=0;round<maxRounds;round++)
-		score += player.getScore()[round];
-	return score;
+	std::vector<uint16_t> scores;
+	for (uint16_t player = 0; player < playerScores.size(); player++)
+	{
+		uint16_t score = 0;
+		for (uint16_t round = 0; round < playerScores[player].size(); round++)
+			score += playerScores[player][round];
+		scores.emplace_back(score);
+	}
+	return scores;
 }
 
 
