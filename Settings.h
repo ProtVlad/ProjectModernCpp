@@ -11,11 +11,16 @@ public:
 	uint16_t getMaxNumberPlayers();
 	uint16_t getDrawtime();
 	uint16_t getMaxClues();
+	uint16_t getNumberWords();
+	uint16_t getNumberHints();
 	void setTime(uint16_t time);
 	void setLanguage(const std::string& language);
 	void setNumberPlayers(uint16_t maxNumberPlayers);
 	void setMaxClues(uint16_t maxClues);
 	void setDrawtime(uint16_t drawtime);
+	void setNumberWods();
+	void setNumberHints();
+	
 
 private:
 	uint16_t m_time;
@@ -23,6 +28,8 @@ private:
 	uint16_t m_maxNumberPlayers;
 	uint16_t m_drawtime;
 	uint16_t m_maxClues;
+	uint16_t m_numberWords;
+	uint16_t m_numberHints;
 	
 };
 
