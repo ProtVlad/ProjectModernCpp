@@ -1,10 +1,10 @@
 #include "Game.h"
 
-Game::Game(uint16_t timer, uint16_t indexDrawer, uint16_t round, 
+Game::Game(uint16_t timer, uint16_t indexDrawer, Settings settings, 
 	std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat):
 	m_timer(timer),
 	m_indexDrawer(indexDrawer),
-	m_round(round),
+	m_settings(settings),
 	m_wordList(wordList),
 	m_wordChoices(wordChoices),
 	m_chat(chat)
@@ -35,11 +35,6 @@ const uint16_t Game::getIndexDrawer()
 	return m_indexDrawer;
 }
 
-const std::vector<Round>& Game::getRounds()
-{
-	return m_round;
-}
-
 void Game::setTimer(const uint16_t timer)
 {
 	m_timer = timer;
@@ -63,11 +58,6 @@ void Game::setChat(const Chat& chat)
 void Game::setIndexDrawer(const uint16_t indexDrawer)
 {
 	m_indexDrawer = indexDrawer;
-}
-
-void Game::setRounds(const std::vector<Round>& round)
-{
-	m_round = round;
 }
 
 uint16_t Game::totalScore(Player player, const uint16_t maxRounds)
