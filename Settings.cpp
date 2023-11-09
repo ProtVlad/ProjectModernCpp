@@ -69,6 +69,16 @@ void Settings::setDrawtime(uint16_t drawtime)
 	m_drawtime = drawtime;
 }
 
+void Settings::setNumberWods(uint16_t numberWords)
+{
+	m_numberWords = numberWords;
+}
+
+void Settings::setNumberHints(uint16_t numberHints)
+{
+	m_numberHints = numberHints;
+}
+
 
 
 
