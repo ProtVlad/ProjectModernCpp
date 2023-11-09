@@ -34,6 +34,16 @@ uint16_t Settings::getMaxClues()
 	return m_maxClues;
 }
 
+uint16_t Settings::getNumberWords()
+{
+	return m_numberWords;
+}
+
+uint16_t Settings::getNumberHints()
+{
+	return m_numberHints;
+}
+
 void Settings::setTime(uint16_t time)
 {
 	m_time == time;
