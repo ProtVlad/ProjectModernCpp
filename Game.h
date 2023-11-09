@@ -22,6 +22,7 @@ public:
 	void setWordChoices(const std::vector<std::string>& wordChoices);
 	void setChat(const Chat& chat);
 	void setIndexDrawer(const uint16_t indexDrawer);
+	void readWordList(std::ifstream& file);
 	uint16_t totalScore(Player player, uint16_t maxRounds);
 private:
 	uint16_t m_timer;

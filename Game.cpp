@@ -60,6 +60,16 @@ void Game::setIndexDrawer(const uint16_t indexDrawer)
 	m_indexDrawer = indexDrawer;
 }
 
+void Game::readWordList(std::ifstream& file)
+{
+	while (!file.eof())
+	{
+		std::string element;
+		std::getline(file, element);
+		m_wordList.emplace_back(element);
+	}
+}
+
 uint16_t Game::totalScore(Player player, const uint16_t maxRounds)
 {
 	uint16_t score=0;
