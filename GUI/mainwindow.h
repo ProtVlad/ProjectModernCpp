@@ -22,6 +22,7 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent *e);
     virtual void mouseMoveEvent(QMouseEvent *e);
     virtual void paintEvent(QPaintEvent *e);
+    virtual void keyPressEvent(QKeyEvent *e);
 
 private slots:
     void on_Gray_toggled();

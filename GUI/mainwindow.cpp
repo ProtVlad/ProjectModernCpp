@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->guessList->setFocusPolicy(Qt::NoFocus);
 }
 
 MainWindow::~MainWindow()
@@ -63,6 +64,18 @@ void MainWindow::paintEvent(QPaintEvent *e)
                 p.setPen(pen);
             }
         p.drawPoint(points[index].first);
+    }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Return)
+    {
+        if (!(ui->guess->text().isEmpty()))
+        {
+                ui->guessList->addItem(ui->guess->text());
+                ui->guess->clear();
+        }
     }
 }
 
