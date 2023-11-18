@@ -32,11 +32,15 @@ private slots:
     void on_Pink_toggled();
     void on_Yellow_toggled();
     void on_Brown_toggled();
+    void on_Surprise_toggled();
 
 private:
     Ui::MainWindow *ui;
     std::vector<std::pair<QPoint,QColor>> points;
     bool leftButton=false;
     QColor color={0,0,0};
+    bool surprise=false;
+    QColor surpriseStatus={255,0,0};
+    void colorChange(QMouseEvent *e);
 };
 #endif // MAINWINDOW_H
