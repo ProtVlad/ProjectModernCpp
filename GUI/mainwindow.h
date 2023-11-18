@@ -45,5 +45,6 @@ private:
     bool surprise=false;
     QColor surpriseStatus={255,0,0};
     void colorChange(QMouseEvent *e);
+    bool noText(QString guess);
 };
 #endif // MAINWINDOW_H

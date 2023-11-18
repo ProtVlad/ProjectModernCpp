@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
+    setFocusPolicy(Qt::StrongFocus);
 }
 
 MainWindow::~MainWindow()
@@ -71,7 +72,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Return)
     {
-        if (!(ui->guess->text().isEmpty()))
+        if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
         {
                 ui->guessList->addItem(ui->guess->text());
                 ui->guess->clear();
@@ -182,4 +183,15 @@ void MainWindow::colorChange(QMouseEvent *e)
         oneAction=true;
     }
     points.push_back({e->pos(),surpriseStatus});
+}
+
+bool MainWindow::noText(QString guess)
+{
+    bool isEmpty=true;
+    for (int index=0; index<guess.size(); index++)
+    {
+        if(guess[index]!=' ')
+                isEmpty=false;
+    }
+    return isEmpty;
 }
