@@ -117,6 +117,18 @@ void MainWindow::on_Brown_toggled()
     surprise=false;
 }
 
+void MainWindow::on_White_toggled()
+{
+    color={255,255,255};
+    surprise=false;
+}
+
+void MainWindow::on_Black_toggled()
+{
+    color={0,0,0};
+    surprise=false;
+}
+
 
 void MainWindow::on_Surprise_toggled()
 {
@@ -158,4 +170,3 @@ void MainWindow::colorChange(QMouseEvent *e)
     }
     points.push_back({e->pos(),surpriseStatus});
 }
-

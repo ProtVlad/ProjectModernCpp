@@ -32,6 +32,8 @@ private slots:
     void on_Pink_toggled();
     void on_Yellow_toggled();
     void on_Brown_toggled();
+    void on_White_toggled();
+    void on_Black_toggled();
     void on_Surprise_toggled();
 
 private:
