@@ -23,9 +23,20 @@ public:
     virtual void mouseMoveEvent(QMouseEvent *e);
     virtual void paintEvent(QPaintEvent *e);
 
+private slots:
+    void on_Gray_toggled();
+    void on_Red_toggled();
+    void on_Green_toggled();
+    void on_Blue_toggled();
+    void on_Orange_toggled();
+    void on_Pink_toggled();
+    void on_Yellow_toggled();
+    void on_Brown_toggled();
+
 private:
     Ui::MainWindow *ui;
-    std::vector<QPoint> points;
+    std::vector<std::pair<QPoint,QColor>> points;
     bool leftButton=false;
+    QColor color={0,0,0};
 };
 #endif // MAINWINDOW_H
