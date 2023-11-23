@@ -20,6 +20,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
 {
+    if (e->button()==Qt::LeftButton && e->pos().x()>xpos-15 && e->pos().x()<xpos+30*(colors.size()+1)-15 && e->pos().y()>ypos-15 && e->pos().y()<ypos+15)
+    {
+        if ((e->pos().x()-xpos+15)/30==colors.size())
+            surprise=true;
+        else
+        {
+            color=colors[(e->pos().x()-xpos+15)/30];
+            surprise=false;
+        }
+    }
     if (e->button()==Qt::LeftButton && e->pos().x()>100 && e->pos().x()<400 &&  e->pos().y()>100 && e->pos().y()<400)
     {
         leftButton=true;
