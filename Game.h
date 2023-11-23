@@ -25,6 +25,9 @@ public:
 	void setIndexDrawer(const uint16_t indexDrawer);
 	void readWordList(std::ifstream& file);
 	std::vector<uint16_t> totalScore(const std::vector<std::vector<uint16_t>>& scores);
+	uint16_t numberLines(std::ifstream& file);
+private:
+	uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
 private:
 	uint16_t m_timer;
 	uint16_t m_indexDrawer;

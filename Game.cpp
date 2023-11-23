@@ -1,5 +1,6 @@
 #include "Game.h"
-
+#include<ctime>
+#include <random>
 Game::Game()
 {
 	//EMPTY
@@ -86,6 +87,24 @@ std::vector<uint16_t> Game::totalScore(const std::vector<std::vector<uint16_t>>&
 		scores.emplace_back(score);
 	}
 	return scores;
+}
+
+uint16_t Game::numberLines(std::ifstream& file)
+{
+	uint16_t numLines = 0;
+	std::string line;
+	while (std::getline(file, line))
+		numLines++;
+	return numLines;
+}
+
+uint16_t Game::GenerateRandomNumber(uint16_t min, uint16_t max)
+{
+	std::random_device rd;
+	std::mt19937 generator(rd());
+	std::uniform_int_distribution<uint16_t> distribution(min, max);
+	int randomValue = distribution(generator);
+	return randomValue;
 }
 
 
