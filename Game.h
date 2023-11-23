@@ -10,6 +10,7 @@
 class Game
 {
 public:
+	Game();
 	Game(uint16_t timer, uint16_t m_indexDrawer, Settings m_settings,
 		std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat);
 	const uint16_t getTimer();

@@ -1,6 +1,11 @@
 #include "Chat.h"
 #include "Player.h"
 
+Chat::Chat()
+{
+	//EMPTY
+}
+
 Chat::Chat(std::string guess, std::vector<std::pair<Player, std::string>> playerActivity,
 	bool right, bool close, std::vector<Player> playerList, std::string rightWord) :
 	m_guess(guess),

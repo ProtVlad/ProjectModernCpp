@@ -5,6 +5,7 @@
 class Settings
 {
 public:
+	Settings();
 	Settings(uint16_t time, const std::string& language, uint16_t numberPlayers);
 	uint16_t getTime();
 	const std::string& getLanguage();
