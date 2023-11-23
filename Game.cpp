@@ -107,4 +107,16 @@ uint16_t Game::GenerateRandomNumber(uint16_t min, uint16_t max)
 	return randomValue;
 }
 
-
+void Game::chooseWords()
+{
+	uint16_t min = 0;
+	std::ifstream file("RoWords.txt");
+	uint16_t max = numberLines(file);
+	uint16_t nr = m_settings.getNumberWords();
+	for (uint16_t index = 0; index < nr; index++)
+	{
+		uint16_t p = GenerateRandomNumber(min, max);
+		std::string cuv = m_wordList[p];
+		m_wordChoices.emplace_back(cuv);
+	}
+}
