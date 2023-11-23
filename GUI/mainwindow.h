@@ -25,17 +25,6 @@ public:
     virtual void keyPressEvent(QKeyEvent *e);
 
 private slots:
-    void on_Gray_toggled();
-    void on_Red_toggled();
-    void on_Green_toggled();
-    void on_Blue_toggled();
-    void on_Orange_toggled();
-    void on_Pink_toggled();
-    void on_Yellow_toggled();
-    void on_Brown_toggled();
-    void on_White_toggled();
-    void on_Black_toggled();
-    void on_Surprise_toggled();
     void on_size3_toggled();
     void on_size5_toggled();
     void on_size10_toggled();
@@ -52,5 +41,8 @@ private:
     QColor surpriseStatus={255,0,0};
     void colorChange(QMouseEvent *e);
     bool noText(QString guess);
+    int xpos;
+    int ypos;
+    std::vector<QColor>colors;
 };
 #endif // MAINWINDOW_H

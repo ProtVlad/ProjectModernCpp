@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
     setFocusPolicy(Qt::StrongFocus);
+    xpos=100;
+    ypos=500;
+    colors={{160,160,164},{255,0,0},{0,255,0},{0,0,255},{255,128,0},{255,128,192},{255,255,0},{185,122,87},{255,255,255},{0,0,0}};
 }
 
 MainWindow::~MainWindow()
@@ -20,6 +23,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
     if (e->button()==Qt::LeftButton && e->pos().x()>100 && e->pos().x()<400 &&  e->pos().y()>100 && e->pos().y()<400)
     {
         leftButton=true;
+
         if (!surprise)
             points.push_back({e->pos(), color, size, true});
         else
@@ -63,6 +67,22 @@ void MainWindow::paintEvent(QPaintEvent *e)
 {
     QPainter p(this);
     QPen pen;
+    pen.setWidth(30);
+    for (int i=0; i<colors.size(); i++)
+    {
+        pen.setColor(colors[i]);
+        p.setPen(pen);
+        p.drawPoint(QPoint {xpos,ypos});
+        xpos+=30;
+    }
+    QRect r(xpos-15, ypos-15, 30, 30);
+    pen.setWidth(1);
+    pen.setColor({0,0,0});
+    p.setBrush(Qt::white);
+    p.setPen(pen);
+    p.drawRect(r);
+    p.drawText(r, Qt::AlignCenter, "?");
+    xpos-=30*colors.size();
     p.setPen(pen);
     for (int index=0;index<points.size();index++)
     {
@@ -106,75 +126,6 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
             ui->guess->clear();
         }
     }
-}
-
-
-void MainWindow::on_Gray_toggled()
-{
-    color=Qt::gray;
-    surprise=false;
-}
-
-void MainWindow::on_Red_toggled()
-{
-    color={255,0,0};
-    surprise=false;
-}
-
-void MainWindow::on_Green_toggled()
-{
-    color={0,255,0};
-    surprise=false;
-}
-
-void MainWindow::on_Blue_toggled()
-{
-    color={0,0,255};
-    surprise=false;
-}
-
-void MainWindow::on_Orange_toggled()
-{
-    color={255,128,0};
-    surprise=false;
-}
-
-void MainWindow::on_Pink_toggled()
-{
-    color={255,128,192};
-    surprise=false;
-}
-
-
-void MainWindow::on_Yellow_toggled()
-{
-    color={255,255,0};
-    surprise=false;
-}
-
-
-void MainWindow::on_Brown_toggled()
-{
-    color={185,122,87};
-    surprise=false;
-}
-
-void MainWindow::on_White_toggled()
-{
-    color={255,255,255};
-    surprise=false;
-}
-
-void MainWindow::on_Black_toggled()
-{
-    color={0,0,0};
-    surprise=false;
-}
-
-
-void MainWindow::on_Surprise_toggled()
-{
-    surprise=true;
 }
 
 void MainWindow::colorChange(QMouseEvent *e)
