@@ -17,7 +17,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
 {
-    if (e->button()==Qt::LeftButton)
+    if (e->button()==Qt::LeftButton && e->pos().x()>100 && e->pos().x()<400 &&  e->pos().y()>100 && e->pos().y()<400)
     {
         leftButton=true;
         if (!surprise)
@@ -34,16 +34,27 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 void MainWindow::mouseReleaseEvent(QMouseEvent *e)
 {
     leftButton=false;
+    verifyOutsideWindow=false;
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *e)
 {
     if (leftButton)
     {
-        if (!surprise)
-            points.push_back({e->pos(), color, size, false});
+        if(e->pos().x()>100 && e->pos().x()<400 &&  e->pos().y()>100 && e->pos().y()<400)
+        {
+            if (!surprise)
+            {
+                points.push_back({e->pos(), color, size, verifyOutsideWindow});
+            }
+            else
+                colorChange(e);
+            verifyOutsideWindow=false;
+        }
         else
-            colorChange(e);
+        {
+            verifyOutsideWindow=true;
+        }
         update();
     }
 }
@@ -199,7 +210,7 @@ void MainWindow::colorChange(QMouseEvent *e)
         surpriseStatus.setBlue(surpriseStatus.blue()-15);
         oneAction=true;
     }
-    points.push_back({e->pos(),surpriseStatus,size,false});
+    points.push_back({e->pos(),surpriseStatus,size,verifyOutsideWindow});
 }
 
 bool MainWindow::noText(QString guess)

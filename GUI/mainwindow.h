@@ -48,6 +48,7 @@ private:
     QColor color={0,0,0};
     int size=3;
     bool surprise=false;
+    bool verifyOutsideWindow=false;
     QColor surpriseStatus={255,0,0};
     void colorChange(QMouseEvent *e);
     bool noText(QString guess);
