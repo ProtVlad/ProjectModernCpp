@@ -43,10 +43,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    std::vector<std::tuple<QPoint,QColor,int>> points;
+    std::vector<std::tuple<QPoint,QColor,int,bool>> points;
     bool leftButton=false;
     QColor color={0,0,0};
-    int size=1;
+    int size=3;
     bool surprise=false;
     QColor surpriseStatus={255,0,0};
     void colorChange(QMouseEvent *e);

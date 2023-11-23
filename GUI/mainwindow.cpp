@@ -21,9 +21,12 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
     {
         leftButton=true;
         if (!surprise)
-            points.push_back({e->pos(), color, size});
+            points.push_back({e->pos(), color, size, true});
         else
+        {
             colorChange(e);
+            std::get<3>(points[points.size()-1])=true;
+        }
         update();
     }
 }
@@ -38,7 +41,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
     if (leftButton)
     {
         if (!surprise)
-            points.push_back({e->pos(), color, size});
+            points.push_back({e->pos(), color, size, false});
         else
             colorChange(e);
         update();
@@ -57,6 +60,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
             pen.setColor(std::get<1>(points[index]));
             pen.setWidth(std::get<2>(points[index]));
             p.setPen(pen);
+            p.drawPoint(std::get<0>(points[index]));
         }
         else
         {
@@ -71,7 +75,13 @@ void MainWindow::paintEvent(QPaintEvent *e)
                 p.setPen(pen);
             }
         }
-        p.drawPoint(std::get<0>(points[index]));
+        if (index!=0)
+        {
+            if (std::get<3>(points[index])==false)
+                p.drawLine(std::get<0>(points[index-1]),std::get<0>(points[index]));
+            else
+                p.drawPoint(std::get<0>(points[index]));
+        }
     }
 }
 
@@ -81,8 +91,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     {
         if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
         {
-                ui->guessList->addItem(ui->guess->text());
-                ui->guess->clear();
+            ui->guessList->addItem(ui->guess->text());
+            ui->guess->clear();
         }
     }
 }
@@ -189,7 +199,7 @@ void MainWindow::colorChange(QMouseEvent *e)
         surpriseStatus.setBlue(surpriseStatus.blue()-15);
         oneAction=true;
     }
-    points.push_back({e->pos(),surpriseStatus,size});
+    points.push_back({e->pos(),surpriseStatus,size,false});
 }
 
 bool MainWindow::noText(QString guess)
