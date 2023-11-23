@@ -21,7 +21,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
     {
         leftButton=true;
         if (!surprise)
-            points.push_back({e->pos(), color});
+            points.push_back({e->pos(), color, size});
         else
             colorChange(e);
         update();
@@ -38,7 +38,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
     if (leftButton)
     {
         if (!surprise)
-            points.push_back({e->pos(), color});
+            points.push_back({e->pos(), color, size});
         else
             colorChange(e);
         update();
@@ -49,22 +49,29 @@ void MainWindow::paintEvent(QPaintEvent *e)
 {
     QPainter p(this);
     QPen pen;
-    pen.setWidth(10);
     p.setPen(pen);
     for (int index=0;index<points.size();index++)
     {
         if (index==0)
         {
-            pen.setColor(points[index].second);
+            pen.setColor(std::get<1>(points[index]));
+            pen.setWidth(std::get<2>(points[index]));
             p.setPen(pen);
         }
         else
-            if (points[index].second!=points[index-1].second)
+        {
+            if (std::get<1>(points[index])!=std::get<1>(points[index-1]))
             {
-                pen.setColor(points[index].second);
+                pen.setColor(std::get<1>(points[index]));
                 p.setPen(pen);
             }
-        p.drawPoint(points[index].first);
+            if (std::get<2>(points[index])!=std::get<2>(points[index-1]))
+            {
+                pen.setWidth(std::get<2>(points[index]));
+                p.setPen(pen);
+            }
+        }
+        p.drawPoint(std::get<0>(points[index]));
     }
 }
 
@@ -182,7 +189,7 @@ void MainWindow::colorChange(QMouseEvent *e)
         surpriseStatus.setBlue(surpriseStatus.blue()-15);
         oneAction=true;
     }
-    points.push_back({e->pos(),surpriseStatus});
+    points.push_back({e->pos(),surpriseStatus,size});
 }
 
 bool MainWindow::noText(QString guess)
@@ -194,4 +201,26 @@ bool MainWindow::noText(QString guess)
                 isEmpty=false;
     }
     return isEmpty;
+}
+
+void MainWindow::on_size3_toggled()
+{
+    size=3;
+}
+
+
+void MainWindow::on_size5_toggled()
+{
+    size=5;
+}
+
+
+void MainWindow::on_size10_toggled()
+{
+    size=10;
+}
+
+void MainWindow::on_size15_toggled()
+{
+    size=15;
 }
