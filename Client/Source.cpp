@@ -5,6 +5,7 @@
 int main()
 {
 	cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:13034/products" });
+	
 
 	return 0;
 }
