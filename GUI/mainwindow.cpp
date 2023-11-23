@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->guessList->setFocusPolicy(Qt::NoFocus);
     setFocusPolicy(Qt::StrongFocus);
     xpos=100;
-    ypos=500;
+    ypos=650;
     colors={{160,160,164},{255,0,0},{0,255,0},{0,0,255},{255,128,0},{255,128,192},{255,255,0},{185,122,87},{255,255,255},{0,0,0}};
 }
 
@@ -30,7 +30,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
             surprise=false;
         }
     }
-    if (e->button()==Qt::LeftButton && e->pos().x()>100 && e->pos().x()<400 &&  e->pos().y()>100 && e->pos().y()<400)
+    if (e->button()==Qt::LeftButton && e->pos().x()>100 && e->pos().x()<900 &&  e->pos().y()>100 && e->pos().y()<500)
     {
         leftButton=true;
 
@@ -55,7 +55,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
 {
     if (leftButton)
     {
-        if(e->pos().x()>100 && e->pos().x()<400 &&  e->pos().y()>100 && e->pos().y()<400)
+        if(e->pos().x()>100 && e->pos().x()<900 &&  e->pos().y()>100 && e->pos().y()<500)
         {
             if (!surprise)
             {
