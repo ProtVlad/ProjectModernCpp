@@ -109,6 +109,31 @@ void Settings::optionsTime()
 	}
 }
 
+void Settings::optionsNumberChosenWords()
+{
+	switch (m_chosenWords) {
+	case 1:
+		m_chosenWords = 1;
+		break;
+	case 2:
+		m_chosenWords = 2;
+		break;
+	case 3:
+		m_chosenWords = 3;
+		break;
+	case 4:
+		m_chosenWords = 4;
+		break;
+	case 5:
+		m_chosenWords = 5;
+		break;
+
+	default:
+
+		break;
+	}
+}
+
 
 
 
