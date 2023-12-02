@@ -27,17 +27,17 @@ public:
 private:
     Ui::MainWindow *ui;
     std::vector<std::tuple<QPoint,QColor,int,bool>> points;
-    std::vector<int> widths;
-    bool leftButton=false;
-    QColor color={0,0,0};
-    int size=3;
-    bool surprise=false;
-    bool verifyOutsideWindow=false;
-    QColor surpriseStatus={255,0,0};
+    bool leftButton;
+    QColor color;
+    int size;
+    bool surprise;
+    bool verifyOutsideWindow;
+    QColor surpriseStatus;
     void colorChange(QMouseEvent *e);
     bool noText(QString guess);
     int xpos;
     int ypos;
     std::vector<QColor>colors;
+    std::vector<int> widths;
 };
 #endif // MAINWINDOW_H
