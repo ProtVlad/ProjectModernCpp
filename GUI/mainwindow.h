@@ -24,15 +24,10 @@ public:
     virtual void paintEvent(QPaintEvent *e);
     virtual void keyPressEvent(QKeyEvent *e);
 
-private slots:
-    void on_size3_toggled();
-    void on_size5_toggled();
-    void on_size10_toggled();
-    void on_size15_toggled();
-
 private:
     Ui::MainWindow *ui;
     std::vector<std::tuple<QPoint,QColor,int,bool>> points;
+    std::vector<int> widths;
     bool leftButton=false;
     QColor color={0,0,0};
     int size=3;

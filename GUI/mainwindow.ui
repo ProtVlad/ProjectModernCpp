@@ -37,46 +37,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>660</y>
-      <width>331</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QRadioButton" name="size3">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="size5">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="size10">
-       <property name="text">
-        <string>10</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="size15">
-       <property name="text">
-        <string>15</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

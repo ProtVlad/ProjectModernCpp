@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     xpos=100;
     ypos=650;
     colors={{160,160,164},{255,0,0},{0,255,0},{0,0,255},{255,128,0},{255,128,192},{255,255,0},{185,122,87},{255,255,255},{0,0,0}};
+    widths={3, 5,10, 15};
 }
 
 MainWindow::~MainWindow()
@@ -77,12 +78,26 @@ void MainWindow::paintEvent(QPaintEvent *e)
 {
     QPainter p(this);
     QPen pen;
-    pen.setWidth(30);
     for (int i=0; i<colors.size(); i++)
     {
         pen.setColor(colors[i]);
+        pen.setWidth(30);
         p.setPen(pen);
         p.drawPoint(QPoint {xpos,ypos});
+        if (i<widths.size())
+        {
+            QRect r(xpos-15, ypos+15, 30, 30);
+            pen.setWidth(1);
+            pen.setColor({0,0,0});
+            p.setBrush(Qt::white);
+            p.setPen(pen);
+            p.drawRect(r);
+            r={xpos-widths[i]/2, ypos+30-widths[i]/2, widths[i], widths[i]};
+            pen.setWidth(widths[i]);
+            p.setBrush(Qt::black);
+            p.setPen(pen);
+            p.drawEllipse(r);
+        }
         xpos+=30;
     }
     QRect r(xpos-15, ypos-15, 30, 30);
@@ -183,26 +198,4 @@ bool MainWindow::noText(QString guess)
                 isEmpty=false;
     }
     return isEmpty;
-}
-
-void MainWindow::on_size3_toggled()
-{
-    size=3;
-}
-
-
-void MainWindow::on_size5_toggled()
-{
-    size=5;
-}
-
-
-void MainWindow::on_size10_toggled()
-{
-    size=10;
-}
-
-void MainWindow::on_size15_toggled()
-{
-    size=15;
 }
