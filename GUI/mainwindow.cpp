@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
     setFocusPolicy(Qt::StrongFocus);
+    ui->errorLabel->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -224,18 +225,25 @@ bool MainWindow::noText(QString guess)
 
 void MainWindow::on_startButton_clicked()
 {
-    gameState=1;
-    ui->hintsChoice->setVisible(false);
-    ui->hintsLabel->setVisible(false);
-    ui->noPlayersChoice->setVisible(false);
-    ui->noPlayersLabel->setVisible(false);
-    ui->noWordsChoice->setVisible(false);
-    ui->noWordsLabel->setVisible(false);
-    ui->languageChoice->setVisible(false);
-    ui->languageLabel->setVisible(false);
-    ui->timeChoice->setVisible(false);
-    ui->timeLabel->setVisible(false);
-    ui->startButton->setVisible(false);
-    update();
+    if (ui->hintsChoice->currentText()!='-' && ui->noPlayersChoice->currentText()!='-' && ui->noWordsChoice->currentText()!='-' &&
+        ui->languageChoice->currentText()!='-' && ui->timeChoice->currentText()!='-')
+    {
+        gameState=1;
+        ui->hintsChoice->setVisible(false);
+        ui->hintsLabel->setVisible(false);
+        ui->noPlayersChoice->setVisible(false);
+        ui->noPlayersLabel->setVisible(false);
+        ui->noWordsChoice->setVisible(false);
+        ui->noWordsLabel->setVisible(false);
+        ui->languageChoice->setVisible(false);
+        ui->languageLabel->setVisible(false);
+        ui->timeChoice->setVisible(false);
+        ui->timeLabel->setVisible(false);
+        ui->startButton->setVisible(false);
+        ui->errorLabel->setVisible(false);
+        update();
+    }
+    else
+        ui->errorLabel->setVisible(true);
 }
 
