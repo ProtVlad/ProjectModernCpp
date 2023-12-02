@@ -30,73 +30,73 @@ Player::Player(std::string name) :
 {
 }
 
-void Player::setName(const std::string& name)
+void Player::SetName(const std::string& name)
 {
 	m_name = name;
 }
 
-const std::string& Player::getName()
+const std::string& Player::GetName()
 {
 	return m_name;
 }
 
-void Player::setScore(uint16_t score)
+void Player::SetScore(uint16_t score)
 {
 	m_score = score;
 }
 
-uint16_t Player::getScore()
+uint16_t Player::GetScore()
 {
 	return m_score;
 }
 
-void Player::setDrawOrNot(bool drawOrNot)
+void Player::SetDrawOrNot(bool drawOrNot)
 {
 	m_drawOrNot = drawOrNot;
 }
 
-bool Player::getDrawOrNot()
+bool Player::GetDrawOrNot()
 {
 	return m_drawOrNot;
 }
 
 
-void Player::setRank(uint16_t rank)
+void Player::SetRank(uint16_t rank)
 {
 	m_rank = rank;
 }
 
-uint16_t Player::getRank()
+uint16_t Player::GetRank()
 {
 	return m_rank;
 }
 
-void Player::setColor(Color color)
+void Player::SetColor(Color color)
 {
 	m_color = color;
 }
 
-Color Player::getColor() const
+Color Player::GetColor() const
 {
 	return m_color;
 }
 
-void Player::setOpinion(Opinion opinion)
+void Player::SetOpinion(Opinion opinion)
 {
 	m_opinion = opinion;
 }
 
-Opinion Player::getOpinion() const
+Opinion Player::GetOpinion() const
 {
 	return m_opinion;
 }
 
-void Player::setAnswerTime(uint16_t answerTime)
+void Player::SetAnswerTime(uint16_t answerTime)
 {
 	m_answerTime = answerTime;
 }
 
-uint16_t Player::getAnswerTime()
+uint16_t Player::GetAnswerTime()
 {
 	return m_answerTime;
 }

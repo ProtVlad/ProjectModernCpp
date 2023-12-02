@@ -8,26 +8,26 @@ public:
 	Player();
 	Player(std::string name, uint16_t score, bool drawOrNot, uint16_t rank, Color color, Opinion opinion);
 	Player(std::string name);
-	void setName(const std::string& name);
-	const std::string& getName();
+	void SetName(const std::string& name);
+	const std::string& GetName();
 
-	void setScore(uint16_t score);
-	uint16_t getScore();
+	void SetScore(uint16_t score);
+	uint16_t GetScore();
 
-	void setDrawOrNot(bool drawOrNot);
-	bool getDrawOrNot();
+	void SetDrawOrNot(bool drawOrNot);
+	bool GetDrawOrNot();
 
-	void setRank(uint16_t rank);
-	uint16_t getRank();
+	void SetRank(uint16_t rank);
+	uint16_t GetRank();
 
-	void setColor(Color color);
-	Color  getColor() const;
+	void SetColor(Color color);
+	Color  GetColor() const;
 
-	void setOpinion(Opinion opinion);
-	Opinion getOpinion() const;
+	void SetOpinion(Opinion opinion);
+	Opinion GetOpinion() const;
 
-	void setAnswerTime(uint16_t answerTime);
-	uint16_t getAnswerTime();
+	void SetAnswerTime(uint16_t answerTime);
+	uint16_t GetAnswerTime();
 
 private:
 	std::string m_name;

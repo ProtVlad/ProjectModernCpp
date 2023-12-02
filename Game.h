@@ -13,20 +13,20 @@ public:
 	Game();
 	Game(uint16_t timer, uint16_t m_indexDrawer, Settings m_settings,
 		std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat);
-	const uint16_t getTimer();
-	const std::vector<std::string>& getWordList();
-	const std::vector<std::string>& getWordChoices();
-	const Chat& getChat();
-	const uint16_t getIndexDrawer();
-	void setTimer(const uint16_t timer);
-	void setWordList(const std::vector<std::string>& wordList);
-	void setWordChoices(const std::vector<std::string>& wordChoices);
-	void setChat(const Chat& chat);
-	void setIndexDrawer(const uint16_t indexDrawer);
-	void readWordList(std::ifstream& file);
-	std::vector<uint16_t> totalScore(const std::vector<std::vector<uint16_t>>& scores);
-	uint16_t numberLines(std::ifstream& file);
-	void chooseWords();
+	const uint16_t GetTimer();
+	const std::vector<std::string>& GetWordList();
+	const std::vector<std::string>& GetWordChoices();
+	const Chat& GetChat();
+	const uint16_t GetIndexDrawer();
+	void SetTimer(const uint16_t timer);
+	void SetWordList(const std::vector<std::string>& wordList);
+	void SetWordChoices(const std::vector<std::string>& wordChoices);
+	void SetChat(const Chat& chat);
+	void SetIndexDrawer(const uint16_t indexDrawer);
+	void ReadWordList(std::ifstream& file);
+	std::vector<uint16_t> TotalScore(const std::vector<std::vector<uint16_t>>& scores);
+	uint16_t NumberLines(std::ifstream& file);
+	void ChooseWords();
 private:
 	uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
 private:

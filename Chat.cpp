@@ -14,10 +14,10 @@ const std::vector<Player>& Chat::GetPlayerList()
 
 void Chat::ShowOpinion(Player player)
 {
-	if (player.getOpinion() == ConvertStringToOpinion("Like"))
-		std::cout << player.getName() << " liked the drawing";
-	if (player.getOpinion() == ConvertStringToOpinion("Dislike"))
-		std::cout << player.getName() << " disliked the drawing";
+	if (player.GetOpinion() == ConvertStringToOpinion("Like"))
+		std::cout << player.GetName() << " liked the drawing";
+	if (player.GetOpinion() == ConvertStringToOpinion("Dislike"))
+		std::cout << player.GetName() << " disliked the drawing";
 }
 
 

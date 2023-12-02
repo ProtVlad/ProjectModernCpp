@@ -16,57 +16,57 @@ Game::Game(uint16_t timer, uint16_t indexDrawer, Settings settings,
 	m_chat(chat)
 {}
 
-const uint16_t Game::getTimer()
+const uint16_t Game::GetTimer()
 {
 	return m_timer;
 }
 
-const std::vector<std::string>& Game::getWordList()
+const std::vector<std::string>& Game::GetWordList()
 {
 	return m_wordList;
 }
 
-const std::vector<std::string>& Game::getWordChoices()
+const std::vector<std::string>& Game::GetWordChoices()
 {
 	return m_wordChoices;
 }
 
-const Chat& Game::getChat()
+const Chat& Game::GetChat()
 {
 	return m_chat;
 }
 
-const uint16_t Game::getIndexDrawer()
+const uint16_t Game::GetIndexDrawer()
 {
 	return m_indexDrawer;
 }
 
-void Game::setTimer(const uint16_t timer)
+void Game::SetTimer(const uint16_t timer)
 {
 	m_timer = timer;
 }
 
-void Game::setWordList(const std::vector<std::string>& wordList)
+void Game::SetWordList(const std::vector<std::string>& wordList)
 {
 	m_wordList = wordList;
 }
 
-void Game::setWordChoices(const std::vector<std::string>& wordChoices)
+void Game::SetWordChoices(const std::vector<std::string>& wordChoices)
 {
 	m_wordChoices = wordChoices;
 }
 
-void Game::setChat(const Chat& chat)
+void Game::SetChat(const Chat& chat)
 {
 	m_chat = chat;
 }
 
-void Game::setIndexDrawer(const uint16_t indexDrawer)
+void Game::SetIndexDrawer(const uint16_t indexDrawer)
 {
 	m_indexDrawer = indexDrawer;
 }
 
-void Game::readWordList(std::ifstream& file)
+void Game::ReadWordList(std::ifstream& file)
 {
 	while (!file.eof())
 	{
@@ -76,7 +76,7 @@ void Game::readWordList(std::ifstream& file)
 	}
 }
 
-std::vector<uint16_t> Game::totalScore(const std::vector<std::vector<uint16_t>>& playerScores)
+std::vector<uint16_t> Game::TotalScore(const std::vector<std::vector<uint16_t>>& playerScores)
 {
 	std::vector<uint16_t> scores;
 	for (uint16_t player = 0; player < playerScores.size(); player++)
@@ -89,7 +89,7 @@ std::vector<uint16_t> Game::totalScore(const std::vector<std::vector<uint16_t>>&
 	return scores;
 }
 
-uint16_t Game::numberLines(std::ifstream& file)
+uint16_t Game::NumberLines(std::ifstream& file)
 {
 	uint16_t numLines = 0;
 	std::string line;
@@ -107,12 +107,12 @@ uint16_t Game::GenerateRandomNumber(uint16_t min, uint16_t max)
 	return randomValue;
 }
 
-void Game::chooseWords()
+void Game::ChooseWords()
 {
 	uint16_t min = 0;
 	std::ifstream file("RoWords.txt");
-	uint16_t max = numberLines(file);
-	uint16_t nr = m_settings.getNumberWords();
+	uint16_t max = NumberLines(file);
+	uint16_t nr = m_settings.GetNumberWords();
 	for (uint16_t index = 0; index < nr; index++)
 	{
 		uint16_t p = GenerateRandomNumber(min, max);

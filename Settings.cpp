@@ -17,42 +17,42 @@ Settings::Settings(uint16_t time,
 {
 }
 
-uint16_t Settings::getTime()
+uint16_t Settings::GetTime()
 {
 	return m_time;
 }
 
-const std::string& Settings::getLanguage()
+const std::string& Settings::GetLanguage()
 {
 	return m_language;
 }
 
-uint16_t Settings::getMaxNumberPlayers()
+uint16_t Settings::GetMaxNumberPlayers()
 {
 	return m_maxNumberPlayers;
 }
 
-uint16_t Settings::getDrawtime()
+uint16_t Settings::GetDrawtime()
 {
 	return m_drawtime;
 }
 
-uint16_t Settings::getMaxClues()
+uint16_t Settings::GetMaxClues()
 {
 	return m_maxClues;
 }
 
-uint16_t Settings::getNumberWords()
+uint16_t Settings::GetNumberWords()
 {
 	return m_numberWords;
 }
 
-uint16_t Settings::getNumberHints()
+uint16_t Settings::GetNumberHints()
 {
 	return m_numberHints;
 }
 
-void Settings::setTime(uint16_t time)
+void Settings::SetTime(uint16_t time)
 {
 	switch (time) {
 	case 20:
@@ -82,12 +82,12 @@ void Settings::setTime(uint16_t time)
 	}
 }
 
-void Settings::setLanguage(const std::string& language)
+void Settings::SetLanguage(const std::string& language)
 {
 	m_language = language;
 }
 
-void Settings::setNumberPlayers(uint16_t numberPlayers)
+void Settings::SetNumberPlayers(uint16_t numberPlayers)
 {
 	switch (numberPlayers) {
 	case 2:
@@ -118,17 +118,17 @@ void Settings::setNumberPlayers(uint16_t numberPlayers)
 	}
 }
 
-void Settings::setMaxClues(uint16_t maxClues)
+void Settings::SetMaxClues(uint16_t maxClues)
 {
 	m_maxClues = maxClues;
 }
 
-void Settings::setDrawtime(uint16_t drawtime)
+void Settings::SetDrawtime(uint16_t drawtime)
 {
 	m_drawtime = drawtime;
 }
 
-void Settings::setNumberWords(uint16_t numberWords)
+void Settings::SetNumberWords(uint16_t numberWords)
 {
 	switch (numberWords) {
 	case 1:
@@ -153,7 +153,7 @@ void Settings::setNumberWords(uint16_t numberWords)
 	}
 }
 
-void Settings::setNumberHints(uint16_t numberHints)
+void Settings::SetNumberHints(uint16_t numberHints)
 {
 	m_numberHints = numberHints;
 }

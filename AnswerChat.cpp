@@ -39,15 +39,15 @@ void AnswerChat::SetIsDrawing(bool isDrawing)
 
 void AnswerChat::ShowOpinion(Player player)
 {
-	if (player.getOpinion() == ConvertStringToOpinion("Like"))
-		std::cout << player.getName() << " liked the drawing";
-	if (player.getOpinion() == ConvertStringToOpinion("Dislike"))
-		std::cout << player.getName() << " disliked the drawing";
+	if (player.GetOpinion() == ConvertStringToOpinion("Like"))
+		std::cout << player.GetName() << " liked the drawing";
+	if (player.GetOpinion() == ConvertStringToOpinion("Dislike"))
+		std::cout << player.GetName() << " disliked the drawing";
 }
 
 void AnswerChat::ShowGuess(Player player, std::string guess)
 {
-	std::cout << player.getName() << ": " << guess;
+	std::cout << player.GetName() << ": " << guess;
 }
 
 bool AnswerChat::IsClose()
@@ -67,10 +67,10 @@ AnswerChat::~AnswerChat()
 
 int AnswerChat::CalculateScore(Player player, uint16_t maxTime)
 {
-	if (IsRight() && player.getAnswerTime() <= maxTime / 2)
+	if (IsRight() && player.GetAnswerTime() <= maxTime / 2)
 		return 100;
-	if (IsRight() && player.getAnswerTime() > maxTime / 2)
-		return ((maxTime - player.getAnswerTime()) * 100) / (maxTime / 2);
-	if (player.getAnswerTime() == maxTime)
+	if (IsRight() && player.GetAnswerTime() > maxTime / 2)
+		return ((maxTime - player.GetAnswerTime()) * 100) / (maxTime / 2);
+	if (player.GetAnswerTime() == maxTime)
 		return -50;
 }

@@ -7,20 +7,20 @@ class Settings
 public:
 	Settings();
 	Settings(uint16_t time, const std::string& language, uint16_t numberPlayers);
-	uint16_t getTime();
-	const std::string& getLanguage();
-	uint16_t getMaxNumberPlayers();
-	uint16_t getDrawtime();
-	uint16_t getMaxClues();
-	uint16_t getNumberWords();
-	uint16_t getNumberHints();
-	void setTime(uint16_t time);
-	void setLanguage(const std::string& language);
-	void setNumberPlayers(uint16_t maxNumberPlayers);
-	void setMaxClues(uint16_t maxClues);
-	void setDrawtime(uint16_t drawtime);
-	void setNumberWords(uint16_t numberWords);
-	void setNumberHints(uint16_t numberHints);
+	uint16_t GetTime();
+	const std::string& GetLanguage();
+	uint16_t GetMaxNumberPlayers();
+	uint16_t GetDrawtime();
+	uint16_t GetMaxClues();
+	uint16_t GetNumberWords();
+	uint16_t GetNumberHints();
+	void SetTime(uint16_t time);
+	void SetLanguage(const std::string& language);
+	void SetNumberPlayers(uint16_t maxNumberPlayers);
+	void SetMaxClues(uint16_t maxClues);
+	void SetDrawtime(uint16_t drawtime);
+	void SetNumberWords(uint16_t numberWords);
+	void SetNumberHints(uint16_t numberHints);
 	//optionHints de dezbatut
 	//void optionsHints(uint16_t maxHints);
 	// de dezbatut daca e nevoie
