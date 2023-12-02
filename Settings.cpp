@@ -77,9 +77,29 @@ void Settings::setDrawtime(uint16_t drawtime)
 	m_drawtime = drawtime;
 }
 
-void Settings::setNumberWods(uint16_t numberWords)
+void Settings::setNumberWords(uint16_t numberWords)
 {
-	m_numberWords = numberWords;
+	switch (numberWords) {
+	case 1:
+		m_numberWords = 1;
+		break;
+	case 2:
+		m_numberWords = 2;
+		break;
+	case 3:
+		m_numberWords = 3;
+		break;
+	case 4:
+		m_numberWords = 4;
+		break;
+	case 5:
+		m_numberWords = 5;
+		break;
+
+	default:
+
+		break;
+	}
 }
 
 void Settings::setNumberHints(uint16_t numberHints)
@@ -114,30 +134,7 @@ void Settings::optionsTime()
 	}
 }
 
-void Settings::optionsNumberChosenWords()
-{
-	switch (m_chosenWords) {
-	case 1:
-		m_chosenWords = 1;
-		break;
-	case 2:
-		m_chosenWords = 2;
-		break;
-	case 3:
-		m_chosenWords = 3;
-		break;
-	case 4:
-		m_chosenWords = 4;
-		break;
-	case 5:
-		m_chosenWords = 5;
-		break;
 
-	default:
-
-		break;
-	}
-}
 
 
 
