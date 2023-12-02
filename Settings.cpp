@@ -89,7 +89,33 @@ void Settings::setLanguage(const std::string& language)
 
 void Settings::setNumberPlayers(uint16_t numberPlayers)
 {
-	m_maxNumberPlayers = numberPlayers;
+	switch (numberPlayers) {
+	case 2:
+		m_maxNumberPlayers = numberPlayers;
+		break;
+	case 3:
+		m_maxNumberPlayers = numberPlayers;
+		break;
+	case 4:
+		m_maxNumberPlayers = numberPlayers;
+		break;
+	case 5:
+		m_maxNumberPlayers = numberPlayers;
+		break;
+	case 6:
+		m_maxNumberPlayers = numberPlayers;
+		break;
+	case 7:
+		m_maxNumberPlayers = numberPlayers;
+		break;
+	case 8:
+		m_maxNumberPlayers = numberPlayers;
+		break;
+
+	default:
+
+		break;
+	}
 }
 
 void Settings::setMaxClues(uint16_t maxClues)
