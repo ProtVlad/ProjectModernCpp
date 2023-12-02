@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ypos(650)
     , colors({{160,160,164},{255,0,0},{0,255,0},{0,0,255},{255,128,0},{255,128,192},{255,255,0},{185,122,87},{255,255,255},{0,0,0}})
     , widths({3, 5,10, 15})
+    , borders({{100,100}, {100, 500}, {900, 100}, {900, 500}})
 {
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
@@ -37,7 +38,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
             surprise=false;
         }
     }
-    if (e->button()==Qt::LeftButton && e->pos().x()>xpos-15 && e->pos().x()<xpos+30*(widths.size()+1)-15 && e->pos().y()>ypos+15 && e->pos().y()<ypos+45)
+    if (e->button()==Qt::LeftButton && e->pos().x()>xpos-15 && e->pos().x()<xpos+30*(widths.size())-15 && e->pos().y()>ypos+15 && e->pos().y()<ypos+45)
         size=widths[(e->pos().x()-xpos+15)/30];
     if (e->button()==Qt::LeftButton && e->pos().x()>100 && e->pos().x()<900 &&  e->pos().y()>100 && e->pos().y()<500)
     {
@@ -147,6 +148,13 @@ void MainWindow::paintEvent(QPaintEvent *e)
                 p.drawPoint(std::get<0>(points[index]));
         }
     }
+    pen.setWidth(17);
+    pen.setColor(Qt::black);
+    p.setPen(pen);
+    p.drawLine(borders[0], borders[1]);
+    p.drawLine(borders[0], borders[2]);
+    p.drawLine(borders[1], borders[3]);
+    p.drawLine(borders[2], borders[3]);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e)

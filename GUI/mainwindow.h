@@ -39,5 +39,6 @@ private:
     int ypos;
     std::vector<QColor>colors;
     std::vector<int> widths;
+    std::vector<QPoint> borders={{100,100}, {100, 500}, {900, 100}, {900, 500}};
 };
 #endif // MAINWINDOW_H
