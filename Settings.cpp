@@ -54,7 +54,32 @@ uint16_t Settings::getNumberHints()
 
 void Settings::setTime(uint16_t time)
 {
-	m_time = time;
+	switch (time) {
+	case 20:
+		m_time = 20;
+		break;
+	case 30:
+		m_time = 30;
+		break;
+	case 40:
+		m_time = 40;
+		break;
+	case 50:
+		m_time = 50;
+		break;
+	case 60:
+		m_time = 60;
+		break;
+	case 70:
+		m_time = 70;
+		break;
+	case 80:
+		m_time = 80;
+		break;
+	default:
+
+		break;
+	}
 }
 
 void Settings::setLanguage(const std::string& language)
@@ -107,32 +132,7 @@ void Settings::setNumberHints(uint16_t numberHints)
 	m_numberHints = numberHints;
 }
 
-void Settings::optionsTime()
-{
-	switch (m_time) {
-	case 15:
-		m_time = 15;
-		break;
-	case 20:
-		m_time = 20;
-		break;
-	case 30:
-		m_time = 30;
-		break;
-	case 40:
-		m_time = 40;
-		break;
-	case 50:
-		m_time = 50;
-		break;
-	case 60:
-		m_time = 60;
-		break;
-	default:
-		
-		break;
-	}
-}
+
 
 
 
