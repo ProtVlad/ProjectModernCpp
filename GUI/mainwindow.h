@@ -24,6 +24,9 @@ public:
     virtual void paintEvent(QPaintEvent *e);
     virtual void keyPressEvent(QKeyEvent *e);
 
+private slots:
+    void on_startButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::vector<std::tuple<QPoint,QColor,int,bool>> points;
@@ -39,6 +42,7 @@ private:
     int ypos;
     std::vector<QColor>colors;
     std::vector<int> widths;
-    std::vector<QPoint> borders={{100,100}, {100, 500}, {900, 100}, {900, 500}};
+    std::vector<QPoint> borders;
+    int gameState;
 };
 #endif // MAINWINDOW_H

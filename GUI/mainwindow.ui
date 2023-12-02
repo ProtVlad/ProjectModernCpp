@@ -37,6 +37,289 @@
      </rect>
     </property>
    </widget>
+   <widget class="QComboBox" name="timeChoice">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>110</y>
+      <width>72</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>20</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>30</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>40</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>50</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>60</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>70</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>80</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="languageChoice">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>150</y>
+      <width>72</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Romanian</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>English</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="noPlayersChoice">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>190</y>
+      <width>72</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>7</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>8</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="noWordsChoice">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>230</y>
+      <width>72</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="hintsChoice">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>270</y>
+      <width>72</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>5</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="timeLabel">
+    <property name="geometry">
+     <rect>
+      <x>514</x>
+      <y>114</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="languageLabel">
+    <property name="geometry">
+     <rect>
+      <x>488</x>
+      <y>154</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Language</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="noPlayersLabel">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>194</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Number of players</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="noWordsLabel">
+    <property name="geometry">
+     <rect>
+      <x>448</x>
+      <y>234</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Number of words</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="hintsLabel">
+    <property name="geometry">
+     <rect>
+      <x>512</x>
+      <y>274</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hints</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="startButton">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>630</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Start</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
