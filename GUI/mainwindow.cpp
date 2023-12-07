@@ -64,7 +64,11 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e)
 {
     if (gameState==2)
     {
-        leftButton=false;
+        if (leftButton)
+        {
+            drawingReleases.emplace_back(points.size()-1);
+            leftButton=false;
+        }
         verifyOutsideWindow=false;
     }
 }
@@ -253,6 +257,7 @@ void MainWindow::setVisibilities(int state)
         ui->guessList->setVisible(false);
         ui->emptyUsername->setVisible(false);
         ui->clearButton->setVisible(false);
+        ui->undoButton->setVisible(false);
         break;
     }
     case 1:
@@ -292,6 +297,7 @@ void MainWindow::setVisibilities(int state)
         ui->startButton->setVisible(false);
         ui->errorLabel->setVisible(false);
         ui->clearButton->setVisible(true);
+        ui->undoButton->setVisible(true);
         break;
     }
     default:
@@ -303,6 +309,24 @@ void MainWindow::setVisibilities(int state)
 void MainWindow::clear()
 {
     points.clear();
+    update();
+}
+
+void MainWindow::undo()
+{
+    if (drawingReleases.empty())
+        return;
+    else
+    {
+        if (drawingReleases.size()==1)
+            points.clear();
+        else
+            for (int index=drawingReleases[drawingReleases.size()-1];index>drawingReleases[drawingReleases.size()-2];index--)
+            {
+                points.erase(points.begin()+index);
+            }
+        drawingReleases.erase(drawingReleases.begin()+drawingReleases.size()-1);
+    }
     update();
 }
 
@@ -349,5 +373,11 @@ void MainWindow::on_joinButton_clicked()
 void MainWindow::on_clearButton_clicked()
 {
     clear();
+}
+
+
+void MainWindow::on_undoButton_clicked()
+{
+    undo();
 }
 

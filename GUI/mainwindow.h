@@ -29,6 +29,7 @@ private slots:
     void on_createButton_clicked();
     void on_joinButton_clicked();
     void on_clearButton_clicked();
+    void on_undoButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -43,6 +44,7 @@ private:
     int ypos;
     std::vector<QColor>colors;
     std::vector<int> widths;
+    std::vector<int> drawingReleases;
     std::vector<QPoint> borders;
     int gameState;
 
@@ -51,5 +53,6 @@ private:
     bool noText(QString guess);
     void setVisibilities(int state);
     void clear();
+    void undo();
 };
 #endif // MAINWINDOW_H
