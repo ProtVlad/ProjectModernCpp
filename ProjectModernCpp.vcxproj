@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnswerChat.cpp" />
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnswerChat.h" />
     <ClInclude Include="Chat.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
