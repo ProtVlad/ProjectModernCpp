@@ -98,8 +98,14 @@ void MainWindow::paintEvent(QPaintEvent *e)
     {
         for (int i=0; i<colors.size(); i++)
         {
+            QRect r(xpos-15, ypos-15, 30, 30);
+            pen.setWidth(1);
+            pen.setColor({0,0,0});
+            p.setBrush(Qt::white);
+            p.setPen(pen);
+            p.drawRect(r);
             pen.setColor(colors[i]);
-            pen.setWidth(30);
+            pen.setWidth(29);
             p.setPen(pen);
             p.drawPoint(QPoint {xpos,ypos});
             if (i<widths.size())
@@ -126,6 +132,8 @@ void MainWindow::paintEvent(QPaintEvent *e)
         p.drawRect(r);
         p.drawText(r, Qt::AlignCenter, "?");
         xpos-=30*colors.size();
+        QRect border(borders[0].x(), borders[0].y(), borders[3].x()-borders[0].x(), borders[3].y()-borders[0].y());
+        p.drawRect(border);
         for (int index=0;index<points.size();index++)
         {
             if (index==0)
@@ -171,7 +179,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     if (e->key() == Qt::Key_Return)
         if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
         {
-            ui->guessList->addItem(ui->guess->text());
+            QString userGuess=ui->username->text()+": "+ui->guess->text();
+            ui->guessList->addItem(userGuess);
             ui->guess->clear();
         }
 }

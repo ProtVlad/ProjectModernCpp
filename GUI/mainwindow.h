@@ -40,14 +40,17 @@ private:
     bool surprise;
     bool verifyOutsideWindow;
     QColor surpriseStatus;
-    void colorChange(QMouseEvent *e);
-    bool noText(QString guess);
     int xpos;
     int ypos;
     std::vector<QColor>colors;
     std::vector<int> widths;
     std::vector<QPoint> borders;
     int gameState;
+
+private:
+    void colorChange(QMouseEvent *e);
+    bool noText(QString guess);
     void setVisibilities(int state);
+
 };
 #endif // MAINWINDOW_H
