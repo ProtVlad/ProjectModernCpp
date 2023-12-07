@@ -66,7 +66,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e)
     {
         if (leftButton)
         {
-            drawingReleases.emplace_back(points.size()-1);
+            actionHistory.push(points.size()-1);
             leftButton=false;
         }
         verifyOutsideWindow=false;
@@ -308,25 +308,39 @@ void MainWindow::setVisibilities(int state)
 
 void MainWindow::clear()
 {
-    points.clear();
-    update();
+    if (!points.empty())
+    {
+        previousDrawings.push(points);
+        points.clear();
+        actionHistory.push(-1);
+        update();
+    }
 }
 
 void MainWindow::undo()
 {
-    if (drawingReleases.empty())
+    if (actionHistory.empty())
         return;
     else
-    {
-        if (drawingReleases.size()==1)
+        if (actionHistory.size()==1)
+        {
             points.clear();
+            actionHistory.pop();
+        }
         else
-            for (int index=drawingReleases[drawingReleases.size()-1];index>drawingReleases[drawingReleases.size()-2];index--)
+            if (actionHistory.top()==-1)
             {
-                points.erase(points.begin()+index);
+                points=previousDrawings.top();
+                previousDrawings.pop();
+                actionHistory.pop();
             }
-        drawingReleases.erase(drawingReleases.begin()+drawingReleases.size()-1);
-    }
+            else
+            {
+                int lastUndoPoint=actionHistory.top();
+                actionHistory.pop();
+                for (int index=lastUndoPoint;index>actionHistory.top();index--)
+                    points.erase(points.begin()+index);
+            }
     update();
 }
 

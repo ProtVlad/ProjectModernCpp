@@ -6,6 +6,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <vector>
+#include <stack>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -34,6 +35,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::vector<std::tuple<QPoint,QColor,int,bool>> points;
+    std::stack<std::vector<std::tuple<QPoint,QColor,int,bool>>> previousDrawings;
     bool leftButton;
     QColor color;
     int size;
@@ -44,7 +46,7 @@ private:
     int ypos;
     std::vector<QColor>colors;
     std::vector<int> widths;
-    std::vector<int> drawingReleases;
+    std::stack<int> actionHistory;
     std::vector<QPoint> borders;
     int gameState;
 
