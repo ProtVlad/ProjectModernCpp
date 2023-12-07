@@ -242,6 +242,7 @@ void MainWindow::setVisibilities(int state)
         ui->errorLabel->setVisible(false);
         ui->guess->setVisible(false);
         ui->guessList->setVisible(false);
+        ui->emptyUsername->setVisible(false);
         break;
     }
     case 1:
@@ -263,6 +264,7 @@ void MainWindow::setVisibilities(int state)
         ui->username->setVisible(false);
         ui->createButton->setVisible(false);
         ui->joinButton->setVisible(false);
+        ui->emptyUsername->setVisible(false);
         break;
     }
     case 2:
@@ -303,16 +305,26 @@ void MainWindow::on_startButton_clicked()
 
 void MainWindow::on_createButton_clicked()
 {
+    if (ui->username->text().isEmpty() || noText(ui->username->text()))
+        ui->emptyUsername->setVisible(true);
+    else
+    {
     gameState=1;
     setVisibilities(gameState);
     update();
+    }
 }
 
 
 void MainWindow::on_joinButton_clicked()
 {
+    if (ui->username->text().isEmpty() || noText(ui->username->text()))
+        ui->emptyUsername->setVisible(true);
+    else
+    {
     gameState=1;
     setVisibilities(gameState);
     update();
+    }
 }
 
