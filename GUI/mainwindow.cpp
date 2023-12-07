@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
     setFocusPolicy(Qt::StrongFocus);
-    ui->errorLabel->setVisible(false);
+    setVisibilities(0);
 }
 
 MainWindow::~MainWindow()
@@ -30,7 +30,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
 {
-    if (gameState==1)
+    if (gameState==2)
     {
         if (e->button()==Qt::LeftButton && e->pos().x()>xpos-15 && e->pos().x()<xpos+30*(colors.size()+1)-15 && e->pos().y()>ypos-15 && e->pos().y()<ypos+15)
         {
@@ -62,7 +62,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *e)
 {
-    if (gameState==1)
+    if (gameState==2)
     {
         leftButton=false;
         verifyOutsideWindow=false;
@@ -71,7 +71,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *e)
 {
-    if (gameState==1)
+    if (gameState==2)
         if (leftButton)
         {
             if(e->pos().x()>100 && e->pos().x()<900 &&  e->pos().y()>100 && e->pos().y()<500)
@@ -94,7 +94,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
 {
     QPainter p(this);
     QPen pen;
-    if (gameState==1)
+    if (gameState==2)
     {
         for (int i=0; i<colors.size(); i++)
         {
@@ -212,23 +212,22 @@ void MainWindow::colorChange(QMouseEvent *e)
     points.push_back({e->pos(),surpriseStatus,size,verifyOutsideWindow});
 }
 
-bool MainWindow::noText(QString guess)
+bool MainWindow::noText(QString text)
 {
     bool isEmpty=true;
-    for (int index=0; index<guess.size(); index++)
+    for (int index=0; index<text.size(); index++)
     {
-        if(guess[index]!=' ')
+        if(text[index]!=' ')
                 isEmpty=false;
     }
     return isEmpty;
 }
 
-void MainWindow::on_startButton_clicked()
+void MainWindow::setVisibilities(int state)
 {
-    if (ui->hintsChoice->currentText()!='-' && ui->noPlayersChoice->currentText()!='-' && ui->noWordsChoice->currentText()!='-' &&
-        ui->languageChoice->currentText()!='-' && ui->timeChoice->currentText()!='-')
+    switch (state) {
+    case 0:
     {
-        gameState=1;
         ui->hintsChoice->setVisible(false);
         ui->hintsLabel->setVisible(false);
         ui->noPlayersChoice->setVisible(false);
@@ -241,9 +240,79 @@ void MainWindow::on_startButton_clicked()
         ui->timeLabel->setVisible(false);
         ui->startButton->setVisible(false);
         ui->errorLabel->setVisible(false);
+        ui->guess->setVisible(false);
+        ui->guessList->setVisible(false);
+        break;
+    }
+    case 1:
+    {
+        ui->hintsChoice->setVisible(true);
+        ui->hintsLabel->setVisible(true);
+        ui->noPlayersChoice->setVisible(true);
+        ui->noPlayersLabel->setVisible(true);
+        ui->noWordsChoice->setVisible(true);
+        ui->noWordsLabel->setVisible(true);
+        ui->languageChoice->setVisible(true);
+        ui->languageLabel->setVisible(true);
+        ui->timeChoice->setVisible(true);
+        ui->timeLabel->setVisible(true);
+        ui->startButton->setVisible(true);
+        ui->guess->setVisible(true);
+        ui->guessList->setVisible(true);
+        ui->usernameLabel->setVisible(false);
+        ui->username->setVisible(false);
+        ui->createButton->setVisible(false);
+        ui->joinButton->setVisible(false);
+        break;
+    }
+    case 2:
+    {
+        ui->hintsChoice->setVisible(false);
+        ui->hintsLabel->setVisible(false);
+        ui->noPlayersChoice->setVisible(false);
+        ui->noPlayersLabel->setVisible(false);
+        ui->noWordsChoice->setVisible(false);
+        ui->noWordsLabel->setVisible(false);
+        ui->languageChoice->setVisible(false);
+        ui->languageLabel->setVisible(false);
+        ui->timeChoice->setVisible(false);
+        ui->timeLabel->setVisible(false);
+        ui->startButton->setVisible(false);
+        ui->errorLabel->setVisible(false);
+        break;
+    }
+    default:
+        break;
+    }
+
+}
+
+void MainWindow::on_startButton_clicked()
+{
+    if (ui->hintsChoice->currentText()!='-' && ui->noPlayersChoice->currentText()!='-' && ui->noWordsChoice->currentText()!='-' &&
+        ui->languageChoice->currentText()!='-' && ui->timeChoice->currentText()!='-')
+    {
+        gameState=2;
+        setVisibilities(gameState);
         update();
     }
     else
         ui->errorLabel->setVisible(true);
+}
+
+
+void MainWindow::on_createButton_clicked()
+{
+    gameState=1;
+    setVisibilities(gameState);
+    update();
+}
+
+
+void MainWindow::on_joinButton_clicked()
+{
+    gameState=1;
+    setVisibilities(gameState);
+    update();
 }
 

@@ -27,6 +27,10 @@ public:
 private slots:
     void on_startButton_clicked();
 
+    void on_createButton_clicked();
+
+    void on_joinButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::vector<std::tuple<QPoint,QColor,int,bool>> points;
@@ -44,5 +48,6 @@ private:
     std::vector<int> widths;
     std::vector<QPoint> borders;
     int gameState;
+    void setVisibilities(int state);
 };
 #endif // MAINWINDOW_H
