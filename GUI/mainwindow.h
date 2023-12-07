@@ -26,10 +26,9 @@ public:
 
 private slots:
     void on_startButton_clicked();
-
     void on_createButton_clicked();
-
     void on_joinButton_clicked();
+    void on_clearButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -51,6 +50,6 @@ private:
     void colorChange(QMouseEvent *e);
     bool noText(QString guess);
     void setVisibilities(int state);
-
+    void clear();
 };
 #endif // MAINWINDOW_H

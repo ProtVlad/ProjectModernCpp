@@ -252,6 +252,7 @@ void MainWindow::setVisibilities(int state)
         ui->guess->setVisible(false);
         ui->guessList->setVisible(false);
         ui->emptyUsername->setVisible(false);
+        ui->clearButton->setVisible(false);
         break;
     }
     case 1:
@@ -290,12 +291,19 @@ void MainWindow::setVisibilities(int state)
         ui->timeLabel->setVisible(false);
         ui->startButton->setVisible(false);
         ui->errorLabel->setVisible(false);
+        ui->clearButton->setVisible(true);
         break;
     }
     default:
         break;
     }
 
+}
+
+void MainWindow::clear()
+{
+    points.clear();
+    update();
 }
 
 void MainWindow::on_startButton_clicked()
@@ -335,5 +343,11 @@ void MainWindow::on_joinButton_clicked()
     setVisibilities(gameState);
     update();
     }
+}
+
+
+void MainWindow::on_clearButton_clicked()
+{
+    clear();
 }
 
