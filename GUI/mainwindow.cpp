@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     bigLogo = new QLabel(this);
     bigLogo->setPixmap(QPixmap("C://Users//Stefan//Downloads//logoMareTTP-removebg-preview (1) (1).png"));
+    logo = new QLabel(this);
+    logo->setPixmap(QPixmap("C://Users//Stefan//Desktop//SEM1//MC//project//GUI//images//logoTTP.png"));
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
     setFocusPolicy(Qt::StrongFocus);
@@ -247,6 +249,7 @@ void MainWindow::setVisibilities(int state)
         bigLogo->setGeometry(700, 200, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
+        logo->setVisible(false);
         ui->hintsChoice->setVisible(false);
         ui->hintsLabel->setVisible(false);
         ui->noPlayersChoice->setVisible(false);
@@ -272,6 +275,7 @@ void MainWindow::setVisibilities(int state)
         bigLogo->setGeometry(450, 350, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
+        logo->setVisible(false);
         ui->hintsChoice->setVisible(true);
         ui->hintsLabel->setVisible(true);
         ui->noPlayersChoice->setVisible(true);
@@ -295,6 +299,9 @@ void MainWindow::setVisibilities(int state)
     case 2:
     {
         bigLogo->setVisible(false);
+        logo->setGeometry(5, 5, 100, 98);
+        logo->setScaledContents(true);
+        logo->setVisible(true);
         ui->hintsChoice->setVisible(false);
         ui->hintsLabel->setVisible(false);
         ui->noPlayersChoice->setVisible(false);

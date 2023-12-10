@@ -51,6 +51,7 @@ private:
     std::vector<QPoint> borders;
     int gameState;
     QLabel* bigLogo;
+    QLabel* logo;
 private:
     void colorChange(QMouseEvent *e);
     bool noText(QString guess);
