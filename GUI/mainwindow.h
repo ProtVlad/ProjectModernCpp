@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QLabel>
 #include <vector>
 #include <stack>
 
@@ -49,7 +50,7 @@ private:
     std::stack<int> actionHistory;
     std::vector<QPoint> borders;
     int gameState;
-
+    QLabel* bigLogo;
 private:
     void colorChange(QMouseEvent *e);
     bool noText(QString guess);
