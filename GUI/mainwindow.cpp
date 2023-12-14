@@ -192,6 +192,12 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
             if (ui->username->text().isEmpty() || noText(ui->username->text()))
                 ui->emptyUsername->setVisible(true);
             else
+                ui->emptyUsername->setVisible(false);
+            if (ui->password->text().isEmpty())
+                ui->emptyPassword->setVisible(true);
+            else
+                ui->emptyPassword->setVisible(false);
+            if (!(ui->username->text().isEmpty() || noText(ui->username->text())) && !ui->password->text().isEmpty())
             {
                 if (reg)
                 {
@@ -206,11 +212,10 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
                     gameState = 2;
                     setVisibilities(gameState);
                     update();
-                    ui->username->clear();
                 }
             }
         }
-        if (gameState == 4)
+        if (gameState == 3 || gameState == 4)
             if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
             {
                 QString userGuess = ui->username->text() + ": " + ui->guess->text();
@@ -292,10 +297,13 @@ void MainWindow::setVisibilities(int state)
         ui->guess->setVisible(false);
         ui->guessList->setVisible(false);
         ui->emptyUsername->setVisible(false);
+        ui->emptyPassword->setVisible(false);
         ui->clearButton->setVisible(false);
         ui->undoButton->setVisible(false);
         ui->usernameLabel->setVisible(false);
         ui->username->setVisible(false);
+        ui->passwordLabel->setVisible(false);
+        ui->password->setVisible(false);
         ui->createButton->setVisible(false);
         ui->joinButton->setVisible(false);
         ui->loginButton->setVisible(true);
@@ -330,6 +338,8 @@ void MainWindow::setVisibilities(int state)
         ui->registerButton->setVisible(false);
         ui->usernameLabel->setVisible(true);
         ui->username->setVisible(true);
+        ui->passwordLabel->setVisible(true);
+        ui->password->setVisible(true);
         break;
     }
     case 2:
@@ -360,6 +370,8 @@ void MainWindow::setVisibilities(int state)
         ui->registerButton->setVisible(false);
         ui->usernameLabel->setVisible(false);
         ui->username->setVisible(false);
+        ui->passwordLabel->setVisible(false);
+        ui->password->setVisible(false);
         ui->createButton->setVisible(true);
         ui->joinButton->setVisible(true);
         break;
