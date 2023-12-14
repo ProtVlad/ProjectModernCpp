@@ -37,18 +37,18 @@ void MainWindow::mousePressEvent(QMouseEvent* e)
 {
     if (gameState == 4)
     {
-        if (e->button() == Qt::LeftButton && e->pos().x() > xpos - 15 && e->pos().x() < xpos + 30 * (colors.size() + 1) - 15 && e->pos().y() > ypos - 15 && e->pos().y() < ypos + 15)
+        if (e->button() == Qt::LeftButton && e->pos().x() > xpos && e->pos().x() < xpos + 30 * (colors.size() + 1) && e->pos().y() > ypos && e->pos().y() < ypos + 30)
         {
-            if ((e->pos().x() - xpos + 15) / 30 == colors.size())
+            if ((e->pos().x() - xpos) / 30 == colors.size())
                 surprise = true;
             else
             {
-                color = colors[(e->pos().x() - xpos + 15) / 30];
+                color = colors[(e->pos().x() - xpos) / 30];
                 surprise = false;
             }
         }
-        if (e->button() == Qt::LeftButton && e->pos().x() > xpos - 15 && e->pos().x() < xpos + 30 * (widths.size()) - 15 && e->pos().y() > ypos + 15 && e->pos().y() < ypos + 45)
-            size = widths[(e->pos().x() - xpos + 15) / 30];
+        if (e->button() == Qt::LeftButton && e->pos().x() > xpos && e->pos().x() < xpos + 30 * (widths.size()) && e->pos().y() > ypos + 30 && e->pos().y() < ypos + 60)
+            size = widths[(e->pos().x() - xpos) / 30];
         if (e->button() == Qt::LeftButton && e->pos().x() > 100 && e->pos().x() < 900 && e->pos().y() > 100 && e->pos().y() < 500)
         {
             leftButton = true;
@@ -103,37 +103,35 @@ void MainWindow::paintEvent(QPaintEvent* e)
 {
     QPainter p(this);
     QPen pen;
+    QBrush brush;
     if (gameState == 4)
     {
         for (int i = 0; i < colors.size(); i++)
         {
-            QRect r(xpos - 15, ypos - 15, 30, 30);
+            QRect r(xpos, ypos, 30, 30);
             pen.setWidth(1);
             pen.setColor({ 0,0,0 });
-            p.setBrush(Qt::white);
+            brush.setColor(colors[i]);
+            brush.setStyle(Qt::SolidPattern);
+            p.setBrush(brush);
             p.setPen(pen);
             p.drawRect(r);
-            pen.setColor(colors[i]);
-            pen.setWidth(29);
-            p.setPen(pen);
-            p.drawPoint(QPoint{ xpos,ypos });
             if (i < widths.size())
             {
-                QRect r(xpos - 15, ypos + 15, 30, 30);
+                QRect r(xpos, ypos + 30, 30, 30);
                 pen.setWidth(1);
                 pen.setColor({ 0,0,0 });
                 p.setBrush(Qt::white);
                 p.setPen(pen);
                 p.drawRect(r);
-                r = { xpos - widths[i] / 2, ypos + 30 - widths[i] / 2, widths[i], widths[i] };
-                pen.setWidth(widths[i]);
+                r = { xpos + 15 - widths[i] / 2, ypos + 45 - widths[i] / 2, widths[i], widths[i] };
                 p.setBrush(Qt::black);
                 p.setPen(pen);
                 p.drawEllipse(r);
             }
             xpos += 30;
         }
-        QRect r(xpos - 15, ypos - 15, 30, 30);
+        QRect r(xpos, ypos, 30, 30);
         pen.setWidth(1);
         pen.setColor({ 0,0,0 });
         p.setBrush(Qt::white);
@@ -205,6 +203,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
                     setVisibilities(gameState);
                     update();
                     ui->username->clear();
+                    ui->password->clear();
                     reg = false;
                 }
                 else
@@ -306,6 +305,8 @@ void MainWindow::setVisibilities(int state)
         ui->password->setVisible(false);
         ui->createButton->setVisible(false);
         ui->joinButton->setVisible(false);
+        ui->signOutButton->setVisible(false);
+        ui->backButton->setVisible(false);
         ui->loginButton->setVisible(true);
         ui->registerButton->setVisible(true);
         break;
@@ -336,6 +337,8 @@ void MainWindow::setVisibilities(int state)
         ui->undoButton->setVisible(false);
         ui->loginButton->setVisible(false);
         ui->registerButton->setVisible(false);
+        ui->signOutButton->setVisible(false);
+        ui->backButton->setVisible(true);
         ui->usernameLabel->setVisible(true);
         ui->username->setVisible(true);
         ui->passwordLabel->setVisible(true);
@@ -372,6 +375,8 @@ void MainWindow::setVisibilities(int state)
         ui->username->setVisible(false);
         ui->passwordLabel->setVisible(false);
         ui->password->setVisible(false);
+        ui->backButton->setVisible(false);
+        ui->signOutButton->setVisible(true);
         ui->createButton->setVisible(true);
         ui->joinButton->setVisible(true);
         break;
@@ -402,6 +407,7 @@ void MainWindow::setVisibilities(int state)
         ui->emptyUsername->setVisible(false);
         ui->loginButton->setVisible(false);
         ui->registerButton->setVisible(false);
+        ui->signOutButton->setVisible(false);
         break;
     }
     case 4:
@@ -525,4 +531,22 @@ void MainWindow::on_registerButton_clicked()
     setVisibilities(gameState);
     update();
     reg = true;
+}
+
+void MainWindow::on_signOutButton_clicked()
+{
+    gameState = 0;
+    setVisibilities(gameState);
+    ui->username->clear();
+    ui->password->clear();
+    update();
+}
+
+void MainWindow::on_backButton_clicked()
+{
+    gameState = 0;
+    setVisibilities(gameState);
+    ui->username->clear();
+    ui->password->clear();
+    update();
 }

@@ -34,6 +34,8 @@ private slots:
     void on_undoButton_clicked();
     void on_loginButton_clicked();
     void on_registerButton_clicked();
+    void on_signOutButton_clicked();
+    void on_backButton_clicked();
 
 private:
     Ui::MainWindow* ui;
