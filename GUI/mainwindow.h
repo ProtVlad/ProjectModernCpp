@@ -18,13 +18,13 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
-    virtual void mousePressEvent(QMouseEvent *e);
-    virtual void mouseReleaseEvent(QMouseEvent *e);
-    virtual void mouseMoveEvent(QMouseEvent *e);
-    virtual void paintEvent(QPaintEvent *e);
-    virtual void keyPressEvent(QKeyEvent *e);
+    virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void paintEvent(QPaintEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e);
 
 private slots:
     void on_startButton_clicked();
@@ -32,11 +32,13 @@ private slots:
     void on_joinButton_clicked();
     void on_clearButton_clicked();
     void on_undoButton_clicked();
+    void on_loginButton_clicked();
+    void on_registerButton_clicked();
 
 private:
-    Ui::MainWindow *ui;
-    std::vector<std::tuple<QPoint,QColor,int,bool>> points;
-    std::stack<std::vector<std::tuple<QPoint,QColor,int,bool>>> previousDrawings;
+    Ui::MainWindow* ui;
+    std::vector<std::tuple<QPoint, QColor, int, bool>> points;
+    std::stack<std::vector<std::tuple<QPoint, QColor, int, bool>>> previousDrawings;
     bool leftButton;
     QColor color;
     int size;
@@ -50,10 +52,11 @@ private:
     std::stack<int> actionHistory;
     std::vector<QPoint> borders;
     int gameState;
+    bool reg;
     QLabel* bigLogo;
     QLabel* logo;
 private:
-    void colorChange(QMouseEvent *e);
+    void colorChange(QMouseEvent* e);
     bool noText(QString guess);
     void setVisibilities(int state);
     void clear();
