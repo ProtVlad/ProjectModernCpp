@@ -18,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
     , gameState(0)
 {
     bigLogo = new QLabel(this);
-    bigLogo->setPixmap(QPixmap("C://Users//Stefan//Downloads//logoMareTTP-removebg-preview (1) (1).png"));
+    bigLogo->setPixmap(QPixmap("images//big_logo.png"));
     logo = new QLabel(this);
-    logo->setPixmap(QPixmap("C://Users//Stefan//Desktop//SEM1//MC//project//GUI//images//logoTTP.png"));
+    logo->setPixmap(QPixmap("images//logoTTP.png"));
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
     setFocusPolicy(Qt::StrongFocus);
@@ -245,7 +245,7 @@ void MainWindow::setVisibilities(int state)
     switch (state) {
     case 0:
     {
-        setStyleSheet("QMainWindow {background-image: url(C://Users//Stefan//Desktop//SEM1//MC//project//GUI//images//background.png)}");
+        setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
         bigLogo->setGeometry(700, 200, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
@@ -271,7 +271,6 @@ void MainWindow::setVisibilities(int state)
     }
     case 1:
     {
-        setStyleSheet("QMainWindow {background-image: url(C://Users//Stefan//Desktop//SEM1//MC//project//GUI//images//background.png)}");
         bigLogo->setGeometry(450, 350, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
