@@ -20,6 +20,21 @@ AddChoosenWord::AddChoosenWord(Storage& storage)
 {
 }
 
+crow::response AddChoosenWord::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto productIdIter = bodyArgs.find("word");
+	auto quantityIter = bodyArgs.find("price");
+	if (productIdIter != end && quantityIter != end)
+	{
+		Words sbrow;
+		sbrow.word = std::stoi(productIdIter->second);
+		sbrow.price = std::stoi(quantityIter->second);
+		m_db.insert(sbrow);
+	}
+	return crow::response(201);
+}
 
 
 
