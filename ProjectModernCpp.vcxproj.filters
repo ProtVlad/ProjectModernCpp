@@ -39,6 +39,15 @@
     <ClCompile Include="AnswerChat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utils.cppm">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Words.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -60,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AnswerChat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Words.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
