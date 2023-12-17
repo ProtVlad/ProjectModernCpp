@@ -40,6 +40,18 @@ int main()
 		return crow::json::wvalue{ wordsJson };
 		});
 
+	CROW_ROUTE(app, "/addProduct/<int>")([&db]
+	(const crow::request& request, int wordId) {
+			char* quantityChar = request.url_params.get("quantity");
+			int quantity = std::stoi(quantityChar);
+			ChoosenWords row;
+			row.word = wordId;
+			row.price = quantity;
+			db.insert(row);
+			return crow::response(200);
+		});
+
+
 	app.port(13034).multithreaded().run();
 	return 0;
 }
