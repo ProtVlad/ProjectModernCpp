@@ -2,23 +2,24 @@
 #include "Game.h"
 #include "Player.h"
 #include "Settings.h"
+#include "Words.h"
 
+#include <filesystem>
+#include <iostream>
+#include <memory>
 #include <crow.h>
-#include <libpq-fe.h>
+#include <sqlite_orm/sqlite_orm.h>
+namespace sql = sqlite_orm;
+
 
 int main()
 {
-
-    PGconn* conn = PQconnectdb("host=localhost user=postgres password=1q2w3e dbname=romanian_words");
-
-    if (PQstatus(conn) == CONNECTION_OK) {
-        std::cout << "Conectat la baza de date PostgreSQL!\n";
-     //ag=daugare interogari
-        PQfinish(conn);
-    }
-    else {
-        std::cerr << "Eroare de conectare la baza de date PostgreSQL: " << PQerrorMessage(conn) << "\n";
-    }
+	Storage db = createStorage("word.sqlite");
+	db.sync_schema();
+	auto initialWordsCount = db.count<Words>();
+	if (initialWordsCount == 0)
+		populateListWords(db);
+	//std::cout << db.count<Words>();
 
 	crow::SimpleApp app;
 	CROW_ROUTE(app, "/")([]() {
