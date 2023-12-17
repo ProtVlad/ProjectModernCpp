@@ -26,9 +26,20 @@ int main()
 		return "This is the path";
 		});
 
-	CROW_ROUTE(app, "/products")([]() {
-		return "Test server";
+	CROW_ROUTE(app, "/products")([&db]() {
+		std::vector<crow::json::wvalue>wordsJson;
+		for (const auto& word : db.iterate<Words>())
+		{
+			crow::json::wvalue pJson{
+				{"id",word.id},
+				{"name",word.word},
+				{"price",word.price}
+			};
+			wordsJson.push_back(pJson);
+		}
+		return crow::json::wvalue{ wordsJson };
 		});
+
 	app.port(13034).multithreaded().run();
 	return 0;
 }
