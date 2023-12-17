@@ -550,3 +550,15 @@ void MainWindow::on_backButton_clicked()
     ui->password->clear();
     update();
 }
+
+void MainWindow::on_password_textChanged()
+{
+    if (password.size() < ui->password->text().size())
+        password = password + ui->password->text()[ui->password->text().size() - 1];
+    else
+        password.resize(ui->password->text().size());
+    QString stars;
+    for (int index = 0; index < password.size(); index++)
+        stars = stars + '*';
+    ui->password->setText(stars);
+}

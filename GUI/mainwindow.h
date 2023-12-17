@@ -36,6 +36,7 @@ private slots:
     void on_registerButton_clicked();
     void on_signOutButton_clicked();
     void on_backButton_clicked();
+    void on_password_textChanged();
 
 private:
     Ui::MainWindow* ui;
@@ -57,6 +58,7 @@ private:
     bool reg;
     QLabel* bigLogo;
     QLabel* logo;
+    QString password;
 private:
     void colorChange(QMouseEvent* e);
     bool noText(QString guess);
