@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget* parent)
     , colors({ {160,160,164},{255,0,0},{0,255,0},{0,0,255},{255,128,0},{255,128,192},{255,255,0},{185,122,87},{255,255,255},{0,0,0} })
     , widths({ 3, 5,10, 15 })
     , borders({ {100,100}, {100, 500}, {900, 100}, {900, 500} })
-    , gameState(0)
+    , gameState(ConvertStringToGameState("MainMenu"))
     , reg(false)
 {
     bigLogo = new QLabel(this);
@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
     ui->guessList->setFocusPolicy(Qt::NoFocus);
     setFocusPolicy(Qt::StrongFocus);
-    setVisibilities(0);
+    setVisibilities(ConvertStringToGameState("MainMenu"));
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent* e)
 {
-    if (gameState == 4)
+    if (gameState == ConvertStringToGameState("InGame"))
     {
         if (e->button() == Qt::LeftButton && e->pos().x() > xpos && e->pos().x() < xpos + 30 * (colors.size() + 1) && e->pos().y() > ypos && e->pos().y() < ypos + 30)
         {
@@ -67,7 +67,7 @@ void MainWindow::mousePressEvent(QMouseEvent* e)
 
 void MainWindow::mouseReleaseEvent(QMouseEvent* e)
 {
-    if (gameState == 4)
+    if (gameState == ConvertStringToGameState("InGame"))
     {
         if (leftButton)
         {
@@ -80,7 +80,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent* e)
 
 void MainWindow::mouseMoveEvent(QMouseEvent* e)
 {
-    if (gameState == 4)
+    if (gameState == ConvertStringToGameState("InGame"))
         if (leftButton)
         {
             if (e->pos().x() > 100 && e->pos().x() < 900 && e->pos().y() > 100 && e->pos().y() < 500)
@@ -104,7 +104,7 @@ void MainWindow::paintEvent(QPaintEvent* e)
     QPainter p(this);
     QPen pen;
     QBrush brush;
-    if (gameState == 4)
+    if (gameState == ConvertStringToGameState("InGame"))
     {
         for (int i = 0; i < colors.size(); i++)
         {
@@ -185,7 +185,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 {
     if (e->key() == Qt::Key_Return)
     {
-        if (gameState == 1)
+        if (gameState == ConvertStringToGameState("LoginOrRegister"))
         {
             if (ui->username->text().isEmpty() || noText(ui->username->text()))
                 ui->emptyUsername->setVisible(true);
@@ -199,7 +199,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
             {
                 if (reg)
                 {
-                    gameState = 0;
+                    gameState = ConvertStringToGameState("MainMenu");
                     setVisibilities(gameState);
                     update();
                     ui->username->clear();
@@ -208,13 +208,13 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    gameState = 2;
+                    gameState = ConvertStringToGameState("LoggedIn");
                     setVisibilities(gameState);
                     update();
                 }
             }
         }
-        if (gameState == 3 || gameState == 4)
+        if (gameState == ConvertStringToGameState("Settings") || gameState == ConvertStringToGameState("InGame"))
             if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
             {
                 QString userGuess = ui->username->text() + ": " + ui->guess->text();
@@ -271,12 +271,11 @@ bool MainWindow::noText(QString text)
     return isEmpty;
 }
 
-void MainWindow::setVisibilities(int state)
+void MainWindow::setVisibilities(GameState state)
 {
-    switch (state) {
-    case 0:
+    if (state==ConvertStringToGameState("MainMenu"))
     {
-        setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
+        setStyleSheet("QMainWindow {background: url(images//background.png)}");
         bigLogo->setGeometry(700, 200, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
@@ -309,11 +308,10 @@ void MainWindow::setVisibilities(int state)
         ui->backButton->setVisible(false);
         ui->loginButton->setVisible(true);
         ui->registerButton->setVisible(true);
-        break;
     }
-    case 1:
+    if (state == ConvertStringToGameState("LoginOrRegister"))
     {
-        setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
+        //setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
         bigLogo->setGeometry(700, 200, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
@@ -343,11 +341,10 @@ void MainWindow::setVisibilities(int state)
         ui->username->setVisible(true);
         ui->passwordLabel->setVisible(true);
         ui->password->setVisible(true);
-        break;
     }
-    case 2:
+    if (state == ConvertStringToGameState("LoggedIn"))
     {
-        setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
+        //setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
         bigLogo->setGeometry(700, 200, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
@@ -379,9 +376,8 @@ void MainWindow::setVisibilities(int state)
         ui->signOutButton->setVisible(true);
         ui->createButton->setVisible(true);
         ui->joinButton->setVisible(true);
-        break;
     }
-    case 3:
+    if (state == ConvertStringToGameState("Settings"))
     {
         bigLogo->setGeometry(450, 350, 400, 300);
         bigLogo->setScaledContents(true);
@@ -408,9 +404,8 @@ void MainWindow::setVisibilities(int state)
         ui->loginButton->setVisible(false);
         ui->registerButton->setVisible(false);
         ui->signOutButton->setVisible(false);
-        break;
     }
-    case 4:
+    if (state == ConvertStringToGameState("InGame"))
     {
         bigLogo->setVisible(false);
         logo->setGeometry(5, 5, 100, 98);
@@ -432,10 +427,6 @@ void MainWindow::setVisibilities(int state)
         ui->undoButton->setVisible(true);
         ui->loginButton->setVisible(false);
         ui->registerButton->setVisible(false);
-        break;
-    }
-    default:
-        break;
     }
 
 }
@@ -483,7 +474,7 @@ void MainWindow::on_startButton_clicked()
     if (ui->hintsChoice->currentText() != '-' && ui->noPlayersChoice->currentText() != '-' && ui->noWordsChoice->currentText() != '-' &&
         ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
     {
-        gameState = 4;
+        gameState = ConvertStringToGameState("InGame");
         setVisibilities(gameState);
         update();
     }
@@ -494,7 +485,7 @@ void MainWindow::on_startButton_clicked()
 
 void MainWindow::on_createButton_clicked()
 {
-    gameState = 3;
+    gameState = ConvertStringToGameState("Settings");
     setVisibilities(gameState);
     update();
 }
@@ -502,7 +493,7 @@ void MainWindow::on_createButton_clicked()
 
 void MainWindow::on_joinButton_clicked()
 {
-    gameState = 3;
+    gameState = ConvertStringToGameState("Settings");
     setVisibilities(gameState);
     update();
 }
@@ -520,14 +511,14 @@ void MainWindow::on_undoButton_clicked()
 
 void MainWindow::on_loginButton_clicked()
 {
-    gameState = 1;
+    gameState = ConvertStringToGameState("LoginOrRegister");
     setVisibilities(gameState);
     update();
 }
 
 void MainWindow::on_registerButton_clicked()
 {
-    gameState = 1;
+    gameState = ConvertStringToGameState("LoginOrRegister");
     setVisibilities(gameState);
     update();
     reg = true;
@@ -535,7 +526,7 @@ void MainWindow::on_registerButton_clicked()
 
 void MainWindow::on_signOutButton_clicked()
 {
-    gameState = 0;
+    gameState = ConvertStringToGameState("MainMenu");
     setVisibilities(gameState);
     ui->username->clear();
     ui->password->clear();
@@ -544,7 +535,7 @@ void MainWindow::on_signOutButton_clicked()
 
 void MainWindow::on_backButton_clicked()
 {
-    gameState = 0;
+    gameState = ConvertStringToGameState("MainMenu");
     setVisibilities(gameState);
     ui->username->clear();
     ui->password->clear();

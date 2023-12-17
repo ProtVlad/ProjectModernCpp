@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <vector>
 #include <stack>
+#include "GameState.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -54,7 +55,7 @@ private:
     std::vector<int> widths;
     std::stack<int> actionHistory;
     std::vector<QPoint> borders;
-    int gameState;
+    GameState gameState;
     bool reg;
     QLabel* bigLogo;
     QLabel* logo;
@@ -62,7 +63,7 @@ private:
 private:
     void colorChange(QMouseEvent* e);
     bool noText(QString guess);
-    void setVisibilities(int state);
+    void setVisibilities(GameState state);
     void clear();
     void undo();
 };
