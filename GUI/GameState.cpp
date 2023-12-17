@@ -8,6 +8,8 @@ GameState ConvertStringToGameState(const std::string& gameState)
 		return GameState::LoginOrRegister;
 	if (gameState == "LoggedIn")
 		return GameState::LoggedIn;
+	if (gameState == "EnterCode")
+		return GameState::EnterCode;
 	if (gameState == "Settings")
 		return GameState::Settings;
 	if (gameState == "InGame")

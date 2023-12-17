@@ -6,6 +6,7 @@ enum class GameState : uint16_t
 	MainMenu,
 	LoginOrRegister,
 	LoggedIn,
+	EnterCode,
 	Settings,
 	InGame
 };

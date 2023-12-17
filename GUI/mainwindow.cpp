@@ -214,6 +214,12 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
                 }
             }
         }
+        if (gameState == ConvertStringToGameState("EnterCode"))
+        {
+            gameState = ConvertStringToGameState("Settings");
+            setVisibilities(gameState);
+            update();
+        }
         if (gameState == ConvertStringToGameState("Settings") || gameState == ConvertStringToGameState("InGame"))
             if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
             {
@@ -306,12 +312,13 @@ void MainWindow::setVisibilities(GameState state)
         ui->joinButton->setVisible(false);
         ui->signOutButton->setVisible(false);
         ui->backButton->setVisible(false);
+        ui->roomCode->setVisible(false);
+        ui->codeLabel->setVisible(false);
         ui->loginButton->setVisible(true);
         ui->registerButton->setVisible(true);
     }
     if (state == ConvertStringToGameState("LoginOrRegister"))
     {
-        //setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
         bigLogo->setGeometry(700, 200, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
@@ -344,7 +351,6 @@ void MainWindow::setVisibilities(GameState state)
     }
     if (state == ConvertStringToGameState("LoggedIn"))
     {
-        //setStyleSheet("QMainWindow {background-image: url(images//background.png)}");
         bigLogo->setGeometry(700, 200, 400, 300);
         bigLogo->setScaledContents(true);
         bigLogo->setVisible(true);
@@ -377,6 +383,43 @@ void MainWindow::setVisibilities(GameState state)
         ui->createButton->setVisible(true);
         ui->joinButton->setVisible(true);
     }
+    if (state == ConvertStringToGameState("EnterCode"))
+    {
+        bigLogo->setGeometry(700, 200, 400, 300);
+        bigLogo->setScaledContents(true);
+        bigLogo->setVisible(true);
+        logo->setVisible(false);
+        ui->hintsChoice->setVisible(false);
+        ui->hintsLabel->setVisible(false);
+        ui->noPlayersChoice->setVisible(false);
+        ui->noPlayersLabel->setVisible(false);
+        ui->noWordsChoice->setVisible(false);
+        ui->noWordsLabel->setVisible(false);
+        ui->languageChoice->setVisible(false);
+        ui->languageLabel->setVisible(false);
+        ui->timeChoice->setVisible(false);
+        ui->timeLabel->setVisible(false);
+        ui->startButton->setVisible(false);
+        ui->errorLabel->setVisible(false);
+        ui->guess->setVisible(false);
+        ui->guessList->setVisible(false);
+        ui->emptyUsername->setVisible(false);
+        ui->emptyPassword->setVisible(false);
+        ui->clearButton->setVisible(false);
+        ui->undoButton->setVisible(false);
+        ui->usernameLabel->setVisible(false);
+        ui->username->setVisible(false);
+        ui->passwordLabel->setVisible(false);
+        ui->password->setVisible(false);
+        ui->createButton->setVisible(false);
+        ui->joinButton->setVisible(false);
+        ui->signOutButton->setVisible(false);
+        ui->backButton->setVisible(false);
+        ui->loginButton->setVisible(false);
+        ui->registerButton->setVisible(false);
+        ui->roomCode->setVisible(true);
+        ui->codeLabel->setVisible(true);
+    }
     if (state == ConvertStringToGameState("Settings"))
     {
         bigLogo->setGeometry(450, 350, 400, 300);
@@ -404,6 +447,8 @@ void MainWindow::setVisibilities(GameState state)
         ui->loginButton->setVisible(false);
         ui->registerButton->setVisible(false);
         ui->signOutButton->setVisible(false);
+        ui->roomCode->setVisible(false);
+        ui->codeLabel->setVisible(false);
     }
     if (state == ConvertStringToGameState("InGame"))
     {
@@ -493,7 +538,7 @@ void MainWindow::on_createButton_clicked()
 
 void MainWindow::on_joinButton_clicked()
 {
-    gameState = ConvertStringToGameState("Settings");
+    gameState = ConvertStringToGameState("EnterCode");
     setVisibilities(gameState);
     update();
 }
