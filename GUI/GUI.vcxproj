@@ -186,6 +186,9 @@
       <QtUicDir>$(ProjectDir)</QtUicDir>
       <QtUicFileName>ui_%(Filename).h</QtUicFileName>
     </QtUic>
+    <PreBuildEvent>
+      <Command>del ui_mainwindow.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameState.cpp" />
