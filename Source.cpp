@@ -51,6 +51,38 @@ int main()
 			return crow::response(200);
 		});
 
+	CROW_ROUTE(app, "/users")([&db]() {
+		std::vector<crow::json::wvalue>usersJson;
+		for (const auto& user : db.iterate<User>())
+		{
+			crow::json::wvalue uJson{
+				{"id",user.id},
+				{"username",user.username},
+				{"password",user.password}
+			};
+			usersJson.push_back(uJson);
+		}
+		return crow::json::wvalue{ usersJson };
+		});
+
+	CROW_ROUTE(app, "/addUser/<int>")([&db](const crow::request& request, int userId = -1)
+		{
+
+			char* username = request.url_params.get("username");
+			char* password = request.url_params.get("password");
+
+			User user;
+			user.id = userId;
+			user.username = username;
+			user.password = password;
+			db.insert(user);
+
+			return crow::response(200);
+		});
+
+	auto& addUserPut = CROW_ROUTE(app, "/addUser")
+		.methods(crow::HTTPMethod::PUT);
+	addUserPut(AddUserHandler(db));
 
 	app.port(13034).multithreaded().run();
 	return 0;

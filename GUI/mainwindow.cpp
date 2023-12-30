@@ -199,12 +199,15 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
             {
                 if (reg)
                 {
-                    gameState = ConvertStringToGameState("MainMenu");
-                    setVisibilities(gameState);
-                    update();
+                    auto response = cpr::Put(
+                        cpr::Url{ "http://localhost:13034/addUser" },
+                        cpr::Payload{
+                            { "username", ui->username->text().toStdString()},
+                            { "password", password.toStdString()}
+                        }
+                    );
                     ui->username->clear();
                     ui->password->clear();
-                    reg = false;
                 }
                 else
                 {
@@ -559,6 +562,7 @@ void MainWindow::on_loginButton_clicked()
     gameState = ConvertStringToGameState("LoginOrRegister");
     setVisibilities(gameState);
     update();
+    reg = false;
 }
 
 void MainWindow::on_registerButton_clicked()

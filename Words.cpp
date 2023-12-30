@@ -10,7 +10,7 @@ void populateListWords(Storage& storage)
 		Words{-1,"clovn",150},
 		Words{-1,"cuvant",50},
 		Words{-1,"limba",50},
-		Words{-1,"calcultator",150},
+		Words{-1,"calculator",150},
 		Words{-1,"Traian Basescu",50},
 		Words{-1,"caseta",100},
 		Words{-1,"buton",150},
@@ -258,6 +258,11 @@ AddChoosenWord::AddChoosenWord(Storage& storage)
 {
 }
 
+AddUserHandler::AddUserHandler(Storage& storage)
+	: m_db{ storage }
+{
+}
+
 crow::response AddChoosenWord::operator()(const crow::request& req) const
 {
 	auto bodyArgs = parseUrlArgs(req.body);
@@ -274,9 +279,19 @@ crow::response AddChoosenWord::operator()(const crow::request& req) const
 	return crow::response(201);
 }
 
-
-
-
-
-
-
+crow::response AddUserHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto usernameIter = bodyArgs.find("username");
+	auto passwordIter = bodyArgs.find("password");
+	if (usernameIter != end && passwordIter != end)
+	{
+		User user;
+		user.id = -1;
+		user.username = usernameIter->second;
+		user.password = passwordIter->second;
+		m_db.insert(user);
+	}
+	return crow::response(201);
+}

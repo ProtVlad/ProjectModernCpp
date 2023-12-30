@@ -25,6 +25,13 @@ struct ChoosenWords
 	int price;
 };
 
+struct User
+{
+	int id;
+	std::string username;
+	std::string password;
+};
+
 
 inline auto createStorage(const std::string& filename)
 {
@@ -41,6 +48,12 @@ inline auto createStorage(const std::string& filename)
 			sql::make_column("id", &ChoosenWords::id, sql::primary_key().autoincrement()),
 			sql::make_column("word", &ChoosenWords::word),
 			sql::make_column("price", &ChoosenWords::price)
+		),
+		sql::make_table(
+			"Users",
+			sql::make_column("id", &User::id, sql::primary_key().autoincrement()),
+			sql::make_column("username", &User::username, sql::unique()),
+			sql::make_column("password", &User::password)
 		)
 	);
 }
@@ -54,6 +67,16 @@ void populateListWords(Storage& storage);
 class AddChoosenWord {
 public:
 	AddChoosenWord(Storage& storage);
+
+	crow::response operator() (const crow::request& req) const;
+
+private:
+	Storage& m_db;
+};
+
+class AddUserHandler {
+public:
+	AddUserHandler(Storage& storage);
 
 	crow::response operator() (const crow::request& req) const;
 

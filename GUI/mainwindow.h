@@ -9,6 +9,8 @@
 #include <vector>
 #include <stack>
 #include "GameState.h"
+#include <cpr/cpr.h>
+#include <crow.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
