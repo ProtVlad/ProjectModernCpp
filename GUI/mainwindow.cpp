@@ -211,8 +211,32 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    gameState = ConvertStringToGameState("LoggedIn");
-                    setVisibilities(gameState);
+                    auto response = cpr::Get(cpr::Url{ "http://localhost:13034/users" });
+                    auto users = crow::json::load(response.text);
+                    bool userExists = false;
+                    for (const auto& user : users)
+                        if (user["username"] == ui->username->text().toStdString())
+                        {
+                            userExists = true;
+                            if (user["password"] == password.toStdString())
+                            {
+                                gameState = ConvertStringToGameState("LoggedIn");
+                                setVisibilities(gameState);
+                                ui->username->clear();
+                                ui->password->clear();
+                                userID = user["id"].i();
+                            }
+                            else
+                                ui->password->clear();
+                            //parola incorecta
+                            break;
+                        }
+                    if (!userExists)
+                    {
+                        ui->username->clear();
+                        ui->password->clear();
+                        //user-ul nu este inregistrat
+                    }
                     update();
                 }
             }

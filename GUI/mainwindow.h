@@ -62,6 +62,7 @@ private:
     QLabel* bigLogo;
     QLabel* logo;
     QString password;
+    int userID;
 private:
     void colorChange(QMouseEvent* e);
     bool noText(QString guess);
