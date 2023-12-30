@@ -7,7 +7,7 @@ enum class GameState : uint16_t
 	LoginOrRegister,
 	LoggedIn,
 	EnterCode,
-	Settings,
+	MeetingRoom,
 	InGame
 };
 GameState ConvertStringToGameState(const std::string& gameState);

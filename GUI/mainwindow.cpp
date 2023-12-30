@@ -273,11 +273,11 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
         }
         if (gameState == ConvertStringToGameState("EnterCode"))
         {
-            gameState = ConvertStringToGameState("Settings");
+            gameState = ConvertStringToGameState("MeetingRoom");
             setVisibilities(gameState);
             update();
         }
-        if (gameState == ConvertStringToGameState("Settings") || gameState == ConvertStringToGameState("InGame"))
+        if (gameState == ConvertStringToGameState("MeetingRoom") || gameState == ConvertStringToGameState("InGame"))
             if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
             {
                 QString userGuess = ui->username->text() + ": " + ui->guess->text();
@@ -382,116 +382,39 @@ void MainWindow::setVisibilities(GameState state)
     }
     if (state == ConvertStringToGameState("LoginOrRegister"))
     {
-        bigLogo->setGeometry(700, 200, 400, 300);
-        bigLogo->setScaledContents(true);
-        bigLogo->setVisible(true);
-        logo->setVisible(false);
-        ui->hintsChoice->setVisible(false);
-        ui->hintsLabel->setVisible(false);
-        ui->noPlayersChoice->setVisible(false);
-        ui->noPlayersLabel->setVisible(false);
-        ui->noWordsChoice->setVisible(false);
-        ui->noWordsLabel->setVisible(false);
-        ui->languageChoice->setVisible(false);
-        ui->languageLabel->setVisible(false);
-        ui->timeChoice->setVisible(false);
-        ui->timeLabel->setVisible(false);
-        ui->startButton->setVisible(false);
-        ui->errorLabel->setVisible(false);
-        ui->guess->setVisible(false);
-        ui->guessList->setVisible(false);
-        ui->emptyUsername->setVisible(false);
-        ui->clearButton->setVisible(false);
-        ui->undoButton->setVisible(false);
-        ui->loginButton->setVisible(false);
-        ui->registerButton->setVisible(false);
-        ui->signOutButton->setVisible(false);
         ui->backButton->setVisible(true);
         ui->usernameLabel->setVisible(true);
         ui->username->setVisible(true);
         ui->passwordLabel->setVisible(true);
         ui->password->setVisible(true);
+        ui->loginButton->setVisible(false);
+        ui->registerButton->setVisible(false);
     }
     if (state == ConvertStringToGameState("LoggedIn"))
     {
-        bigLogo->setGeometry(700, 200, 400, 300);
-        bigLogo->setScaledContents(true);
-        bigLogo->setVisible(true);
-        logo->setVisible(false);
-        ui->hintsChoice->setVisible(false);
-        ui->hintsLabel->setVisible(false);
-        ui->noPlayersChoice->setVisible(false);
-        ui->noPlayersLabel->setVisible(false);
-        ui->noWordsChoice->setVisible(false);
-        ui->noWordsLabel->setVisible(false);
-        ui->languageChoice->setVisible(false);
-        ui->languageLabel->setVisible(false);
-        ui->timeChoice->setVisible(false);
-        ui->timeLabel->setVisible(false);
-        ui->startButton->setVisible(false);
-        ui->errorLabel->setVisible(false);
-        ui->guess->setVisible(false);
-        ui->guessList->setVisible(false);
-        ui->emptyUsername->setVisible(false);
-        ui->clearButton->setVisible(false);
-        ui->undoButton->setVisible(false);
-        ui->loginButton->setVisible(false);
-        ui->registerButton->setVisible(false);
+        ui->signOutButton->setVisible(true);
+        ui->createButton->setVisible(true);
+        ui->joinButton->setVisible(true);
         ui->usernameLabel->setVisible(false);
         ui->username->setVisible(false);
         ui->passwordLabel->setVisible(false);
         ui->password->setVisible(false);
         ui->backButton->setVisible(false);
-        ui->signOutButton->setVisible(true);
-        ui->createButton->setVisible(true);
-        ui->joinButton->setVisible(true);
         ui->loginText->setVisible(false);
         ui->wrongPassowrd->setVisible(false);
         ui->notRegistered->setVisible(false);
     }
     if (state == ConvertStringToGameState("EnterCode"))
     {
-        bigLogo->setGeometry(700, 200, 400, 300);
-        bigLogo->setScaledContents(true);
-        bigLogo->setVisible(true);
-        logo->setVisible(false);
-        ui->hintsChoice->setVisible(false);
-        ui->hintsLabel->setVisible(false);
-        ui->noPlayersChoice->setVisible(false);
-        ui->noPlayersLabel->setVisible(false);
-        ui->noWordsChoice->setVisible(false);
-        ui->noWordsLabel->setVisible(false);
-        ui->languageChoice->setVisible(false);
-        ui->languageLabel->setVisible(false);
-        ui->timeChoice->setVisible(false);
-        ui->timeLabel->setVisible(false);
-        ui->startButton->setVisible(false);
-        ui->errorLabel->setVisible(false);
-        ui->guess->setVisible(false);
-        ui->guessList->setVisible(false);
-        ui->emptyUsername->setVisible(false);
-        ui->emptyPassword->setVisible(false);
-        ui->clearButton->setVisible(false);
-        ui->undoButton->setVisible(false);
-        ui->usernameLabel->setVisible(false);
-        ui->username->setVisible(false);
-        ui->passwordLabel->setVisible(false);
-        ui->password->setVisible(false);
+        ui->roomCode->setVisible(true);
+        ui->codeLabel->setVisible(true);
         ui->createButton->setVisible(false);
         ui->joinButton->setVisible(false);
         ui->signOutButton->setVisible(false);
         ui->backButton->setVisible(false);
-        ui->loginButton->setVisible(false);
-        ui->registerButton->setVisible(false);
-        ui->roomCode->setVisible(true);
-        ui->codeLabel->setVisible(true);
     }
-    if (state == ConvertStringToGameState("Settings"))
+    if (state == ConvertStringToGameState("MeetingRoom"))
     {
-        bigLogo->setGeometry(450, 350, 400, 300);
-        bigLogo->setScaledContents(true);
-        bigLogo->setVisible(true);
-        logo->setVisible(false);
         ui->hintsChoice->setVisible(true);
         ui->hintsLabel->setVisible(true);
         ui->noPlayersChoice->setVisible(true);
@@ -505,23 +428,20 @@ void MainWindow::setVisibilities(GameState state)
         ui->startButton->setVisible(true);
         ui->guess->setVisible(true);
         ui->guessList->setVisible(true);
-        ui->usernameLabel->setVisible(false);
-        ui->username->setVisible(false);
         ui->createButton->setVisible(false);
         ui->joinButton->setVisible(false);
-        ui->emptyUsername->setVisible(false);
-        ui->loginButton->setVisible(false);
-        ui->registerButton->setVisible(false);
         ui->signOutButton->setVisible(false);
         ui->roomCode->setVisible(false);
         ui->codeLabel->setVisible(false);
     }
     if (state == ConvertStringToGameState("InGame"))
     {
-        bigLogo->setVisible(false);
         logo->setGeometry(5, 5, 100, 98);
         logo->setScaledContents(true);
         logo->setVisible(true);
+        ui->clearButton->setVisible(true);
+        ui->undoButton->setVisible(true);
+        bigLogo->setVisible(false);
         ui->hintsChoice->setVisible(false);
         ui->hintsLabel->setVisible(false);
         ui->noPlayersChoice->setVisible(false);
@@ -534,10 +454,6 @@ void MainWindow::setVisibilities(GameState state)
         ui->timeLabel->setVisible(false);
         ui->startButton->setVisible(false);
         ui->errorLabel->setVisible(false);
-        ui->clearButton->setVisible(true);
-        ui->undoButton->setVisible(true);
-        ui->loginButton->setVisible(false);
-        ui->registerButton->setVisible(false);
     }
 
 }
@@ -596,7 +512,7 @@ void MainWindow::on_startButton_clicked()
 
 void MainWindow::on_createButton_clicked()
 {
-    gameState = ConvertStringToGameState("Settings");
+    gameState = ConvertStringToGameState("MeetingRoom");
     setVisibilities(gameState);
     update();
 }

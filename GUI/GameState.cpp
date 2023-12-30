@@ -10,8 +10,8 @@ GameState ConvertStringToGameState(const std::string& gameState)
 		return GameState::LoggedIn;
 	if (gameState == "EnterCode")
 		return GameState::EnterCode;
-	if (gameState == "Settings")
-		return GameState::Settings;
+	if (gameState == "MeetingRoom")
+		return GameState::MeetingRoom;
 	if (gameState == "InGame")
 		return GameState::InGame;
 	throw std::exception("GameState Invalid");
