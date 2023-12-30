@@ -348,7 +348,153 @@ void populateListWords(Storage& storage)
 		Words{ -1,"scaun",150 },
 		Words{ -1,"vanilie",50 },
 		Words{ -1,"abur",100 },
-		Words{ -1,"cutie",150 }
+		Words{ -1,"cutie",150 },
+		Words{ -1,"pachet",100 },
+		Words{ -1,"curier",150 },
+		Words{ -1,"distribuire",100 },
+		Words{ -1,"frana",100 },
+		Words{ -1,"porc",150 },
+		Words{ -1,"urs panda",150 },
+		Words{ -1,"gaina",50 },
+		Words{ -1,"rana",100 },
+		Words{ -1,"accident",100 },
+		Words{ -1,"laptop",150 },
+		Words{ -1,"stele",150 },
+		Words{ -1,"intuneric",50 },
+		Words{ -1,"noapte",150 },
+		Words{ -1,"rasarit",150 },
+		Words{ -1,"apus",150 },
+		Words{ -1,"nori",150 },
+		Words{ -1,"natura",100 },
+		Words{ -1,"cartela de acces",50 },
+		Words{ -1,"munte",150 },
+		Words{ -1,"deal",100 },
+		Words{ -1,"campie",100 },
+		Words{ -1,"floarea soarelui",150 },
+		Words{ -1,"balama",50 },
+		Words{ -1,"usa",150 },
+		Words{ -1,"diavol",150 },
+		Words{ -1,"flacari",100 },
+		Words{ -1,"rai",50 },
+		Words{ -1,"durere",50 },
+		Words{ -1,"bani",150 },
+		Words{ -1,"card",100 },
+		Words{ -1,"bogat",100 },
+		Words{ -1,"sarac",100 },
+		Words{ -1,"cod de bare",100 },
+		Words{ -1,"patrat",150 },
+		Words{ -1,"cateta",100 },
+		Words{ -1,"eticheta",150 },
+		Words{ -1,"haine",150 },
+		Words{ -1,"dulap",150 },
+		Words{ -1,"alegere",50 },
+		Words{ -1,"maini",150 },
+		Words{ -1,"cot",150 },
+		Words{ -1,"cort",100 },
+		Words{ -1,"foc de tabara",150 },
+		Words{ -1,"ciocolata calda",100 },
+		Words{ -1,"pictura",100 },
+		Words{ -1,"instructiuni",50 },
+		Words{ -1,"mobilier",100 },
+		Words{ -1,"pilota",100 },
+		Words{ -1,"poseta",150 },
+		Words{ -1,"grau",50 },
+		Words{ -1,"orez",100 },
+		Words{ -1,"suflet",50 },
+		Words{ -1,"inima",150 },
+		Words{ -1,"nas",150 },
+		Words{ -1,"ureche",150 },
+		Words{ -1,"termos",100 },
+		Words{ -1,"termometru",150 },
+		Words{ -1,"stranut",50 },
+		Words{ -1,"cirese",150 },
+		Words{ -1,"portocale",150 },
+		Words{ -1,"piele",50 },
+		Words{ -1,"inel",150 },
+		Words{ -1,"observator",50 },
+		Words{ -1,"tastatura",150 },
+		Words{ -1,"punct",150 },
+		Words{ -1,"semnul exclamarii",150 },
+		Words{ -1,"tava",100 },
+		Words{ -1,"piscina",150 },
+		Words{ -1,"cutit",150 },
+		Words{ -1,"furculita",150 },
+		Words{ -1,"lingura",150 },
+		Words{ -1,"lingura de lemn",100 },
+		Words{ -1,"auriu",50 },
+		Words{ -1,"marmura",50 },
+		Words{ -1,"sticla",150 },
+		Words{ -1,"jeleu",50 },
+		Words{ -1,"vizita",50 },
+		Words{ -1,"cuier",100 },
+		Words{ -1,"debara",50 },
+		Words{ -1,"raft",100 },
+		Words{ -1,"tigru",100 },
+		Words{ -1,"centrala",50 },
+		Words{ -1,"trening",100 },
+		Words{ -1,"berbec",50 },
+		Words{ -1,"rac",50 },
+		Words{ -1,"fecioara",50 },
+		Words{ -1,"scorpion",50 },
+		Words{ -1,"varsator",50 },
+		Words{ -1,"primavara",100 },
+		Words{ -1,"toamna",100 },
+		Words{ -1,"iarna",100 },
+		Words{ -1,"vara",100 },
+		Words{ -1,"trafalet",50 },
+		Words{ -1,"pensula",150 },
+		Words{ -1,"acuarele",150 },
+		Words{ -1,"crocodil",50 },
+		Words{ -1,"broasca testoasa",100 },
+		Words{ -1,"horoscop",50 },
+		Words{ -1,"taxi",150 },
+		Words{ -1,"alarma",150 },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	};
 	storage.insert_range(words.begin(), words.end());
 }
