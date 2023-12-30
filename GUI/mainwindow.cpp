@@ -187,37 +187,64 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
     {
         if (gameState == ConvertStringToGameState("LoginOrRegister"))
         {
+            ui->usernameExists->setVisible(false);
             if (ui->username->text().isEmpty() || noText(ui->username->text()))
+            {
                 ui->emptyUsername->setVisible(true);
+                ui->notRegistered->setVisible(false);
+                ui->userRegistered->setVisible(false);
+                ui->wrongPassowrd->setVisible(false);
+            }
             else
                 ui->emptyUsername->setVisible(false);
             if (ui->password->text().isEmpty())
+            {
                 ui->emptyPassword->setVisible(true);
+                ui->userRegistered->setVisible(false);
+                ui->wrongPassowrd->setVisible(false);
+                ui->notRegistered->setVisible(false);
+            }
             else
                 ui->emptyPassword->setVisible(false);
             if (!(ui->username->text().isEmpty() || noText(ui->username->text())) && !ui->password->text().isEmpty())
             {
+                auto response = cpr::Get(cpr::Url{ "http://localhost:13034/users" });
+                auto users = crow::json::load(response.text);
+                bool userExists = false;
                 if (reg)
                 {
-                    auto response = cpr::Put(
+                    for (const auto& user : users)
+                        if (user["username"] == ui->username->text().toStdString())
+                        {
+                            userExists = true;
+                            ui->usernameExists->setVisible(true);
+                            break;
+                        }
+                    auto response2 = cpr::Put(
                         cpr::Url{ "http://localhost:13034/addUser" },
                         cpr::Payload{
                             { "username", ui->username->text().toStdString()},
                             { "password", password.toStdString()}
                         }
                     );
+                    if (!userExists)
+                    {
+                        ui->userRegistered->setVisible(true);
+                    }
+                    else
+                    {
+                        ui->userRegistered->setVisible(false);
+                    }
                     ui->username->clear();
                     ui->password->clear();
                 }
                 else
                 {
-                    auto response = cpr::Get(cpr::Url{ "http://localhost:13034/users" });
-                    auto users = crow::json::load(response.text);
-                    bool userExists = false;
                     for (const auto& user : users)
                         if (user["username"] == ui->username->text().toStdString())
                         {
                             userExists = true;
+                            ui->notRegistered->setVisible(false);
                             if (user["password"] == password.toStdString())
                             {
                                 gameState = ConvertStringToGameState("LoggedIn");
@@ -227,15 +254,18 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
                                 userID = user["id"].i();
                             }
                             else
+                            {
                                 ui->password->clear();
-                            //parola incorecta
+                                ui->wrongPassowrd->setVisible(true);
+                            }
                             break;
                         }
                     if (!userExists)
                     {
                         ui->username->clear();
                         ui->password->clear();
-                        //user-ul nu este inregistrat
+                        ui->wrongPassowrd->setVisible(false);
+                        ui->notRegistered->setVisible(true);
                     }
                     update();
                 }
@@ -343,6 +373,12 @@ void MainWindow::setVisibilities(GameState state)
         ui->codeLabel->setVisible(false);
         ui->loginButton->setVisible(true);
         ui->registerButton->setVisible(true);
+        ui->loginText->setVisible(false);
+        ui->registerText->setVisible(false);
+        ui->usernameExists->setVisible(false);
+        ui->wrongPassowrd->setVisible(false);
+        ui->notRegistered->setVisible(false);
+        ui->userRegistered->setVisible(false);
     }
     if (state == ConvertStringToGameState("LoginOrRegister"))
     {
@@ -409,6 +445,9 @@ void MainWindow::setVisibilities(GameState state)
         ui->signOutButton->setVisible(true);
         ui->createButton->setVisible(true);
         ui->joinButton->setVisible(true);
+        ui->loginText->setVisible(false);
+        ui->wrongPassowrd->setVisible(false);
+        ui->notRegistered->setVisible(false);
     }
     if (state == ConvertStringToGameState("EnterCode"))
     {
@@ -585,6 +624,7 @@ void MainWindow::on_loginButton_clicked()
 {
     gameState = ConvertStringToGameState("LoginOrRegister");
     setVisibilities(gameState);
+    ui->loginText->setVisible(true);
     update();
     reg = false;
 }
@@ -593,6 +633,7 @@ void MainWindow::on_registerButton_clicked()
 {
     gameState = ConvertStringToGameState("LoginOrRegister");
     setVisibilities(gameState);
+    ui->registerText->setVisible(true);
     update();
     reg = true;
 }
