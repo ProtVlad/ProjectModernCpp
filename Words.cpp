@@ -128,7 +128,7 @@ void populateListWords(Storage& storage)
 		Words{ -1,"Klaus Iohannis",50 },
 		Words{ -1,"nume de familie",100 },
 		Words{ -1,"carte de identitate",150 },
-		Words{ -1,"CNP",100 }, 
+		Words{ -1,"CNP",100 },
 		Words{ -1,"veteran",50 },
 		Words{ -1,"tanc",100 },
 		Words{ -1,"castron",100 },
@@ -199,7 +199,7 @@ void populateListWords(Storage& storage)
 		Words{ -1,"fructiera",100 },
 		Words{ -1,"scortisoara",50 },
 		Words{ -1,"piper",150 },
-		Words{ -1,"mucenici",100 }, 
+		Words{ -1,"mucenici",100 },
 		Words{ -1,"pasta de tomate",100 },
 		Words{ -1,"sos de rosii",150 },
 		Words{ -1,"sah",150 },
@@ -449,51 +449,127 @@ void populateListWords(Storage& storage)
 		Words{ -1,"horoscop",50 },
 		Words{ -1,"taxi",150 },
 		Words{ -1,"alarma",150 },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		Words{ -1,"parchet",50 },
+		Words{ -1,"sobolan",50 },
+		Words{ -1,"Cenusareasa",50 },
+		Words{ -1,"lup",100 },
+		Words{ -1,"soparla",100 },
+		Words{ -1,"surub",100 },
+		Words{ -1,"ciocan",150 },
+		Words{ -1,"dragon",50 },
+		Words{ -1,"sarpe",150 },
+		Words{ -1,"maimuta",100 },
+		Words{ -1,"mesaj",100 },
+		Words{ -1,"aplicatie",150 },
+		Words{ -1,"calendar",150 },
+		Words{ -1,"muzica",100 },
+		Words{ -1,"farfurie",150 },
+		Words{ -1,"taraba",100 },
+		Words{ -1,"intrare",100 },
+		Words{ -1,"lift",50 },
+		Words{ -1,"zid",100 },
+		Words{ -1,"Samsung",100 },
+		Words{ -1,"sultan",50 },
+		Words{ -1,"baclava",50 },
+		Words{ -1,"ulei de masline",100 },
+		Words{ -1,"picnic",150 },
+		Words{ -1,"cina",100 },
+		Words{ -1,"roata",150 },
+		Words{ -1,"moschee",50 },
+		Words{ -1,"piatra",100 },
+		Words{ -1,"harpa",100 },
+		Words{ -1,"sirena",150 },
+		Words{ -1,"vulpe",100 },
+		Words{ -1,"ochi de aragaz",100 },
+		Words{ -1,"tortura",50 },
+		Words{ -1,"securitate",100 },
+		Words{ -1,"hartie igienica",100 },
+		Words{ -1,"gel de dus",100 },
+		Words{ -1,"ambulanta",150 },
+		Words{ -1,"geam",150 },
+		Words{ -1,"pahar",150 },
+		Words{ -1,"bananier",150 },
+		Words{ -1,"florarie",150 },
+		Words{ -1,"ospatar",150 },
+		Words{ -1,"corect",100 },
+		Words{ -1,"fereastra",150 },
+		Words{ -1,"bibelou",50 },
+		Words{ -1,"mileu",50 },
+		Words{ -1,"sprancene",150 },
+		Words{ -1,"breton",150 },
+		Words{ -1,"Barbie",150 },
+		Words{ -1,"baiat",150 },
+		Words{ -1,"fata",150 },
+		Words{ -1,"desert",150 },
+		Words{ -1,"mustata",150 },
+		Words{ -1,"caserola",100 },
+		Words{ -1,"drujba",150 },
+		Words{ -1,"Borsec",50 },
+		Words{ -1,"Dorna",50 },
+		Words{ -1,"cleste de par",100 },
+		Words{ -1,"elastic",100 },
+		Words{ -1,"adeziv",50 },
+		Words{ -1,"raza de soare",50 },
+		Words{ -1,"bloc",150 },
+		Words{ -1,"apartament",100 },
+		Words{ -1,"complet",50 },
+		Words{ -1,"aparat de ras",50 },
+		Words{ -1,"metal",50 },
+		Words{ -1,"plic",100 },
+		Words{ -1,"posta",100 },
+		Words{ -1,"timbru",150 },
+		Words{ -1,"vedere",50 },
+		Words{ -1,"tufa",100 },
+		Words{ -1,"breloc",150 },
+		Words{ -1,"cercei",150 },
+		Words{ -1,"umeras",150 },
+		Words{ -1,"optiune",100 },
+		Words{ -1,"esofag",50 },
+		Words{ -1,"durere de gat",50 },
+		Words{ -1,"costum de baie",150 },
+		Words{ -1,"mamaliga",150 },
+		Words{ -1,"sorici",50 },
+		Words{ -1,"ascutitoare",100 },
+		Words{ -1,"penar",150 },
+		Words{ -1,"iepure",50 },
+		Words{ -1,"vizor",50 },
+		Words{ -1,"zodiac",50 },
+		Words{ -1,"musca",50 },
+		Words{ -1,"loz",50 },
+		Words{ -1,"loterie",50 },
+		Words{ -1,"biscuiti",100 },
+		Words{ -1,"vinil",50 },
+		Words{ -1,"prezentator",100 },
+		Words{ -1,"radio",100 },
+		Words{ -1,"pitic de gradina",100 },
+		Words{ -1,"Alba ca Zapada",100 },
+		Words{ -1,"groapa",50 },
+		Words{ -1,"groaza",50 },
+		Words{ -1,"vis",50 },
+		Words{ -1,"pistol",100 },
+		Words{ -1,"rezultat",50 },
+		Words{ -1,"Wi-Fi",150 },
+		Words{ -1,"ceas",150 },
+		Words{ -1,"Iepurasul de Paste",100 },
+		Words{ -1,"divinitate",50 },
+		Words{ -1,"salopeta",150 },
+		Words{ -1,"pantofi cu toc",100 },
+		Words{ -1,"lac de unghii",100 },
+		Words{ -1,"paleta de machiaj",100 },
+		Words{ -1,"cui",150 },
+		Words{ -1,"lemn",100 },
+		Words{ -1,"brad",150 },
+		Words{ -1,"lumanare",150 },
+		Words{ -1,"diez",150 },
+		Words{ -1,"liniste",50 },
+		Words{ -1,"palton",100 },
+		Words{ -1,"parasuta",150 },
+		Words{ -1,"sedinta foto",150 },
+		Words{ -1,"apa minerala",150 },
+		Words{ -1,"izvor",150 },
+		Words{ -1,"proiector",100 },
+		Words{ -1,"papanasi",100 },
+		Words{ -1,"maner",150 },
 
 	};
 	storage.insert_range(words.begin(), words.end());
