@@ -7,6 +7,7 @@ class GameTimer
 public:
     GameTimer(int durationInSeconds); 
 
+    void DisplayThread();
 private:
     int duration;
 };
