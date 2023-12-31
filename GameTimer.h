@@ -8,6 +8,7 @@ public:
     GameTimer(int durationInSeconds); 
 
     void DisplayThread();
+    void Start();
 private:
     int duration;
 };

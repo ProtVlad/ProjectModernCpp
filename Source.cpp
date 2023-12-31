@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Settings.h"
 #include "Words.h"
+#include "GameTimer.h"
 
 #include <filesystem>
 #include <iostream>

@@ -12,3 +12,11 @@ void GameTimer::DisplayThread()
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
+
+void GameTimer::Start()
+{
+    std::thread displayThread(&GameTimer::DisplayThread, this);
+    std::this_thread::sleep_for(std::chrono::seconds(duration));
+    std::cout << "Timer expired!\n";
+    displayThread.join();
+}
