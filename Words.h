@@ -4,7 +4,8 @@
 #include <vector>
 
 #include <crow.h>
-
+#include "Game.h"
+#include "Settings.h"
 
 #include <sqlite_orm/sqlite_orm.h>
 namespace sql = sqlite_orm;
@@ -82,4 +83,14 @@ public:
 
 private:
 	Storage& m_db;
+};
+
+class AddGameHandler {
+public:
+	AddGameHandler(std::vector<Game>& game);
+
+	crow::response operator() (const crow::request& req) const;
+
+private:
+	std::vector<Game>& m_games;
 };

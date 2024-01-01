@@ -63,6 +63,8 @@ private:
     QLabel* logo;
     QString password;
     int userID;
+    std::string roomcode1 = "test";
+    std::string roomcode2 = "test2";
 private:
     void colorChange(QMouseEvent* e);
     bool noText(QString guess);

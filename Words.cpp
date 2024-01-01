@@ -614,6 +614,11 @@ AddUserHandler::AddUserHandler(Storage& storage)
 {
 }
 
+AddGameHandler::AddGameHandler(std::vector<Game>& games)
+	: m_games{ games }
+{
+}
+
 crow::response AddChoosenWord::operator()(const crow::request& req) const
 {
 	auto bodyArgs = parseUrlArgs(req.body);
@@ -643,6 +648,36 @@ crow::response AddUserHandler::operator()(const crow::request& req) const
 		user.username = usernameIter->second;
 		user.password = passwordIter->second;
 		m_db.insert(user);
+	}
+	return crow::response(201);
+}
+
+crow::response AddGameHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto roomcodeIter = bodyArgs.find("roomcode");
+	auto timerIter = bodyArgs.find("timer");
+	auto indexDrawerIter = bodyArgs.find("indexDrawer");
+	auto timeIter = bodyArgs.find("time");
+	auto languageIter = bodyArgs.find("language");
+	auto noPlayersIter = bodyArgs.find("noPlayers");
+	auto noWordsIter = bodyArgs.find("noWords");
+	auto hintsIter = bodyArgs.find("hints");
+	auto hostIter = bodyArgs.find("user");
+
+	if (roomcodeIter != end && timerIter != end && indexDrawerIter != end && timeIter != end 
+		&& languageIter != end && noPlayersIter != end && noWordsIter != end && hintsIter != end && hostIter != end)
+	{
+		Settings settings;
+		settings.SetTime(std::stoi(timeIter->second));
+		settings.SetLanguage(languageIter->second);
+		settings.SetNumberPlayers(std::stoi(noPlayersIter->second));
+		settings.SetNumberWords(std::stoi(noWordsIter->second));
+		settings.SetNumberHints(std::stoi(hintsIter->second));
+		Game game(roomcodeIter->second, std::stoi(timerIter->second),std::stoi(indexDrawerIter->second),settings);
+		game.AddPlayer(std::stoi(hostIter->second));
+		m_games.push_back(game);
 	}
 	return crow::response(201);
 }

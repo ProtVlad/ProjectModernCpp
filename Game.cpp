@@ -1,45 +1,62 @@
 #include "Game.h"
-#include<ctime>
+#include <ctime>
 #include <random>
 
-Game::Game()
-{
-	//EMPTY
-}
-
-Game::Game(uint16_t timer, uint16_t indexDrawer, Settings settings,
-	std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat):
+Game::Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings
+/*std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat*/) :
+	m_roomcode(roomcode),
 	m_timer(timer),
 	m_indexDrawer(indexDrawer),
-	m_settings(settings),
-	m_wordList(wordList),
-	m_wordChoices(wordChoices),
-	m_chat(chat)
+	m_settings(settings)
+	//m_wordList(wordList),
+	//m_wordChoices(wordChoices),
+	//m_chat(chat)
 {}
 
-const uint16_t Game::GetTimer()
+const std::string& Game::GetRoomcode() const
+{
+	return m_roomcode;
+}
+
+const uint16_t Game::GetTimer() const
 {
 	return m_timer;
 }
 
-const std::vector<std::string>& Game::GetWordList()
-{
-	return m_wordList;
-}
-
-const std::vector<std::string>& Game::GetWordChoices()
-{
-	return m_wordChoices;
-}
-
-const Chat& Game::GetChat()
-{
-	return m_chat;
-}
-
-const uint16_t Game::GetIndexDrawer()
+const uint16_t Game::GetIndexDrawer() const
 {
 	return m_indexDrawer;
+}
+
+Settings Game::GetSettings() const
+{
+	return m_settings;
+}
+
+const std::vector<int>& Game::GetUserIDs() const
+{
+	return m_userIDs;
+}
+
+/*const std::vector<std::string>& Game::GetWordList()
+{
+	return m_wordList;
+}*/
+
+/*const std::vector<std::string>& Game::GetWordChoices()
+{
+	return m_wordChoices;
+}*/
+
+/*const Chat& Game::GetChat()
+{
+	return m_chat;
+}*/
+
+
+void Game::SetRoomcode(const std::string roomcode)
+{
+	m_roomcode = roomcode;
 }
 
 void Game::SetTimer(const uint16_t timer)
@@ -47,27 +64,33 @@ void Game::SetTimer(const uint16_t timer)
 	m_timer = timer;
 }
 
-void Game::SetWordList(const std::vector<std::string>& wordList)
-{
-	m_wordList = wordList;
-}
-
-void Game::SetWordChoices(const std::vector<std::string>& wordChoices)
-{
-	m_wordChoices = wordChoices;
-}
-
-void Game::SetChat(const Chat& chat)
-{
-	m_chat = chat;
-}
-
 void Game::SetIndexDrawer(const uint16_t indexDrawer)
 {
 	m_indexDrawer = indexDrawer;
 }
 
-void Game::ReadWordList(std::ifstream& file)
+void Game::SetSettings(const Settings settings)
+{
+	m_settings = settings;
+}
+
+/*void Game::SetWordList(const std::vector<std::string>& wordList)
+{
+	m_wordList = wordList;
+}*/
+
+/*void Game::SetWordChoices(const std::vector<std::string>& wordChoices)
+{
+	m_wordChoices = wordChoices;
+}*/
+
+/*void Game::SetChat(const Chat& chat)
+{
+	m_chat = chat;
+}*/
+
+
+/*void Game::ReadWordList(std::ifstream& file)
 {
 	while (!file.eof())
 	{
@@ -75,6 +98,11 @@ void Game::ReadWordList(std::ifstream& file)
 		std::getline(file, element);
 		m_wordList.emplace_back(element);
 	}
+}*/
+
+void Game::AddPlayer(const int userID)
+{
+	m_userIDs.push_back(userID);
 }
 
 std::vector<uint16_t> Game::TotalScore(const std::vector<std::vector<uint16_t>>& playerScores)
@@ -108,7 +136,7 @@ uint16_t Game::GenerateRandomNumber(uint16_t min, uint16_t max)
 	return randomValue;
 }
 
-void Game::ChooseWords()
+/*void Game::ChooseWords()
 {
 	uint16_t min = 0;
 	std::ifstream file("RoWords.txt");
@@ -120,4 +148,4 @@ void Game::ChooseWords()
 		std::string cuv = m_wordList[p];
 		m_wordChoices.emplace_back(cuv);
 	}
-}
+}*/

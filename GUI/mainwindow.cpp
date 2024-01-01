@@ -512,6 +512,20 @@ void MainWindow::on_startButton_clicked()
 
 void MainWindow::on_createButton_clicked()
 {
+    auto response = cpr::Put(
+        cpr::Url{ "http://localhost:13034/addGame" },
+        cpr::Payload{
+            { "roomcode", roomcode1},
+            { "timer", "0"},
+            { "indexDrawer", "0"},
+            { "time", "0"},
+            { "language", "none"},
+            { "noPlayers", "0"},
+            { "noWords", "0"},
+            { "hints", "0"},
+            { "user", std::to_string(userID)}
+        }
+    );
     gameState = ConvertStringToGameState("MeetingRoom");
     setVisibilities(gameState);
     update();
