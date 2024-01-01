@@ -619,6 +619,11 @@ AddGameHandler::AddGameHandler(std::vector<Game>& games)
 {
 }
 
+AddPlayerHandler::AddPlayerHandler(std::vector<Game>& games)
+	: m_games{ games }
+{
+}
+
 crow::response AddChoosenWord::operator()(const crow::request& req) const
 {
 	auto bodyArgs = parseUrlArgs(req.body);
@@ -679,5 +684,22 @@ crow::response AddGameHandler::operator()(const crow::request& req) const
 		game.AddPlayer(std::stoi(hostIter->second));
 		m_games.push_back(game);
 	}
+	return crow::response(201);
+}
+
+crow::response AddPlayerHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto roomcodeIter = bodyArgs.find("roomcode");
+	for (int index=0; index < m_games.size(); index++)
+		if (m_games[index].GetRoomcode() == roomcodeIter->second)
+		{
+			auto userIter = bodyArgs.find("user");
+			if (roomcodeIter != end && userIter != end)
+				m_games[index].AddPlayer(std::stoi(userIter->second));
+			break;
+		}
+
 	return crow::response(201);
 }

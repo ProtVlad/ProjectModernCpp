@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "Settings.h"
 #include "Words.h"
-#include "GameTimer.h"
 
 #include <filesystem>
 #include <iostream>
@@ -66,24 +65,54 @@ int main()
 		return crow::json::wvalue{ usersJson };
 		});
 
-	CROW_ROUTE(app, "/addUser/<int>")([&db](const crow::request& request, int userId = -1)
-		{
-
-			char* username = request.url_params.get("username");
-			char* password = request.url_params.get("password");
-
-			User user;
-			user.id = userId;
-			user.username = username;
-			user.password = password;
-			db.insert(user);
-
-			return crow::response(200);
-		});
-
 	auto& addUserPut = CROW_ROUTE(app, "/addUser")
 		.methods(crow::HTTPMethod::PUT);
 	addUserPut(AddUserHandler(db));
+
+	std::vector<Game> games;
+
+	CROW_ROUTE(app, "/games")([&games]()
+		{
+			std::vector<crow::json::wvalue>gamesJson;
+			for (const auto& game : games)
+			{
+				crow::json::wvalue gameJson{
+					{"roomcode",game.GetRoomcode()},
+					{"timer",game.GetTimer()},
+					{"indexDrawer",game.GetIndexDrawer()},
+					{"time",game.GetSettings().GetTime()},
+					{"language",game.GetSettings().GetLanguage()},
+					{"noPlayers",game.GetSettings().GetMaxNumberPlayers()},
+					{"noWords",game.GetSettings().GetNumberWords()},
+					{"hints",game.GetSettings().GetNumberHints()}
+				};
+				/*crow::json::wvalue gameJson;
+				gameJson["roomcode"] = game.GetRoomcode();
+				gameJson["timer"] = game.GetTimer();
+				gameJson["indexDrawer"] = game.GetIndexDrawer();
+				gameJson["time"] = game.GetSettings().GetTime();
+				gameJson["language"] = game.GetSettings().GetLanguage();
+				gameJson["noPlayers"] = game.GetSettings().GetMaxNumberPlayers();
+				gameJson["noWords"] = game.GetSettings().GetNumberWords();
+				gameJson["hints"] = game.GetSettings().GetNumberHints();*/
+				std::string key;
+				for (int index = 0; index < game.GetUserIDs().size(); index++)
+				{
+					key = "user" + std::to_string(index);
+					gameJson[key] = game.GetUserIDs()[index];
+				}
+				gamesJson.push_back(gameJson);
+			}
+			return crow::json::wvalue{ gamesJson };
+		});
+
+	auto& addGamePut = CROW_ROUTE(app, "/addGame")
+		.methods(crow::HTTPMethod::PUT);
+	addGamePut(AddGameHandler(games));
+
+	auto& addPlayerPut = CROW_ROUTE(app, "/addPlayer")
+		.methods(crow::HTTPMethod::PUT);
+	addPlayerPut(AddPlayerHandler(games));
 
 	app.port(13034).multithreaded().run();
 	return 0;

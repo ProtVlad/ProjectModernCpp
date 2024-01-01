@@ -273,8 +273,25 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
         }
         if (gameState == ConvertStringToGameState("EnterCode"))
         {
-            gameState = ConvertStringToGameState("MeetingRoom");
-            setVisibilities(gameState);
+            auto response = cpr::Get(cpr::Url{ "http://localhost:13034/games" });
+            auto games = crow::json::load(response.text);
+            //bool existaJoc-false
+            for (const auto& game : games)
+                if (game["roomcode"] == ui->roomCode->text().toStdString())
+                {
+
+                    auto response2 = cpr::Put(
+                        cpr::Url{ "http://localhost:13034/addPlayer" },
+                        cpr::Payload{
+                            { "roomcode", ui->roomCode->text().toStdString()},
+                            { "user", std::to_string(userID)}
+                        });
+                    gameState = ConvertStringToGameState("MeetingRoom");
+                    setVisibilities(gameState);
+                    //existaJoc-true
+                    break;
+                }
+            //daca existaJoc-false atunci afisezi eroarea;clear la casuta
             update();
         }
         if (gameState == ConvertStringToGameState("MeetingRoom") || gameState == ConvertStringToGameState("InGame"))
