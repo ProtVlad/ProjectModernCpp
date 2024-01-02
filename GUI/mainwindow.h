@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QTimer>
 #include <QLabel>
 #include <vector>
 #include <stack>
@@ -40,6 +41,7 @@ private slots:
     void on_signOutButton_clicked();
     void on_backButton_clicked();
     void on_password_textChanged();
+    void GetPlayersInRoom();
 
 private:
     Ui::MainWindow* ui;
@@ -62,9 +64,11 @@ private:
     QLabel* bigLogo;
     QLabel* logo;
     QString password;
-    int userID;
-    std::string roomcode1 = "test";
-    std::string roomcode2 = "test2";
+    std::string username;
+    std::string roomcode = "test";
+    QTimer* timer;
+    std::vector<std::string> players;
+    int count = 0;
 private:
     void colorChange(QMouseEvent* e);
     bool noText(QString guess);

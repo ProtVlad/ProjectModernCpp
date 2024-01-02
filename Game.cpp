@@ -33,9 +33,9 @@ Settings Game::GetSettings() const
 	return m_settings;
 }
 
-const std::vector<int>& Game::GetUserIDs() const
+const std::vector<std::string>& Game::GetUsers() const
 {
-	return m_userIDs;
+	return m_users;
 }
 
 /*const std::vector<std::string>& Game::GetWordList()
@@ -100,9 +100,9 @@ void Game::SetSettings(const Settings settings)
 	}
 }*/
 
-void Game::AddPlayer(const int userID)
+void Game::AddPlayer(const std::string& user)
 {
-	m_userIDs.push_back(userID);
+	m_users.push_back(user);
 }
 
 std::vector<uint16_t> Game::TotalScore(const std::vector<std::vector<uint16_t>>& playerScores)

@@ -681,7 +681,7 @@ crow::response AddGameHandler::operator()(const crow::request& req) const
 		settings.SetNumberWords(std::stoi(noWordsIter->second));
 		settings.SetNumberHints(std::stoi(hintsIter->second));
 		Game game(roomcodeIter->second, std::stoi(timerIter->second),std::stoi(indexDrawerIter->second),settings);
-		game.AddPlayer(std::stoi(hostIter->second));
+		game.AddPlayer(hostIter->second);
 		m_games.push_back(game);
 	}
 	return crow::response(201);
@@ -697,7 +697,7 @@ crow::response AddPlayerHandler::operator()(const crow::request& req) const
 		{
 			auto userIter = bodyArgs.find("user");
 			if (roomcodeIter != end && userIter != end)
-				m_games[index].AddPlayer(std::stoi(userIter->second));
+				m_games[index].AddPlayer(userIter->second);
 			break;
 		}
 

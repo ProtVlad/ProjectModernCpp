@@ -82,7 +82,7 @@ int main()
 					{"indexDrawer",game.GetIndexDrawer()},
 					{"time",game.GetSettings().GetTime()},
 					{"language",game.GetSettings().GetLanguage()},
-					{"noPlayers",game.GetSettings().GetMaxNumberPlayers()},
+					{"maxNoPlayers",game.GetSettings().GetMaxNumberPlayers()},
 					{"noWords",game.GetSettings().GetNumberWords()},
 					{"hints",game.GetSettings().GetNumberHints()}
 				};
@@ -95,15 +95,27 @@ int main()
 				gameJson["noPlayers"] = game.GetSettings().GetMaxNumberPlayers();
 				gameJson["noWords"] = game.GetSettings().GetNumberWords();
 				gameJson["hints"] = game.GetSettings().GetNumberHints();*/
-				std::string key;
-				for (int index = 0; index < game.GetUserIDs().size(); index++)
-				{
-					key = "user" + std::to_string(index);
-					gameJson[key] = game.GetUserIDs()[index];
-				}
 				gamesJson.push_back(gameJson);
 			}
 			return crow::json::wvalue{ gamesJson };
+		});
+
+	CROW_ROUTE(app, "/<string>/players")([&games](std::string roomcode)
+		{
+			crow::json::wvalue playersJson;
+			for (const auto& game : games)
+				if (game.GetRoomcode() == roomcode)
+				{
+					playersJson["noPlayers"] = game.GetUsers().size();
+					std::string key;
+					for (int index = 0; index < game.GetUsers().size(); index++)
+					{
+						key = "user" + std::to_string(index);
+						playersJson[key] = game.GetUsers()[index];
+					}
+					break;
+				}
+			return crow::json::wvalue{ playersJson };
 		});
 
 	auto& addGamePut = CROW_ROUTE(app, "/addGame")
