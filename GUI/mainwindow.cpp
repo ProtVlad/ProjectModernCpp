@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget* parent)
 	, surpriseStatus({ 255,0,0 })
 	, xpos(100)
 	, ypos(650)
+	, xRect(100)
+	, yRect(100)
 	, colors({ {160,160,164},{255,0,0},{0,255,0},{0,0,255},{255,128,0},{255,128,192},{255,255,0},{185,122,87},{255,255,255},{0,0,0} })
 	, widths({ 3, 5,10, 15 })
 	, borders({ {100,100}, {100, 500}, {900, 100}, {900, 500} })
@@ -27,7 +29,7 @@ MainWindow::MainWindow(QWidget* parent)
 	setFocusPolicy(Qt::StrongFocus);
 	setVisibilities(ConvertStringToGameState("MainMenu"));
 	timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), SLOT(GetPlayersInRoom()));
+	connect(timer, SIGNAL(timeout()), SLOT(createThread()));
 }
 
 MainWindow::~MainWindow()
@@ -106,6 +108,24 @@ void MainWindow::paintEvent(QPaintEvent* e)
 	QPainter p(this);
 	QPen pen;
 	QBrush brush;
+	if (gameState == ConvertStringToGameState("MeetingRoom"))
+	{
+		for (int i = 0; i < players.size(); i++)
+		{
+			QRect r(xRect, yRect, 150, 50);
+			QString s = QString::fromStdString(players[i]);
+			pen.setWidth(1);
+			pen.setColor({ 0,0,0 });
+			brush.setColor({ 255,255,255 });
+			brush.setStyle(Qt::SolidPattern);
+			p.setBrush(brush);
+			p.setPen(pen);
+			p.drawRect(r);
+			p.drawText(r, Qt::AlignCenter, s);
+			yRect += 50;
+		}
+		yRect -= 50 * players.size();
+	}
 	if (gameState == ConvertStringToGameState("InGame"))
 	{
 		for (int i = 0; i < colors.size(); i++)
@@ -636,6 +656,6 @@ void MainWindow::GetPlayersInRoom()
 		{
 			std::string key = "user" + std::to_string(index);
 			players.push_back(playerList[key].s());
-			//update();
+			update();
 		}
 }

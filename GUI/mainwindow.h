@@ -56,6 +56,8 @@ private:
     QColor surpriseStatus;
     int xpos;
     int ypos;
+    int xRect;
+    int yRect;
     std::vector<QColor>colors;
     std::vector<int> widths;
     std::stack<int> actionHistory;
