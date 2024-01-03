@@ -290,8 +290,8 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 						});
 					gameState = ConvertStringToGameState("MeetingRoom");
 					setVisibilities(gameState);
-					GetPlayersInRoom();
-					timer->start(500);
+					createThread();
+					timer->start(100);
 					//existaJoc-true
 					break;
 				}
@@ -549,8 +549,8 @@ void MainWindow::on_createButton_clicked()
 	);
 	gameState = ConvertStringToGameState("MeetingRoom");
 	setVisibilities(gameState);
-	GetPlayersInRoom();
-	timer->start(500);
+	createThread();
+	timer->start(100);
 	update();
 }
 
@@ -619,6 +619,11 @@ void MainWindow::on_password_textChanged()
 	for (int index = 0; index < password.size(); index++)
 		stars = stars + '*';
 	ui->password->setText(stars);
+}
+
+void MainWindow::createThread()
+{
+	QtConcurrent::run([this]() {GetPlayersInRoom(); });
 }
 
 void MainWindow::GetPlayersInRoom()

@@ -12,6 +12,7 @@
 #include "GameState.h"
 #include <cpr/cpr.h>
 #include <crow.h>
+#include <QtConcurrent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,7 +42,7 @@ private slots:
     void on_signOutButton_clicked();
     void on_backButton_clicked();
     void on_password_textChanged();
-    void GetPlayersInRoom();
+    void createThread();
 
 private:
     Ui::MainWindow* ui;
@@ -75,5 +76,6 @@ private:
     void setVisibilities(GameState state);
     void clear();
     void undo();
+    void GetPlayersInRoom();
 };
 #endif // MAINWINDOW_H
