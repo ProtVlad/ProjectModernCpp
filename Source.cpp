@@ -79,52 +79,64 @@ int main()
 				crow::json::wvalue gameJson{
 					{"roomcode",game.GetRoomcode()},
 					{"timer",game.GetTimer()},
-					{"indexDrawer",game.GetIndexDrawer()},
-					{"time",game.GetSettings().GetTime()},
-					{"language",game.GetSettings().GetLanguage()},
-					{"maxNoPlayers",game.GetSettings().GetMaxNumberPlayers()},
-					{"noWords",game.GetSettings().GetNumberWords()},
-					{"hints",game.GetSettings().GetNumberHints()}
+					{"indexDrawer",game.GetIndexDrawer()}
 				};
 				/*crow::json::wvalue gameJson;
 				gameJson["roomcode"] = game.GetRoomcode();
 				gameJson["timer"] = game.GetTimer();
-				gameJson["indexDrawer"] = game.GetIndexDrawer();
-				gameJson["time"] = game.GetSettings().GetTime();
-				gameJson["language"] = game.GetSettings().GetLanguage();
-				gameJson["noPlayers"] = game.GetSettings().GetMaxNumberPlayers();
-				gameJson["noWords"] = game.GetSettings().GetNumberWords();
-				gameJson["hints"] = game.GetSettings().GetNumberHints();*/
+				gameJson["indexDrawer"] = game.GetIndexDrawer();*/
 				gamesJson.push_back(gameJson);
 			}
 			return crow::json::wvalue{ gamesJson };
-		});
-
-	CROW_ROUTE(app, "/<string>/players")([&games](std::string roomcode)
-		{
-			crow::json::wvalue playersJson;
-			for (const auto& game : games)
-				if (game.GetRoomcode() == roomcode)
-				{
-					playersJson["noPlayers"] = game.GetUsers().size();
-					std::string key;
-					for (int index = 0; index < game.GetUsers().size(); index++)
-					{
-						key = "user" + std::to_string(index);
-						playersJson[key] = game.GetUsers()[index];
-					}
-					break;
-				}
-			return crow::json::wvalue{ playersJson };
 		});
 
 	auto& addGamePut = CROW_ROUTE(app, "/addGame")
 		.methods(crow::HTTPMethod::PUT);
 	addGamePut(AddGameHandler(games));
 
+	CROW_ROUTE(app, "/<string>/players")([&games](std::string roomcode)
+		{
+			for (const auto& game : games)
+				if (game.GetRoomcode() == roomcode)
+				{
+					crow::json::wvalue playersJson{
+						{"noPlayers", game.GetUsers().size()}
+					};
+					std::string key;
+					for (int index = 0; index < game.GetUsers().size(); index++)
+					{
+						key = "user" + std::to_string(index);
+						playersJson[key] = game.GetUsers()[index];
+					}
+					return crow::json::wvalue{ playersJson };
+				}
+			return crow::json::wvalue{  };
+		});
+
 	auto& addPlayerPut = CROW_ROUTE(app, "/addPlayer")
 		.methods(crow::HTTPMethod::PUT);
 	addPlayerPut(AddPlayerHandler(games));
+
+	CROW_ROUTE(app, "/<string>/settings")([&games](std::string roomcode)
+		{
+			for (const auto& game : games)
+				if (game.GetRoomcode() == roomcode)
+				{
+					crow::json::wvalue settingsJson{
+					{"time",game.GetSettings().GetTime()},
+					{"language",game.GetSettings().GetLanguage()},
+					{"maxNoPlayers",game.GetSettings().GetMaxNumberPlayers()},
+					{"noWords",game.GetSettings().GetNumberWords()},
+					{"hints",game.GetSettings().GetNumberHints()}
+					};
+					return crow::json::wvalue{ settingsJson };
+				}
+			return crow::json::wvalue{  };
+		});
+
+	auto& modifySettingsPut = CROW_ROUTE(app, "/modifySettings")
+		.methods(crow::HTTPMethod::PUT);
+	modifySettingsPut(ModifySettingsHandler(games));
 
 	app.port(13034).multithreaded().run();
 	return 0;

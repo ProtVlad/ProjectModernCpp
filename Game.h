@@ -16,7 +16,7 @@ public:
 	const std::string& GetRoomcode() const;
 	const uint16_t GetTimer() const;
 	const uint16_t GetIndexDrawer() const;
-	Settings GetSettings() const;
+	const Settings GetSettings() const;
 	const std::vector<std::string>& GetUsers() const;
 	//const std::vector<std::string>& GetWordList();
 	//const std::vector<std::string>& GetWordChoices();

@@ -624,6 +624,11 @@ AddPlayerHandler::AddPlayerHandler(std::vector<Game>& games)
 {
 }
 
+ModifySettingsHandler::ModifySettingsHandler(std::vector<Game>& games)
+	: m_games{ games }
+{
+}
+
 crow::response AddChoosenWord::operator()(const crow::request& req) const
 {
 	auto bodyArgs = parseUrlArgs(req.body);
@@ -662,25 +667,12 @@ crow::response AddGameHandler::operator()(const crow::request& req) const
 	auto bodyArgs = parseUrlArgs(req.body);
 	auto end = bodyArgs.end();
 	auto roomcodeIter = bodyArgs.find("roomcode");
-	auto timerIter = bodyArgs.find("timer");
-	auto indexDrawerIter = bodyArgs.find("indexDrawer");
-	auto timeIter = bodyArgs.find("time");
-	auto languageIter = bodyArgs.find("language");
-	auto noPlayersIter = bodyArgs.find("noPlayers");
-	auto noWordsIter = bodyArgs.find("noWords");
-	auto hintsIter = bodyArgs.find("hints");
 	auto hostIter = bodyArgs.find("user");
 
-	if (roomcodeIter != end && timerIter != end && indexDrawerIter != end && timeIter != end 
-		&& languageIter != end && noPlayersIter != end && noWordsIter != end && hintsIter != end && hostIter != end)
+	if (roomcodeIter != end && hostIter != end)
 	{
-		Settings settings;
-		settings.SetTime(std::stoi(timeIter->second));
-		settings.SetLanguage(languageIter->second);
-		settings.SetNumberPlayers(std::stoi(noPlayersIter->second));
-		settings.SetNumberWords(std::stoi(noWordsIter->second));
-		settings.SetNumberHints(std::stoi(hintsIter->second));
-		Game game(roomcodeIter->second, std::stoi(timerIter->second),std::stoi(indexDrawerIter->second),settings);
+		Settings settings(0, 0, 0, 0, 0);
+		Game game(roomcodeIter->second, 0, 0, settings);
 		game.AddPlayer(hostIter->second);
 		m_games.push_back(game);
 	}
@@ -692,7 +684,7 @@ crow::response AddPlayerHandler::operator()(const crow::request& req) const
 	auto bodyArgs = parseUrlArgs(req.body);
 	auto end = bodyArgs.end();
 	auto roomcodeIter = bodyArgs.find("roomcode");
-	for (int index=0; index < m_games.size(); index++)
+	for (int index = 0; index < m_games.size(); index++)
 		if (m_games[index].GetRoomcode() == roomcodeIter->second)
 		{
 			auto userIter = bodyArgs.find("user");
@@ -703,3 +695,33 @@ crow::response AddPlayerHandler::operator()(const crow::request& req) const
 
 	return crow::response(201);
 }
+
+crow::response ModifySettingsHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto roomcodeIter = bodyArgs.find("roomcode");
+	for (int index = 0; index < m_games.size(); index++)
+		if (m_games[index].GetRoomcode() == roomcodeIter->second)
+		{
+			auto timeIter = bodyArgs.find("time");
+			auto languageIter = bodyArgs.find("language");
+			auto noPlayersIter = bodyArgs.find("noPlayers");
+			auto noWordsIter = bodyArgs.find("noWords");
+			auto hintsIter = bodyArgs.find("hints");
+			if (roomcodeIter != end && timeIter != end && languageIter != end && noPlayersIter != end
+				&& noWordsIter != end && hintsIter != end)
+			{
+				Settings settings(static_cast<uint16_t>(std::stoi(timeIter->second)), 
+					static_cast<uint16_t>(std::stoi(languageIter->second)),
+					static_cast<uint16_t>(std::stoi(noPlayersIter->second)),
+					static_cast<uint16_t>(std::stoi(noWordsIter->second)),
+					static_cast<uint16_t>(std::stoi(hintsIter->second)));
+				m_games[index].SetSettings(settings);
+			}
+			break;
+		}
+
+	return crow::response(201);
+}
+

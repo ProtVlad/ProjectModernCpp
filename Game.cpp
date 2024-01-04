@@ -28,7 +28,7 @@ const uint16_t Game::GetIndexDrawer() const
 	return m_indexDrawer;
 }
 
-Settings Game::GetSettings() const
+const Settings Game::GetSettings() const
 {
 	return m_settings;
 }

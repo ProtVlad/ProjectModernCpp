@@ -43,6 +43,11 @@ private slots:
     void on_backButton_clicked();
     void on_password_textChanged();
     void createThread();
+    void on_timeChoice_currentTextChanged();
+    void on_languageChoice_currentTextChanged();
+    void on_noPlayersChoice_currentTextChanged();
+    void on_noWordsChoice_currentTextChanged();
+    void on_hintsChoice_currentTextChanged();
 
 private:
     Ui::MainWindow* ui;
@@ -71,7 +76,8 @@ private:
     std::string roomcode = "test";
     QTimer* timer;
     std::vector<std::string> players;
-    int count = 0;
+    bool host = false;
+
 private:
     void colorChange(QMouseEvent* e);
     bool noText(QString guess);
@@ -79,5 +85,7 @@ private:
     void clear();
     void undo();
     void GetPlayersInRoom();
+    void GetSettings();
+    void modifySettings();
 };
 #endif // MAINWINDOW_H

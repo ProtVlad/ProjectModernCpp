@@ -104,3 +104,13 @@ public:
 private:
 	std::vector<Game>& m_games;
 };
+
+class ModifySettingsHandler {
+public:
+	ModifySettingsHandler(std::vector<Game>& games);
+
+	crow::response operator() (const crow::request& req) const;
+
+private:
+	std::vector<Game>& m_games;
+};

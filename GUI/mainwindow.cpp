@@ -308,9 +308,15 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 							{ "roomcode", ui->roomCode->text().toStdString()},
 							{ "user", username}
 						});
+					host = false;
+					ui->timeChoice->setEnabled(false);
+					ui->languageChoice->setEnabled(false);
+					ui->noPlayersChoice->setEnabled(false);
+					ui->noWordsChoice->setEnabled(false);
+					ui->hintsChoice->setEnabled(false);
 					gameState = ConvertStringToGameState("MeetingRoom");
 					setVisibilities(gameState);
-					createThread();
+					GetPlayersInRoom();
 					timer->start(100);
 					//existaJoc-true
 					break;
@@ -466,7 +472,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->languageLabel->setVisible(true);
 		ui->timeChoice->setVisible(true);
 		ui->timeLabel->setVisible(true);
-		ui->startButton->setVisible(true);
+		if (host)
+			ui->startButton->setVisible(true);
 		ui->guess->setVisible(true);
 		ui->guessList->setVisible(true);
 		ui->createButton->setVisible(false);
@@ -557,19 +564,18 @@ void MainWindow::on_createButton_clicked()
 		cpr::Url{ "http://localhost:13034/addGame" },
 		cpr::Payload{
 			{ "roomcode", roomcode},
-			{ "timer", "0"},
-			{ "indexDrawer", "0"},
-			{ "time", "0"},
-			{ "language", "none"},
-			{ "noPlayers", "0"},
-			{ "noWords", "0"},
-			{ "hints", "0"},
 			{ "user", username}
 		}
 	);
+	host = true;
+	ui->timeChoice->setEnabled(true);
+	ui->languageChoice->setEnabled(true);
+	ui->noPlayersChoice->setEnabled(true);
+	ui->noWordsChoice->setEnabled(true);
+	ui->hintsChoice->setEnabled(true);
 	gameState = ConvertStringToGameState("MeetingRoom");
 	setVisibilities(gameState);
-	createThread();
+	GetPlayersInRoom();
 	timer->start(100);
 	update();
 }
@@ -644,6 +650,8 @@ void MainWindow::on_password_textChanged()
 void MainWindow::createThread()
 {
 	QtConcurrent::run([this]() {GetPlayersInRoom(); });
+	if (!host)
+		QtConcurrent::run([this]() {GetSettings(); });
 }
 
 void MainWindow::GetPlayersInRoom()
@@ -658,4 +666,57 @@ void MainWindow::GetPlayersInRoom()
 			players.push_back(playerList[key].s());
 			update();
 		}
+}
+
+void MainWindow::GetSettings()
+{
+	std::string url = "http://localhost:13034/" + roomcode + "/settings";
+	auto response = cpr::Get(cpr::Url{ url });
+	auto roomSettings = crow::json::load(response.text);
+	ui->timeChoice->setCurrentIndex(roomSettings["time"].i());
+	ui->languageChoice->setCurrentIndex(roomSettings["language"].i());
+	ui->noPlayersChoice->setCurrentIndex(roomSettings["maxNoPlayers"].i());
+	ui->noWordsChoice->setCurrentIndex(roomSettings["noWords"].i());
+	ui->hintsChoice->setCurrentIndex(roomSettings["hints"].i());
+}
+
+void MainWindow::modifySettings()
+{
+	if (host)
+		auto response = cpr::Put(
+			cpr::Url{ "http://localhost:13034/modifySettings" },
+			cpr::Payload{
+				{ "roomcode", roomcode},
+				{ "time", std::to_string(ui->timeChoice->currentIndex())},
+				{ "language", std::to_string(ui->languageChoice->currentIndex())},
+				{ "noPlayers", std::to_string(ui->noPlayersChoice->currentIndex())},
+				{ "noWords", std::to_string(ui->noWordsChoice->currentIndex())},
+				{ "hints", std::to_string(ui->hintsChoice->currentIndex())},
+			}
+	);
+}
+
+void MainWindow::on_timeChoice_currentTextChanged()
+{
+	modifySettings();
+}
+
+void MainWindow::on_languageChoice_currentTextChanged()
+{
+	modifySettings();
+}
+
+void MainWindow::on_noPlayersChoice_currentTextChanged()
+{
+	modifySettings();
+}
+
+void MainWindow::on_noWordsChoice_currentTextChanged()
+{
+	modifySettings();
+}
+
+void MainWindow::on_hintsChoice_currentTextChanged()
+{
+	modifySettings();
 }
