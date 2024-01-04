@@ -327,8 +327,15 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 		if (gameState == ConvertStringToGameState("MeetingRoom") || gameState == ConvertStringToGameState("InGame"))
 			if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
 			{
-				QString userGuess = ui->username->text() + ": " + ui->guess->text();
-				ui->guessList->addItem(userGuess);
+				userGuess = QString::fromStdString(username) + ": " + ui->guess->text();
+				auto response = cpr::Put(
+					cpr::Url{ "http://localhost:13034/addGuess" },
+					cpr::Payload{
+						{ "roomcode", roomcode},
+						{ "guess", userGuess.toStdString()}
+					});
+				QtConcurrent::run([this]() {GetGuessesInChat(); });
+				timer->start(100);
 				ui->guess->clear();
 			}
 	}
@@ -652,6 +659,7 @@ void MainWindow::createThread()
 	QtConcurrent::run([this]() {GetPlayersInRoom(); });
 	if (!host)
 		QtConcurrent::run([this]() {GetSettings(); });
+	QtConcurrent::run([this]() {GetGuessesInChat(); });
 }
 
 void MainWindow::GetPlayersInRoom()
@@ -680,6 +688,21 @@ void MainWindow::GetSettings()
 	ui->hintsChoice->setCurrentIndex(roomSettings["hints"].i());
 }
 
+void MainWindow::GetGuessesInChat()
+{
+	std::string url = "http://localhost:13034/" + roomcode + "/guesses";
+	auto response = cpr::Get(cpr::Url{ url });
+	auto guessList = crow::json::load(response.text);
+	if (ui->guessList->count() != guessList["noGuesses"].i())
+		for (int index = ui->guessList->count(); index < guessList["noGuesses"].i(); index++)
+		{
+			std::string key = "guess" + std::to_string(index);
+			std::string text = guessList[key].s();
+			replaceCharacters(text);
+			ui->guessList->addItem(QString::fromStdString(text));
+		}
+}
+
 void MainWindow::modifySettings()
 {
 	if (host)
@@ -694,6 +717,34 @@ void MainWindow::modifySettings()
 				{ "hints", std::to_string(ui->hintsChoice->currentIndex())},
 			}
 	);
+}
+
+void MainWindow::replaceCharacters(std::string& text)
+{
+	for (int index = 0; index < text.size(); index++)
+	{
+		if (text[index] == '%')
+		{
+			if (text[index + 1] == '2' && text[index + 2] == '0')
+				text.replace(index, 3, " ");
+			if (text[index + 1] == '2' && text[index + 2] == '1')
+				text.replace(index, 3, "!");
+			if (text[index + 1] == '3' && text[index + 2] == 'F')
+				text.replace(index, 3, "?");
+			if (text[index + 1] == '2' && text[index + 2] == 'C')
+				text.replace(index, 3, ",");
+			if (text[index + 1] == '2' && text[index + 2] == 'A')
+				text.replace(index, 3, "*");
+			if (text[index + 1] == '3' && text[index + 2] == 'A')
+				text.replace(index, 3, ":");
+			if (text[index + 1] == '2' && text[index + 2] == '8')
+				text.replace(index, 3, "(");
+			if (text[index + 1] == '2' && text[index + 2] == '9')
+				text.replace(index, 3, ")");
+			if (text[index + 1] == '5' && text[index + 2] == 'E')
+				text.replace(index, 3, "^");
+		}
+	}
 }
 
 void MainWindow::on_timeChoice_currentTextChanged()

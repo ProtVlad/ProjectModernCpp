@@ -134,6 +134,28 @@ int main()
 			return crow::json::wvalue{  };
 		});
 
+	CROW_ROUTE(app, "/<string>/guesses")([&games](std::string roomcode)
+		{
+			crow::json::wvalue guessesJson;
+			for (const auto& game : games)
+				if (game.GetRoomcode() == roomcode)
+				{
+					guessesJson["noGuesses"] = game.GetGuesses().size();
+					std::string key;
+					for (int index = 0; index < game.GetGuesses().size(); index++)
+					{
+						key = "guess" + std::to_string(index);
+						guessesJson[key] = game.GetGuesses()[index];
+					}
+					break;
+				}
+			return crow::json::wvalue{ guessesJson };
+		});
+
+	auto& addGuessPut = CROW_ROUTE(app, "/addGuess")
+		.methods(crow::HTTPMethod::PUT);
+	addGuessPut(AddGuessHandler(games));
+
 	auto& modifySettingsPut = CROW_ROUTE(app, "/modifySettings")
 		.methods(crow::HTTPMethod::PUT);
 	modifySettingsPut(ModifySettingsHandler(games));

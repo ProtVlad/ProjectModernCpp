@@ -114,3 +114,13 @@ public:
 private:
 	std::vector<Game>& m_games;
 };
+
+class AddGuessHandler {
+public:
+	AddGuessHandler(std::vector<Game>& games);
+
+	crow::response operator() (const crow::request& req) const;
+
+private:
+	std::vector<Game>& m_games;
+};

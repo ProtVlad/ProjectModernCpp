@@ -77,6 +77,7 @@ private:
     QTimer* timer;
     std::vector<std::string> players;
     bool host = false;
+    QString userGuess;
 
 private:
     void colorChange(QMouseEvent* e);
@@ -86,6 +87,8 @@ private:
     void undo();
     void GetPlayersInRoom();
     void GetSettings();
+    void GetGuessesInChat();
     void modifySettings();
+    void replaceCharacters(std::string &text);
 };
 #endif // MAINWINDOW_H

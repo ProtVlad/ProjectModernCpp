@@ -18,6 +18,7 @@ public:
 	const uint16_t GetIndexDrawer() const;
 	const Settings GetSettings() const;
 	const std::vector<std::string>& GetUsers() const;
+	const std::vector<std::string>& GetGuesses() const;
 	//const std::vector<std::string>& GetWordList();
 	//const std::vector<std::string>& GetWordChoices();
 	//const Chat& GetChat();
@@ -31,6 +32,7 @@ public:
 	//void SetChat(const Chat& chat);
 
 	void AddPlayer(const std::string& user);
+	void AddGuess(const std::string& guess);
 	//void ReadWordList(std::ifstream& file);
 	std::vector<uint16_t> TotalScore(const std::vector<std::vector<uint16_t>>& scores);
 	uint16_t NumberLines(std::ifstream& file);
@@ -45,5 +47,6 @@ private:
 	uint16_t m_indexDrawer;
 	Settings m_settings;
 	std::vector<std::string> m_users;
+	std::vector<std::string> m_guesses;
 };
 
