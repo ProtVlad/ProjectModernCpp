@@ -7,11 +7,11 @@ class Settings
 public:
 	Settings();
 	Settings(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
-	uint16_t GetTime();
-	uint16_t GetLanguage();
-	uint16_t GetMaxNumberPlayers();
-	uint16_t GetNumberWords();
-	uint16_t GetNumberHints();
+	const uint16_t GetTime();
+	const uint16_t GetLanguage();
+	const uint16_t GetMaxNumberPlayers();
+	const uint16_t GetNumberWords();
+	const uint16_t GetNumberHints();
 	const uint16_t GetNumberRounds();
 	void SetTime(uint16_t);
 	void SetLanguage(uint16_t);

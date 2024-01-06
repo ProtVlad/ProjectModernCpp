@@ -21,27 +21,27 @@ Settings::Settings(uint16_t time,
 {
 }
 
-uint16_t Settings::GetTime()
+const uint16_t Settings::GetTime()
 {
 	return m_time;
 }
 
-uint16_t Settings::GetLanguage()
+const uint16_t Settings::GetLanguage()
 {
 	return m_language;
 }
 
-uint16_t Settings::GetMaxNumberPlayers()
+const uint16_t Settings::GetMaxNumberPlayers()
 {
 	return m_maxNumberPlayers;
 }
 
-uint16_t Settings::GetNumberWords()
+const uint16_t Settings::GetNumberWords()
 {
 	return m_numberWords;
 }
 
-uint16_t Settings::GetNumberHints()
+const uint16_t Settings::GetNumberHints()
 {
 	return m_numberHints;
 }
