@@ -127,7 +127,8 @@ int main()
 					{"language",game.GetSettings().GetLanguage()},
 					{"maxNoPlayers",game.GetSettings().GetMaxNumberPlayers()},
 					{"noWords",game.GetSettings().GetNumberWords()},
-					{"hints",game.GetSettings().GetNumberHints()}
+					{"hints",game.GetSettings().GetNumberHints()},
+					{"noRounds",game.GetSettings().GetNumberRounds()}
 					};
 					return crow::json::wvalue{ settingsJson };
 				}

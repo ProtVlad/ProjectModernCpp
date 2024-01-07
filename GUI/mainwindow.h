@@ -48,6 +48,7 @@ private slots:
     void on_noPlayersChoice_currentTextChanged();
     void on_noWordsChoice_currentTextChanged();
     void on_hintsChoice_currentTextChanged();
+    void on_roundsChoice_currentTextChanged();
 
 private:
     Ui::MainWindow* ui;

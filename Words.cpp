@@ -714,14 +714,16 @@ crow::response ModifySettingsHandler::operator()(const crow::request& req) const
 			auto noPlayersIter = bodyArgs.find("noPlayers");
 			auto noWordsIter = bodyArgs.find("noWords");
 			auto hintsIter = bodyArgs.find("hints");
+			auto noRoundsIter = bodyArgs.find("noRounds");
 			if (roomcodeIter != end && timeIter != end && languageIter != end && noPlayersIter != end
-				&& noWordsIter != end && hintsIter != end)
+				&& noWordsIter != end && hintsIter != end && noRoundsIter != end)
 			{
 				Settings settings(static_cast<uint16_t>(std::stoi(timeIter->second)), 
 					static_cast<uint16_t>(std::stoi(languageIter->second)),
 					static_cast<uint16_t>(std::stoi(noPlayersIter->second)),
 					static_cast<uint16_t>(std::stoi(noWordsIter->second)),
-					static_cast<uint16_t>(std::stoi(hintsIter->second)));
+					static_cast<uint16_t>(std::stoi(hintsIter->second)),
+					static_cast<uint16_t>(std::stoi(noRoundsIter->second)));
 				m_games[index].SetSettings(settings);
 			}
 			break;

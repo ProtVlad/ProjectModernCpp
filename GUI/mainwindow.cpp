@@ -314,6 +314,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 					ui->noPlayersChoice->setEnabled(false);
 					ui->noWordsChoice->setEnabled(false);
 					ui->hintsChoice->setEnabled(false);
+					ui->roundsChoice->setEnabled(false);
 					gameState = ConvertStringToGameState("MeetingRoom");
 					setVisibilities(gameState);
 					GetPlayersInRoom();
@@ -397,6 +398,8 @@ void MainWindow::setVisibilities(GameState state)
 		bigLogo->setScaledContents(true);
 		bigLogo->setVisible(true);
 		logo->setVisible(false);
+		ui->roundsChoice->setVisible(false);
+		ui->roundsLabel->setVisible(false);
 		ui->hintsChoice->setVisible(false);
 		ui->hintsLabel->setVisible(false);
 		ui->noPlayersChoice->setVisible(false);
@@ -469,6 +472,8 @@ void MainWindow::setVisibilities(GameState state)
 	}
 	if (state == ConvertStringToGameState("MeetingRoom"))
 	{
+		ui->roundsChoice->setVisible(true);
+		ui->roundsLabel->setVisible(true);
 		ui->hintsChoice->setVisible(true);
 		ui->hintsLabel->setVisible(true);
 		ui->noPlayersChoice->setVisible(true);
@@ -497,6 +502,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->clearButton->setVisible(true);
 		ui->undoButton->setVisible(true);
 		bigLogo->setVisible(false);
+		ui->roundsChoice->setVisible(false);
+		ui->roundsLabel->setVisible(false);
 		ui->hintsChoice->setVisible(false);
 		ui->hintsLabel->setVisible(false);
 		ui->noPlayersChoice->setVisible(false);
@@ -553,8 +560,8 @@ void MainWindow::undo()
 
 void MainWindow::on_startButton_clicked()
 {
-	if (ui->hintsChoice->currentText() != '-' && ui->noPlayersChoice->currentText() != '-' && ui->noWordsChoice->currentText() != '-' &&
-		ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
+	if (ui->roundsChoice->currentText() != '-' && ui->hintsChoice->currentText() != '-' && ui->noPlayersChoice->currentText() != '-' &&
+		ui->noWordsChoice->currentText() != '-' && ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
 	{
 		gameState = ConvertStringToGameState("InGame");
 		setVisibilities(gameState);
@@ -580,6 +587,7 @@ void MainWindow::on_createButton_clicked()
 	ui->noPlayersChoice->setEnabled(true);
 	ui->noWordsChoice->setEnabled(true);
 	ui->hintsChoice->setEnabled(true);
+	ui->roundsChoice->setEnabled(true);
 	gameState = ConvertStringToGameState("MeetingRoom");
 	setVisibilities(gameState);
 	GetPlayersInRoom();
@@ -686,6 +694,7 @@ void MainWindow::GetSettings()
 	ui->noPlayersChoice->setCurrentIndex(roomSettings["maxNoPlayers"].i());
 	ui->noWordsChoice->setCurrentIndex(roomSettings["noWords"].i());
 	ui->hintsChoice->setCurrentIndex(roomSettings["hints"].i());
+	ui->roundsChoice->setCurrentIndex(roomSettings["noRounds"].i());
 }
 
 void MainWindow::GetGuessesInChat()
@@ -715,6 +724,7 @@ void MainWindow::modifySettings()
 				{ "noPlayers", std::to_string(ui->noPlayersChoice->currentIndex())},
 				{ "noWords", std::to_string(ui->noWordsChoice->currentIndex())},
 				{ "hints", std::to_string(ui->hintsChoice->currentIndex())},
+				{ "noRounds", std::to_string(ui->roundsChoice->currentIndex())}
 			}
 	);
 }
@@ -768,6 +778,11 @@ void MainWindow::on_noWordsChoice_currentTextChanged()
 }
 
 void MainWindow::on_hintsChoice_currentTextChanged()
+{
+	modifySettings();
+}
+
+void MainWindow::on_roundsChoice_currentTextChanged()
 {
 	modifySettings();
 }
