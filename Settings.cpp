@@ -12,41 +12,43 @@ Settings::Settings(uint16_t time,
 	uint16_t language,
 	uint16_t numberPlayers,
 	uint16_t numberWords,
-	uint16_t numberHints):
+	uint16_t numberHints,
+	uint16_t numberRounds):
 	m_time(time),
 	m_language(language),
 	m_maxNumberPlayers(numberPlayers),
 	m_numberWords(numberWords),
-	m_numberHints(numberHints)
+	m_numberHints(numberHints),
+	m_numberRounds(numberRounds)
 {
 }
 
-const uint16_t Settings::GetTime()
+const uint16_t Settings::GetTime() const
 {
 	return m_time;
 }
 
-const uint16_t Settings::GetLanguage()
+const uint16_t Settings::GetLanguage() const
 {
 	return m_language;
 }
 
-const uint16_t Settings::GetMaxNumberPlayers()
+const uint16_t Settings::GetMaxNumberPlayers() const
 {
 	return m_maxNumberPlayers;
 }
 
-const uint16_t Settings::GetNumberWords()
+const uint16_t Settings::GetNumberWords() const
 {
 	return m_numberWords;
 }
 
-const uint16_t Settings::GetNumberHints()
+const uint16_t Settings::GetNumberHints() const
 {
 	return m_numberHints;
 }
 
-const uint16_t Settings::GetNumberRounds()
+const uint16_t Settings::GetNumberRounds() const
 {
 	return m_numberRounds;
 }

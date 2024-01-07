@@ -676,7 +676,7 @@ crow::response AddGameHandler::operator()(const crow::request& req) const
 
 	if (roomcodeIter != end && hostIter != end)
 	{
-		Settings settings(0, 0, 0, 0, 0);
+		Settings settings(0, 0, 0, 0, 0,0);
 		Game game(roomcodeIter->second, 0, 0, settings);
 		game.AddPlayer(hostIter->second);
 		m_games.push_back(game);
