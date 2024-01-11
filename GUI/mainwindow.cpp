@@ -58,7 +58,23 @@ void MainWindow::mousePressEvent(QMouseEvent* e)
 			leftButton = true;
 
 			if (!surprise)
+			{
 				points.push_back({ e->pos(), color, size, true });
+				QtConcurrent::run([this]() {
+					auto response = cpr::Put(
+						cpr::Url{ "http://localhost:13034/addPoints" },
+						cpr::Payload{
+							{ "roomcode", roomcode},
+							{ "xCoord", std::to_string(std::get<0>(points[points.size() - 1]).x())},
+							{ "yCoord", std::to_string(std::get<0>(points[points.size() - 1]).y())},
+							{ "rColor", std::to_string(std::get<1>(points[points.size() - 1]).red())},
+							{ "gColor", std::to_string(std::get<1>(points[points.size() - 1]).green())},
+							{ "bColor", std::to_string(std::get<1>(points[points.size() - 1]).blue())},
+							{ "brushSize", std::to_string(std::get<2>(points[points.size() - 1]))},
+							{ "inWindow", std::to_string(std::get<3>(points[points.size() - 1]))}
+						});
+					});
+			}
 			else
 			{
 				colorChange(e);
@@ -92,6 +108,20 @@ void MainWindow::mouseMoveEvent(QMouseEvent* e)
 				if (!surprise)
 				{
 					points.push_back({ e->pos(), color, size, verifyOutsideWindow });
+					QtConcurrent::run([this]() {
+						auto response = cpr::Put(
+							cpr::Url{ "http://localhost:13034/addPoints" },
+							cpr::Payload{
+								{ "roomcode", roomcode},
+								{ "xCoord", std::to_string(std::get<0>(points[points.size() - 1]).x())},
+								{ "yCoord", std::to_string(std::get<0>(points[points.size() - 1]).y())},
+								{ "rColor", std::to_string(std::get<1>(points[points.size() - 1]).red())},
+								{ "gColor", std::to_string(std::get<1>(points[points.size() - 1]).green())},
+								{ "bColor", std::to_string(std::get<1>(points[points.size() - 1]).blue())},
+								{ "brushSize", std::to_string(std::get<2>(points[points.size() - 1]))},
+								{ "inWindow", std::to_string(std::get<3>(points[points.size() - 1]))}
+							});
+						});
 				}
 				else
 					colorChange(e);
@@ -392,6 +422,20 @@ void MainWindow::colorChange(QMouseEvent* e)
 		oneAction = true;
 	}
 	points.push_back({ e->pos(),surpriseStatus,size,verifyOutsideWindow });
+	QtConcurrent::run([this]() {
+		auto response = cpr::Put(
+			cpr::Url{ "http://localhost:13034/addPoints" },
+			cpr::Payload{
+				{ "roomcode", roomcode},
+				{ "xCoord", std::to_string(std::get<0>(points[points.size() - 1]).x())},
+				{ "yCoord", std::to_string(std::get<0>(points[points.size() - 1]).y())},
+				{ "rColor", std::to_string(std::get<1>(points[points.size() - 1]).red())},
+				{ "gColor", std::to_string(std::get<1>(points[points.size() - 1]).green())},
+				{ "bColor", std::to_string(std::get<1>(points[points.size() - 1]).blue())},
+				{ "brushSize", std::to_string(std::get<2>(points[points.size() - 1]))},
+				{ "inWindow", std::to_string(std::get<3>(points[points.size() - 1]))}
+			});
+		});
 }
 
 bool MainWindow::noText(QString text)
@@ -721,6 +765,7 @@ void MainWindow::createThread()
 		QtConcurrent::run([this]() {GetSettings(); });
 		QtConcurrent::run([this]() {GetGameState(); });
 		setVisibilities(gameState);
+		QtConcurrent::run([this]() {GetDrawing(); });
 	}
 	QtConcurrent::run([this]() {GetGuessesInChat(); });
 }
@@ -777,6 +822,27 @@ void MainWindow::GetGameState()
 			if (game["gameState"].s() != ConvertGameStateToString(gameState))
 				gameState = ConvertStringToGameState(game["gameState"].s());
 			break;
+		}
+}
+
+void MainWindow::GetDrawing()
+{
+	std::string url = "http://localhost:13034/" + roomcode + "/points";
+	auto response = cpr::Get(cpr::Url{ url });
+	auto pointsList = crow::json::load(response.text);
+	if (points.size() != pointsList["noPoints"].i())
+		for (int index = points.size(); index < pointsList["noPoints"].i(); index++)
+		{
+			std::string keyX = "x" + std::to_string(index);
+			std::string keyY = "y" + std::to_string(index);
+			std::string keyR = "red" + std::to_string(index);
+			std::string keyG = "green" + std::to_string(index);
+			std::string keyB = "blue" + std::to_string(index);
+			std::string keyBrushSize = "brushSize" + std::to_string(index);
+			std::string keyInWindow = "inWindow" + std::to_string(index);
+			points.push_back({ {static_cast<int>(pointsList[keyX].i()),static_cast<int>(pointsList[keyY].i())},
+				{static_cast<int>(pointsList[keyR].i()), static_cast<int>(pointsList[keyG].i()), static_cast<int>(pointsList[keyB].i())},
+				static_cast<int>(pointsList[keyBrushSize].i()),pointsList[keyInWindow].b() });
 		}
 }
 

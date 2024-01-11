@@ -732,9 +732,9 @@ crow::response AddPointsHandler::operator()(const crow::request& req) const
 			{
 				Points point(static_cast<uint16_t>(std::stoi(xIter->second)),
 					static_cast<uint16_t>(std::stoi(yIter->second)),
-					static_cast<uint8_t>(std::stoi(RIter->second)),
-					static_cast<uint8_t>(std::stoi(GIter->second)),
-					static_cast<uint8_t>(std::stoi(BIter->second)),
+					static_cast<uint16_t>(std::stoi(RIter->second)),
+					static_cast<uint16_t>(std::stoi(GIter->second)),
+					static_cast<uint16_t>(std::stoi(BIter->second)),
 					static_cast<uint8_t>(std::stoi(brushSizeIter->second)),
 					static_cast<bool>(std::stoi(inWindowIter->second)));
 
