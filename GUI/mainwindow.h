@@ -13,6 +13,7 @@
 #include <cpr/cpr.h>
 #include <crow.h>
 #include <QtConcurrent>
+#include <random>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -91,5 +92,7 @@ private:
     void GetGuessesInChat();
     void modifySettings();
     void replaceCharacters(std::string &text);
+    uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
+    std::string GenerateCode();
 };
 #endif // MAINWINDOW_H

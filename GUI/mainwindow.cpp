@@ -757,6 +757,32 @@ void MainWindow::replaceCharacters(std::string& text)
 	}
 }
 
+uint16_t MainWindow::GenerateRandomNumber(uint16_t min, uint16_t max)
+{
+	std::random_device rd;
+	std::mt19937 generator(rd());
+	std::uniform_int_distribution<uint16_t> distribution(min, max);
+	int randomValue = distribution(generator);
+	return randomValue;
+}
+
+std::string MainWindow::GenerateCode()
+{
+	std::string code;
+	int x;
+	for (int i = 0;i < 6;i++)
+	{
+		x = GenerateRandomNumber(1, 3);
+		if (x == 1)
+			code.push_back(char(GenerateRandomNumber(48, 57)));
+		else if (x == 2)
+			code.push_back(char(GenerateRandomNumber(65, 90)));
+		else
+			code.push_back(char(GenerateRandomNumber(97, 122)));
+	}
+	return code;
+}
+
 void MainWindow::on_timeChoice_currentTextChanged()
 {
 	modifySettings();
