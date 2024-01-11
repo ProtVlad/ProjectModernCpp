@@ -302,9 +302,13 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 			auto games = crow::json::load(responseGames.text);
 			auto players = crow::json::load(responsePlayers.text);
 			auto settings = crow::json::load(responseSettings.text);
-			//bool existaJoc-false
+			ui->roomFull->setVisible(false);
+			ui->doesntExist->setVisible(false);
+			bool gameExists = false;
 			for (const auto& game : games)
 				if (game["roomcode"] == ui->roomCode->text().toStdString())
+				{
+					gameExists = true;
 					if (players["noPlayers"].i() < settings["maxNoPlayers"].i() + 1)
 					{
 
@@ -326,14 +330,15 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 						setVisibilities(gameState);
 						GetPlayersInRoom();
 						timer->start(100);
-						//existaJoc-true
 						break;
 					}
 					else
 						ui->roomFull->setVisible(true);
+				}
+			if (!gameExists)
+				ui->doesntExist->setVisible(true);
 
 			ui->roomCode->clear();
-			//daca existaJoc-false atunci afisezi eroarea;clear la casuta
 			update();
 		}
 		if (gameState == ConvertStringToGameState("MeetingRoom") || gameState == ConvertStringToGameState("InGame"))
@@ -450,6 +455,7 @@ void MainWindow::setVisibilities(GameState state)
 		ui->enterCodeTextLabel->setVisible(false);
 		ui->generatedCodeLabel->setVisible(false);
 		ui->roomFull->setVisible(false);
+		ui->doesntExist->setVisible(false);
 
 	}
 	if (state == ConvertStringToGameState("LoginOrRegister"))
@@ -516,7 +522,6 @@ void MainWindow::setVisibilities(GameState state)
 		ui->signOutButton->setVisible(false);
 		ui->roomCode->setVisible(false);
 		ui->codeLabel->setVisible(false);
-		ui->roomFull->setVisible(false);
 	}
 	if (state == ConvertStringToGameState("InGame"))
 	{
@@ -804,7 +809,7 @@ std::string MainWindow::GenerateCode()
 {
 	std::string code;
 	int x;
-	for (int i = 0;i < 6;i++)
+	for (int i = 0; i < 6; i++)
 	{
 		x = GenerateRandomNumber(1, 3);
 		if (x == 1)
