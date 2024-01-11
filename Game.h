@@ -10,8 +10,11 @@
 class Game
 {
 public:
+	Game();
+
+
 	Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings
-	/*std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat*/);
+	/* std::vector<uint16_t> anteriorWordsChoices, Chat chat*/);
 
 	const std::string& GetRoomcode() const;
 	const uint16_t GetTimer() const;

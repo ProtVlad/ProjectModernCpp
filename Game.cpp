@@ -1,16 +1,18 @@
 #include "Game.h"
-#include <ctime>
 #include <random>
 
-Game::Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings
-/*std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat*/) :
+Game::Game()
+{
+}
+
+Game::Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings/*,
+std::vector<uint16_t> anteriorWordsChoices/, Chat chat */) :
 	m_roomcode(roomcode),
 	m_timer(timer),
 	m_indexDrawer(indexDrawer),
 	m_settings(settings)
-	//m_wordList(wordList),
-	//m_wordChoices(wordChoices),
-	//m_chat(chat)
+	/*m_anteriorWordsChoices(anteriorWordsChoices),
+	m_chat(chat)*/
 {}
 
 const std::string& Game::GetRoomcode() const

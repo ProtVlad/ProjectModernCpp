@@ -19,7 +19,6 @@ int main()
 	auto initialWordsCount = db.count<Words>();
 	if (initialWordsCount == 0)
 		populateListWords(db);
-	//std::cout << db.count<Words>();
 
 	crow::SimpleApp app;
 	CROW_ROUTE(app, "/")([]() {
