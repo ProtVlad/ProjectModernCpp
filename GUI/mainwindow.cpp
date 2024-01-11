@@ -436,6 +436,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->wrongPassowrd->setVisible(false);
 		ui->notRegistered->setVisible(false);
 		ui->userRegistered->setVisible(false);
+		ui->enterCodeTextLabel->setVisible(false);
+
 	}
 	if (state == ConvertStringToGameState("LoginOrRegister"))
 	{
@@ -446,6 +448,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->password->setVisible(true);
 		ui->loginButton->setVisible(false);
 		ui->registerButton->setVisible(false);
+		ui->enterCodeTextLabel->setVisible(false);
+
 	}
 	if (state == ConvertStringToGameState("LoggedIn"))
 	{
@@ -460,6 +464,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->loginText->setVisible(false);
 		ui->wrongPassowrd->setVisible(false);
 		ui->notRegistered->setVisible(false);
+		ui->enterCodeTextLabel->setVisible(false);
+
 	}
 	if (state == ConvertStringToGameState("EnterCode"))
 	{
@@ -469,6 +475,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->joinButton->setVisible(false);
 		ui->signOutButton->setVisible(false);
 		ui->backButton->setVisible(false);
+		ui->enterCodeTextLabel->setVisible(false);
+
 	}
 	if (state == ConvertStringToGameState("MeetingRoom"))
 	{
@@ -493,6 +501,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->signOutButton->setVisible(false);
 		ui->roomCode->setVisible(false);
 		ui->codeLabel->setVisible(false);
+		ui->generatedCodeLabel->setVisible(true);
+		ui->enterCodeTextLabel->setVisible(true);
 	}
 	if (state == ConvertStringToGameState("InGame"))
 	{
@@ -516,6 +526,10 @@ void MainWindow::setVisibilities(GameState state)
 		ui->timeLabel->setVisible(false);
 		ui->startButton->setVisible(false);
 		ui->errorLabel->setVisible(false);
+		ui->generatedCodeLabel->setVisible(false);
+		ui->enterCodeTextLabel->setVisible(false);
+
+
 	}
 
 }
@@ -574,6 +588,8 @@ void MainWindow::on_startButton_clicked()
 
 void MainWindow::on_createButton_clicked()
 {
+	roomcode = GenerateCode();
+	ui->generatedCodeLabel->setText(QString::fromStdString(roomcode));
 	auto response = cpr::Put(
 		cpr::Url{ "http://localhost:13034/addGame" },
 		cpr::Payload{

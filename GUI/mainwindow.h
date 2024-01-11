@@ -75,7 +75,7 @@ private:
     QLabel* logo;
     QString password;
     std::string username;
-    std::string roomcode = "test";
+    std::string roomcode;
     QTimer* timer;
     std::vector<std::string> players;
     bool host = false;

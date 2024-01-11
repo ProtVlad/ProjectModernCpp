@@ -1,19 +1,16 @@
 #include "Game.h"
+//#include <ctime>
 #include <random>
-#include "Words.h"
 
-Game::Game()
-{
-}
-
-Game::Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings/*,
-std::vector<uint16_t> anteriorWordsChoices/, Chat chat */) :
+Game::Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings
+/*std::vector<std::string> wordList, std::vector<std::string> wordChoices, Chat chat*/) :
 	m_roomcode(roomcode),
 	m_timer(timer),
 	m_indexDrawer(indexDrawer),
 	m_settings(settings)
-	/*m_anteriorWordsChoices(anteriorWordsChoices),
-	m_chat(chat)*/
+	//m_wordList(wordList),
+	//m_wordChoices(wordChoices),
+	//m_chat(chat)
 {}
 
 const std::string& Game::GetRoomcode() const
@@ -148,16 +145,16 @@ uint16_t Game::GenerateRandomNumber(uint16_t min, uint16_t max)
 	return randomValue;
 }
 
-void Game::ChooseWords()
+/*void Game::ChooseWords()
 {
-	uint16_t min = 1;
-	Storage db = createStorage("word.sqlite");
-	uint16_t max = db.count<Words>();
+	uint16_t min = 0;
+	std::ifstream file("RoWords.txt");
+	uint16_t max = NumberLines(file);
 	uint16_t nr = m_settings.GetNumberWords();
 	for (uint16_t index = 0; index < nr; index++)
 	{
 		uint16_t p = GenerateRandomNumber(min, max);
-		int cuv = db.get<Words>(p).id;
-		m_wordsChoices.emplace_back(cuv);
+		std::string cuv = m_wordList[p];
+		m_wordChoices.emplace_back(cuv);
 	}
-}
+}*/
