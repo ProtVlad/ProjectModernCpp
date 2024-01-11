@@ -77,7 +77,7 @@ int main()
 			{
 				crow::json::wvalue gameJson{
 					{"roomcode",game.GetRoomcode()},
-					{"timer",game.GetTimer()},
+					{"timer",game.GetTimer().GetDuration()},
 					{"indexDrawer",game.GetIndexDrawer()},
 					{"gameState",game.GetGameState()}
 				};
