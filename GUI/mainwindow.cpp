@@ -456,6 +456,7 @@ void MainWindow::setVisibilities(GameState state)
 		ui->generatedCodeLabel->setVisible(false);
 		ui->roomFull->setVisible(false);
 		ui->doesntExist->setVisible(false);
+		ui->notEnoughPlayers->setVisible(false);
 
 	}
 	if (state == ConvertStringToGameState("LoginOrRegister"))
@@ -547,6 +548,7 @@ void MainWindow::setVisibilities(GameState state)
 		ui->errorLabel->setVisible(false);
 		ui->generatedCodeLabel->setVisible(false);
 		ui->enterCodeTextLabel->setVisible(false);
+		ui->notEnoughPlayers->setVisible(false);
 
 
 	}
@@ -593,15 +595,23 @@ void MainWindow::undo()
 
 void MainWindow::on_startButton_clicked()
 {
-	if (ui->roundsChoice->currentText() != '-' && ui->hintsChoice->currentText() != '-' && ui->noPlayersChoice->currentText() != '-' &&
-		ui->noWordsChoice->currentText() != '-' && ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
+	if (players.size() > 1)
 	{
-		gameState = ConvertStringToGameState("InGame");
-		setVisibilities(gameState);
-		update();
+		if (ui->roundsChoice->currentText() != '-' && ui->hintsChoice->currentText() != '-' && ui->noPlayersChoice->currentText() != '-' &&
+			ui->noWordsChoice->currentText() != '-' && ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
+		{
+			gameState = ConvertStringToGameState("InGame");
+			setVisibilities(gameState);
+			update();
+		}
+		else
+		{
+			ui->notEnoughPlayers->setVisible(false);
+			ui->errorLabel->setVisible(true);
+		}
 	}
 	else
-		ui->errorLabel->setVisible(true);
+		ui->notEnoughPlayers->setVisible(true);
 }
 
 
