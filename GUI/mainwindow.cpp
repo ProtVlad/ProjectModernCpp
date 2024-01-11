@@ -601,6 +601,12 @@ void MainWindow::on_startButton_clicked()
 			ui->noWordsChoice->currentText() != '-' && ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
 		{
 			gameState = ConvertStringToGameState("InGame");
+			auto response = cpr::Put(
+				cpr::Url{ "http://localhost:13034/modifyGameState" },
+				cpr::Payload{
+					{ "roomcode", roomcode},
+					{ "gameState", ConvertGameStateToString(gameState)}
+				});
 			setVisibilities(gameState);
 			update();
 		}
@@ -711,7 +717,11 @@ void MainWindow::createThread()
 {
 	QtConcurrent::run([this]() {GetPlayersInRoom(); });
 	if (!host)
+	{
 		QtConcurrent::run([this]() {GetSettings(); });
+		QtConcurrent::run([this]() {GetGameState(); });
+		setVisibilities(gameState);
+	}
 	QtConcurrent::run([this]() {GetGuessesInChat(); });
 }
 
@@ -754,6 +764,19 @@ void MainWindow::GetGuessesInChat()
 			std::string text = guessList[key].s();
 			replaceCharacters(text);
 			ui->guessList->addItem(QString::fromStdString(text));
+		}
+}
+
+void MainWindow::GetGameState()
+{
+	auto response = cpr::Get(cpr::Url{ "http://localhost:13034/games" });
+	auto games = crow::json::load(response.text);
+	for (const auto& game : games)
+		if (game["roomcode"] == roomcode)
+		{
+			if (game["gameState"].s() != ConvertGameStateToString(gameState))
+				gameState = ConvertStringToGameState(game["gameState"].s());
+			break;
 		}
 }
 

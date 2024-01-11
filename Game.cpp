@@ -6,12 +6,13 @@ Game::Game()
 {
 }
 
-Game::Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings/*,
+Game::Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings, std::string gameState/*,
 std::vector<uint16_t> anteriorWordsChoices/, Chat chat */) :
 	m_roomcode(roomcode),
 	m_timer(timer),
 	m_indexDrawer(indexDrawer),
-	m_settings(settings)
+	m_settings(settings),
+	m_gameState(gameState)
 	/*m_anteriorWordsChoices(anteriorWordsChoices),
 	m_chat(chat)*/
 {}
@@ -45,6 +46,12 @@ const std::vector<std::string>& Game::GetGuesses() const
 {
 	return m_guesses;
 }
+
+const std::string& Game::GetGameState() const
+{
+	return m_gameState;
+}
+
 const std::vector<Points>& Game::GetPoints() const
 {
 	return m_points;
@@ -84,6 +91,11 @@ void Game::SetIndexDrawer(const uint16_t indexDrawer)
 void Game::SetSettings(const Settings settings)
 {
 	m_settings = settings;
+}
+
+void Game::SetGameState(const std::string gameState)
+{
+	m_gameState = gameState;
 }
 
 /*void Game::SetWordList(const std::vector<std::string>& wordList)

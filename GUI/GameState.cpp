@@ -16,3 +16,20 @@ GameState ConvertStringToGameState(const std::string& gameState)
 		return GameState::InGame;
 	throw std::exception("GameState Invalid");
 }
+
+std::string ConvertGameStateToString(const GameState& gameState)
+{
+	if (gameState == GameState::MainMenu)
+		return "MainMenu";
+	if (gameState == GameState::LoginOrRegister)
+		return "LoginOrRegister";
+	if (gameState == GameState::LoggedIn)
+		return "LoggedIn";
+	if (gameState == GameState::EnterCode)
+		return "EnterCode";
+	if (gameState == GameState::MeetingRoom)
+		return "MeetingRoom";
+	if (gameState == GameState::InGame)
+		return "InGame";
+	throw std::exception("GameState Invalid");
+}

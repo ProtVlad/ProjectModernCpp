@@ -639,6 +639,11 @@ AddPointsHandler::AddPointsHandler(std::vector<Game>& games)
 {
 }
 
+ModifyGameStateHandler::ModifyGameStateHandler(std::vector<Game>& games)
+	: m_games{ games }
+{
+}
+
 crow::response AddChoosenWord::operator()(const crow::request& req) const
 {
 	auto bodyArgs = parseUrlArgs(req.body);
@@ -682,7 +687,7 @@ crow::response AddGameHandler::operator()(const crow::request& req) const
 	if (roomcodeIter != end && hostIter != end)
 	{
 		Settings settings(0, 0, 0, 0, 0,0);
-		Game game(roomcodeIter->second, 0, 0, settings);
+		Game game(roomcodeIter->second, 0, 0, settings, "MeetingRoom");
 		game.AddPlayer(hostIter->second);
 		m_games.push_back(game);
 	}
@@ -782,6 +787,23 @@ crow::response AddGuessHandler::operator()(const crow::request& req) const
 			auto guessIter = bodyArgs.find("guess");
 			if (roomcodeIter != end && guessIter != end)
 				m_games[index].AddGuess(guessIter->second);
+			break;
+		}
+
+	return crow::response(201);
+}
+
+crow::response ModifyGameStateHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto roomcodeIter = bodyArgs.find("roomcode");
+	for (int index = 0; index < m_games.size(); index++)
+		if (m_games[index].GetRoomcode() == roomcodeIter->second)
+		{
+			auto gameStateIter = bodyArgs.find("gameState");
+			if (roomcodeIter != end && gameStateIter != end)
+				m_games[index].SetGameState(gameStateIter->second);
 			break;
 		}
 

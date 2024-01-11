@@ -78,7 +78,8 @@ int main()
 				crow::json::wvalue gameJson{
 					{"roomcode",game.GetRoomcode()},
 					{"timer",game.GetTimer()},
-					{"indexDrawer",game.GetIndexDrawer()}
+					{"indexDrawer",game.GetIndexDrawer()},
+					{"gameState",game.GetGameState()}
 				};
 				/*crow::json::wvalue gameJson;
 				gameJson["roomcode"] = game.GetRoomcode();
@@ -200,6 +201,10 @@ int main()
 	auto& modifySettingsPut = CROW_ROUTE(app, "/modifySettings")
 		.methods(crow::HTTPMethod::PUT);
 	modifySettingsPut(ModifySettingsHandler(games));
+
+	auto& modifyGameStatePut = CROW_ROUTE(app, "/modifyGameState")
+		.methods(crow::HTTPMethod::PUT);
+	modifyGameStatePut(ModifyGameStateHandler(games));
 
 	app.port(13034).multithreaded().run();
 	return 0;

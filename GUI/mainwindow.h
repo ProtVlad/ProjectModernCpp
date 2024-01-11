@@ -90,6 +90,7 @@ private:
     void GetPlayersInRoom();
     void GetSettings();
     void GetGuessesInChat();
+    void GetGameState();
     void modifySettings();
     void replaceCharacters(std::string &text);
     uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);

@@ -11,4 +11,4 @@ enum class GameState : uint16_t
 	InGame
 };
 GameState ConvertStringToGameState(const std::string& gameState);
-
+std::string ConvertGameStateToString(const GameState& gameState);

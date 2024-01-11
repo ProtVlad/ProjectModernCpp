@@ -15,7 +15,7 @@ public:
 	Game();
 
 
-	Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings
+	Game(std::string roomcode, uint16_t timer, uint16_t indexDrawer, Settings settings, std::string gameState
 	/* std::vector<uint16_t> anteriorWordsChoices, Chat chat*/);
 
 	const std::string& GetRoomcode() const;
@@ -24,6 +24,7 @@ public:
 	const Settings GetSettings() const;
 	const std::vector<std::string>& GetUsers() const;
 	const std::vector<std::string>& GetGuesses() const;
+	const std::string& GetGameState() const;
 	const std::vector<Points>& GetPoints()const; 
 	//const std::vector<std::string>& GetWordList();
 	//const std::vector<std::string>& GetWordChoices();
@@ -33,6 +34,7 @@ public:
 	void SetTimer(const uint16_t timer);
 	void SetIndexDrawer(const uint16_t indexDrawer);
 	void SetSettings(const Settings settings);
+	void SetGameState(const std::string gameState);
 	//void SetWordList(const std::vector<std::string>& wordList);
 	//void SetWordChoices(const std::vector<std::string>& wordChoices);
 	//void SetChat(const Chat& chat);
@@ -57,6 +59,7 @@ private:
 	std::vector<std::string> m_guesses;
 	std::vector<uint16_t> m_anteriorWordsChoices;
 	std::vector<uint16_t> m_wordsChoices;
+	std::string m_gameState;
 	std::vector<Points> m_points;
 };
 
