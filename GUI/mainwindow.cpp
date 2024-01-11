@@ -295,33 +295,44 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 		}
 		if (gameState == ConvertStringToGameState("EnterCode"))
 		{
-			auto response = cpr::Get(cpr::Url{ "http://localhost:13034/games" });
-			auto games = crow::json::load(response.text);
+			roomcode = ui->roomCode->text().toStdString();
+			auto responseGames = cpr::Get(cpr::Url{ "http://localhost:13034/games" });
+			auto responsePlayers = cpr::Get(cpr::Url{ "http://localhost:13034/" + ui->roomCode->text().toStdString() + "/players" });
+			auto responseSettings = cpr::Get(cpr::Url{ "http://localhost:13034/" + ui->roomCode->text().toStdString() + "/settings" });
+			auto games = crow::json::load(responseGames.text);
+			auto players = crow::json::load(responsePlayers.text);
+			auto settings = crow::json::load(responseSettings.text);
 			//bool existaJoc-false
 			for (const auto& game : games)
 				if (game["roomcode"] == ui->roomCode->text().toStdString())
-				{
+					if (players["noPlayers"].i() < settings["maxNoPlayers"].i() + 1)
+					{
 
-					auto response2 = cpr::Put(
-						cpr::Url{ "http://localhost:13034/addPlayer" },
-						cpr::Payload{
-							{ "roomcode", ui->roomCode->text().toStdString()},
-							{ "user", username}
-						});
-					host = false;
-					ui->timeChoice->setEnabled(false);
-					ui->languageChoice->setEnabled(false);
-					ui->noPlayersChoice->setEnabled(false);
-					ui->noWordsChoice->setEnabled(false);
-					ui->hintsChoice->setEnabled(false);
-					ui->roundsChoice->setEnabled(false);
-					gameState = ConvertStringToGameState("MeetingRoom");
-					setVisibilities(gameState);
-					GetPlayersInRoom();
-					timer->start(100);
-					//existaJoc-true
-					break;
-				}
+						auto responseAddPlayer = cpr::Put(
+							cpr::Url{ "http://localhost:13034/addPlayer" },
+							cpr::Payload{
+								{ "roomcode", ui->roomCode->text().toStdString()},
+								{ "user", username}
+							});
+						ui->generatedCodeLabel->setText(ui->roomCode->text());
+						host = false;
+						ui->timeChoice->setEnabled(false);
+						ui->languageChoice->setEnabled(false);
+						ui->noPlayersChoice->setEnabled(false);
+						ui->noWordsChoice->setEnabled(false);
+						ui->hintsChoice->setEnabled(false);
+						ui->roundsChoice->setEnabled(false);
+						gameState = ConvertStringToGameState("MeetingRoom");
+						setVisibilities(gameState);
+						GetPlayersInRoom();
+						timer->start(100);
+						//existaJoc-true
+						break;
+					}
+					else
+						ui->roomFull->setVisible(true);
+
+			ui->roomCode->clear();
 			//daca existaJoc-false atunci afisezi eroarea;clear la casuta
 			update();
 		}
@@ -437,6 +448,8 @@ void MainWindow::setVisibilities(GameState state)
 		ui->notRegistered->setVisible(false);
 		ui->userRegistered->setVisible(false);
 		ui->enterCodeTextLabel->setVisible(false);
+		ui->generatedCodeLabel->setVisible(false);
+		ui->roomFull->setVisible(false);
 
 	}
 	if (state == ConvertStringToGameState("LoginOrRegister"))
@@ -496,13 +509,14 @@ void MainWindow::setVisibilities(GameState state)
 			ui->startButton->setVisible(true);
 		ui->guess->setVisible(true);
 		ui->guessList->setVisible(true);
+		ui->generatedCodeLabel->setVisible(true);
+		ui->enterCodeTextLabel->setVisible(true);
 		ui->createButton->setVisible(false);
 		ui->joinButton->setVisible(false);
 		ui->signOutButton->setVisible(false);
 		ui->roomCode->setVisible(false);
 		ui->codeLabel->setVisible(false);
-		ui->generatedCodeLabel->setVisible(true);
-		ui->enterCodeTextLabel->setVisible(true);
+		ui->roomFull->setVisible(false);
 	}
 	if (state == ConvertStringToGameState("InGame"))
 	{
@@ -731,6 +745,10 @@ void MainWindow::GetGuessesInChat()
 void MainWindow::modifySettings()
 {
 	if (host)
+	{
+		if (players.size() > ui->noPlayersChoice->currentIndex())
+			ui->noPlayersChoice->setCurrentIndex(players.size() - 1);
+
 		auto response = cpr::Put(
 			cpr::Url{ "http://localhost:13034/modifySettings" },
 			cpr::Payload{
@@ -741,8 +759,8 @@ void MainWindow::modifySettings()
 				{ "noWords", std::to_string(ui->noWordsChoice->currentIndex())},
 				{ "hints", std::to_string(ui->hintsChoice->currentIndex())},
 				{ "noRounds", std::to_string(ui->roundsChoice->currentIndex())}
-			}
-	);
+			});
+	}
 }
 
 void MainWindow::replaceCharacters(std::string& text)
