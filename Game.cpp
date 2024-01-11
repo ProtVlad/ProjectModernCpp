@@ -22,11 +22,6 @@ const std::string& Game::GetRoomcode() const
 	return m_roomcode;
 }
 
-const uint16_t Game::GetTimer() const
-{
-	return m_timer;
-}
-
 const uint16_t Game::GetIndexDrawer() const
 {
 	return m_indexDrawer;
@@ -55,6 +50,11 @@ const std::string& Game::GetGameState() const
 const std::vector<Points>& Game::GetPoints() const
 {
 	return m_points;
+}
+
+const GameTimer& Game::GetTimer() const
+{
+	return m_timer;
 }
 
 /*const std::vector<std::string>& Game::GetWordList()

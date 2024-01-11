@@ -5,11 +5,16 @@
 class GameTimer
 {
 public:
+    GameTimer();
     GameTimer(int durationInSeconds); 
 
     void DisplayThread();
     void Start();
+
+    const uint8_t GetCurrentTimeValue() const;
+    const uint8_t GetDuration() const;
 private:
-    int duration;
+    uint8_t m_duration;
+    uint8_t m_currentTimeValue;
 };
 

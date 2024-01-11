@@ -153,6 +153,7 @@
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Opinion.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Points.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Chat.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Opinion.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Points.h" />

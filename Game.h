@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Settings.h"
 #include "Points.h"
+#include "GameTimer.h"
 
 class Game
 {
@@ -19,13 +20,13 @@ public:
 	/* std::vector<uint16_t> anteriorWordsChoices, Chat chat*/);
 
 	const std::string& GetRoomcode() const;
-	const uint16_t GetTimer() const;
 	const uint16_t GetIndexDrawer() const;
 	const Settings GetSettings() const;
 	const std::vector<std::string>& GetUsers() const;
 	const std::vector<std::string>& GetGuesses() const;
 	const std::string& GetGameState() const;
 	const std::vector<Points>& GetPoints()const; 
+	const GameTimer& GetTimer()const;
 	//const std::vector<std::string>& GetWordList();
 	//const std::vector<std::string>& GetWordChoices();
 	//const Chat& GetChat();
@@ -52,7 +53,6 @@ private:
 
 private:
 	std::string m_roomcode;
-	uint16_t m_timer;
 	uint16_t m_indexDrawer;
 	Settings m_settings;
 	std::vector<std::string> m_users;
@@ -61,5 +61,6 @@ private:
 	std::vector<uint16_t> m_wordsChoices;
 	std::string m_gameState;
 	std::vector<Points> m_points;
+	GameTimer m_timer;
 };
 
