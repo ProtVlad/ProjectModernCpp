@@ -6,6 +6,7 @@
 #include "Chat.h"
 #include "Player.h"
 #include "Settings.h"
+#include "Points.h"
 
 class Game
 {
@@ -23,6 +24,7 @@ public:
 	const Settings GetSettings() const;
 	const std::vector<std::string>& GetUsers() const;
 	const std::vector<std::string>& GetGuesses() const;
+	const std::vector<Points>& GetPoints()const; 
 	//const std::vector<std::string>& GetWordList();
 	//const std::vector<std::string>& GetWordChoices();
 	//const Chat& GetChat();
@@ -37,6 +39,7 @@ public:
 
 	void AddPlayer(const std::string& user);
 	void AddGuess(const std::string& guess);
+	void AddPoint(const Points& point); 
 	//void ReadWordList(std::ifstream& file);
 	std::vector<uint16_t> TotalScore(const std::vector<std::vector<uint16_t>>& scores);
 	uint16_t NumberLines(std::ifstream& file);
@@ -54,5 +57,6 @@ private:
 	std::vector<std::string> m_guesses;
 	std::vector<uint16_t> m_anteriorWordsChoices;
 	std::vector<uint16_t> m_wordsChoices;
+	std::vector<Points> m_points;
 };
 

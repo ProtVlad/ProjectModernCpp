@@ -634,6 +634,11 @@ AddGuessHandler::AddGuessHandler(std::vector<Game>& games)
 {
 }
 
+AddPointsHandler::AddPointsHandler(std::vector<Game>& games)
+	: m_games{ games }
+{
+}
+
 crow::response AddChoosenWord::operator()(const crow::request& req) const
 {
 	auto bodyArgs = parseUrlArgs(req.body);
@@ -698,6 +703,40 @@ crow::response AddPlayerHandler::operator()(const crow::request& req) const
 			break;
 		}
 
+	return crow::response(201);
+}
+
+crow::response AddPointsHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto roomcodeIter = bodyArgs.find("roomcode");
+	for (int index = 0; index < m_games.size(); index++)
+		if (m_games[index].GetRoomcode() == roomcodeIter->second)
+		{
+			auto xIter = bodyArgs.find("xCoord");
+			auto yIter = bodyArgs.find("yCoord");
+			auto RIter = bodyArgs.find("rColor");
+			auto GIter = bodyArgs.find("gColor");
+			auto BIter = bodyArgs.find("bColor");
+			auto brushSizeIter = bodyArgs.find("brushSize");
+			auto inWindowIter = bodyArgs.find("inWindow");
+
+			if (roomcodeIter != end && xIter != end && yIter!=end && RIter!=end && GIter!=end &&
+				BIter!=end && brushSizeIter!=end && inWindowIter!=end)
+			{
+				Points point(static_cast<uint16_t>(std::stoi(xIter->second)),
+					static_cast<uint16_t>(std::stoi(yIter->second)),
+					static_cast<uint8_t>(std::stoi(RIter->second)),
+					static_cast<uint8_t>(std::stoi(GIter->second)),
+					static_cast<uint8_t>(std::stoi(BIter->second)),
+					static_cast<uint8_t>(std::stoi(brushSizeIter->second)),
+					static_cast<bool>(std::stoi(inWindowIter->second)));
+
+				m_games[index].AddPoint(point);
+			}
+			break;
+		}
 	return crow::response(201);
 }
 

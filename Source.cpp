@@ -152,6 +152,47 @@ int main()
 			return crow::json::wvalue{ guessesJson };
 		});
 
+	CROW_ROUTE(app, "/<string>/points")([&games](std::string roomcode)
+		{
+			for (const auto& game : games)
+				if (game.GetRoomcode() == roomcode)
+				{
+					crow::json::wvalue pointsJson{
+						{"noPoints", game.GetPoints().size()}
+					};
+					std::string keyX;
+					std::string keyY;
+					std::string keyR;
+					std::string keyG;
+					std::string keyB;
+					std::string keyBrushSize;
+					std::string keyInWindow;
+					for (int index = 0; index < game.GetPoints().size(); index++)
+					{
+						keyX = "x" + std::to_string(index);
+						pointsJson[keyX] = game.GetPoints()[index].GetX();
+						keyY= "y" + std::to_string(index);
+						pointsJson[keyY] = game.GetPoints()[index].GetY();
+						keyR = "red" + std::to_string(index);
+						pointsJson[keyR] = game.GetPoints()[index].GetRed();
+						keyG = "green" + std::to_string(index);
+						pointsJson[keyG] = game.GetPoints()[index].GetGreen();
+						keyB = "blue" + std::to_string(index);
+						pointsJson[keyB] = game.GetPoints()[index].GetBlue();
+						keyBrushSize = "brushSize" + std::to_string(index);
+						pointsJson[keyBrushSize] = game.GetPoints()[index].GetBrushSize();
+						keyInWindow = "inWindow" + std::to_string(index);
+						pointsJson[keyInWindow] = game.GetPoints()[index].GetInWindow();
+					}
+					return crow::json::wvalue{ pointsJson };
+				}
+			return crow::json::wvalue{  };
+		});
+
+	auto& addPointsPut = CROW_ROUTE(app, "/addPoints")
+		.methods(crow::HTTPMethod::PUT);
+	addPointsPut(AddPointsHandler(games));
+
 	auto& addGuessPut = CROW_ROUTE(app, "/addGuess")
 		.methods(crow::HTTPMethod::PUT);
 	addGuessPut(AddGuessHandler(games));

@@ -1,5 +1,17 @@
 #include "Points.h"
 
+Points::Points(uint16_t x, uint16_t y, uint8_t R, uint8_t G, uint8_t B, 
+	uint8_t brushSize, bool inWindow):
+	m_x(x),
+	m_y(y),
+	m_R(R),
+	m_G(G),
+	m_B(B),
+	m_brushSize(brushSize),
+	m_inWindow(inWindow)
+{
+}
+
 const uint16_t Points::GetX() const
 {
 	return m_x;

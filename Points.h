@@ -3,6 +3,7 @@
 class Points
 {
 public:
+	Points(uint16_t x, uint16_t y, uint8_t R, uint8_t G, uint8_t B, uint8_t brushSize, bool inWindow);
 	const uint16_t GetX() const;
 	const uint16_t GetY() const;
 	const uint8_t GetRed() const;
@@ -17,6 +18,7 @@ public:
 	void SetBlue(uint16_t blue);
 	void SetBrushSize(uint8_t brushSize);
 	void SetInWindow(bool inWindow);
+	
 
 private:
 	uint16_t m_x;

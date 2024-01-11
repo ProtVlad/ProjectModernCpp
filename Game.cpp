@@ -45,6 +45,11 @@ const std::vector<std::string>& Game::GetGuesses() const
 {
 	return m_guesses;
 }
+const std::vector<Points>& Game::GetPoints() const
+{
+	return m_points;
+}
+
 /*const std::vector<std::string>& Game::GetWordList()
 {
 	return m_wordList;
@@ -115,6 +120,11 @@ void Game::AddPlayer(const std::string& user)
 void Game::AddGuess(const std::string& guess)
 {
 	m_guesses.push_back(guess);
+}
+
+void Game::AddPoint(const Points& point)
+{
+	m_points.push_back(point);
 }
 
 std::vector<uint16_t> Game::TotalScore(const std::vector<std::vector<uint16_t>>& playerScores)
