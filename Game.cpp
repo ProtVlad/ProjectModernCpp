@@ -170,16 +170,16 @@ uint16_t Game::GenerateRandomNumber(uint16_t min, uint16_t max)
 	return randomValue;
 }
 
-void Game::ChooseWords()
-{
-	uint16_t min = 1;
-	Storage db = createStorage("word.sqlite");
-	uint16_t max = db.count<Words>();
-	uint16_t nr = m_settings.GetNumberWords();
-	for (uint16_t index = 0; index < nr; index++)
-	{
-		uint16_t p = GenerateRandomNumber(min, max);
-		int cuv = db.get<Words>(p).id;
-		m_wordsChoices.emplace_back(cuv);
-	}
-}
+//void Game::ChooseWords()
+//{
+//	uint16_t min = 1;
+//	Storage db = createStorage("words.sqlite");
+//	uint16_t max = db.count<Word>();
+//	uint16_t nr = m_settings.GetNumberWords();
+//	for (uint16_t index = 0; index < nr; index++)
+//	{
+//		uint16_t p = GenerateRandomNumber(min, max);
+//		int cuv = db.get<Word>(p).id;
+//		m_wordsChoices.emplace_back(cuv);
+//	}
+//}
