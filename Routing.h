@@ -1,6 +1,6 @@
 #pragma once
 #include <crow.h>
-#include "Words.h"
+#include "GameDatabase.h"
 
 
 namespace http
@@ -8,10 +8,10 @@ namespace http
 	class Routing
 	{
 	public:
-		void Run(WordStorage& storage);
+		void Run(GameStorage& storage);
 
 	private:
-		crow::response AddWordToChosenWord(WordStorage& storage, const crow::request& req, int productId)const;
+		//crow::response AddWordToChosenWord(GameStorage& storage, const crow::request& req, int productId)const;
 
 	private:
 		crow::SimpleApp m_app;

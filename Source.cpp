@@ -219,7 +219,7 @@ using namespace http;
 //
 int main() {
 
-	WordStorage storage;
+	GameStorage storage;
 	if (!storage.Initialize())
 	{
 		std::cout << "Faild to initialize the database!";
