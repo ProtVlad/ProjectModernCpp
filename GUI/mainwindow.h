@@ -14,6 +14,8 @@
 #include <crow.h>
 #include <QtConcurrent>
 #include <random>
+#include <map>
+#include "../Points.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,8 +55,8 @@ private slots:
 
 private:
     Ui::MainWindow* ui;
-    std::vector<std::tuple<QPoint, QColor, int, bool>> points;
-    std::stack<std::vector<std::tuple<QPoint, QColor, int, bool>>> previousDrawings;
+    std::map<int, Points> points;
+    std::stack<std::map<int, Points>> previousDrawings;
     bool leftButton;
     QColor color;
     int size;
@@ -93,7 +95,7 @@ private:
     void GetGameState();
     void GetDrawing();
     void modifySettings();
-    void replaceCharacters(std::string &text);
+    void replaceCharacters(std::string& text);
     uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
     std::string GenerateCode();
 };

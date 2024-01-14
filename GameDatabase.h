@@ -55,7 +55,7 @@ namespace http
 			uint16_t noWords, uint16_t hints, uint16_t rounds);
 		void AddGuess(std::string& roomcode, std::string& guess);
 		void ModifyGameState(std::string& roomcode, std::string& gameState);
-		void AddPointInDrawing(std::string& roomcode, uint16_t x, uint16_t y, uint16_t r, uint16_t g, uint16_t b,
+		void AddPointInDrawing(std::string& roomcode, uint16_t x, uint16_t y, uint8_t r, uint8_t g, uint8_t b,
 			uint8_t brushSize, bool inWindow);
 		void AddWordInChosenWords(std::string& roomcode);
 		uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);

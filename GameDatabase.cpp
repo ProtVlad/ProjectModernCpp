@@ -710,7 +710,7 @@ void http::GameStorage::ModifyGameState(std::string& roomcode, std::string& game
 		}
 }
 
-void http::GameStorage::AddPointInDrawing(std::string& roomcode, uint16_t x, uint16_t y, uint16_t r, uint16_t g, uint16_t b, uint8_t brushSize, bool inWindow)
+void http::GameStorage::AddPointInDrawing(std::string& roomcode, uint16_t x, uint16_t y, uint8_t r, uint8_t g, uint8_t b, uint8_t brushSize, bool inWindow)
 {
 	for (int index = 0; index < m_games.size(); index++)
 		if (m_games[index].GetRoomcode() == roomcode)
