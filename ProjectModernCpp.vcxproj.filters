@@ -45,9 +45,6 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Points.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AnswerChat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Points.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameTimer.h">

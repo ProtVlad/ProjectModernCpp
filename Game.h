@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "Settings.h"
-#include "Points.h"
+#include "PointsDLL/Points.h"
 
 class Game
 {

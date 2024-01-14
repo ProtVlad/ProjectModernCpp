@@ -157,7 +157,6 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Opinion.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Points.cpp" />
     <ClCompile Include="Routing.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -177,9 +176,13 @@
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Opinion.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Points.h" />
     <ClInclude Include="Routing.h" />
     <ClInclude Include="Settings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="PointsDLL\PointsDLL.vcxproj">
+      <Project>{e13db8c2-c8f0-4cae-92a5-6c756c66cdb8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
