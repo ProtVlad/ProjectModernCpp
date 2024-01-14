@@ -631,14 +631,6 @@ std::vector<Game> GameStorage::GetGames()
 	return m_games;
 }
 
-//std::vector<std::tuple<std::string, int, int>> GameStorage::GetChosenWords()
-//{
-//	return m_db.select(
-//		sql::columns(&Word::GetWord, &Word::GetPrice, &ChosenWords::GetNumberWords),
-//		sql::inner_join<ChosenWords>(sql::on(sql::c(&Word::GetId) == &ChosenWords::GetId))
-//	);
-//}
-//
 void GameStorage::AddUserToDatabase(std::string& username, std::string& password)
 {
 	User user;
@@ -647,20 +639,6 @@ void GameStorage::AddUserToDatabase(std::string& username, std::string& password
 	m_db.insert(user);
 }
 
-//void GameStorage::AddWordToChosenWords(int id, int numberWords)
-//{
-//	ChosenWords w;
-//	w.SetId(id);
-//	w.SetNumberWords(numberWords);
-//
-//	m_db.insert(w);
-//}
-//http::AddToChosenWordsHandler::AddToChosenWordsHandler(GameStorage& storage)
-//	: m_db{ storage }
-//{
-//}
-
-//
 void http::GameStorage::AddGame(std::string& roomcode, std::string& host)
 {
 	Settings settings(0, 0, 0, 0, 0, 0);
@@ -729,15 +707,38 @@ void GameStorage::AddWordInChosenWords(std::string& roomcode)
 		if (m_games[index].GetRoomcode() == roomcode)
 		{
 			int nr = m_games[index].GetSettings().GetNumberWords();
-			for (uint16_t cuvantAdaugat = 0; cuvantAdaugat < nr; cuvantAdaugat++)
+			for (uint16_t indexAddedWord = 0; indexAddedWord < nr; indexAddedWord++)
 			{
 				uint16_t p = GenerateRandomNumber(min, max);
-				/*int p1 = std::static_cast<int>(p);*/
 				std::string cuv = GameStorage::GetWords()[p].GetWord();
 				m_games[index].AddChosenWord(cuv);
 			}
+			m_games[index].AddChosenWord(AddPaidWordInChosenWords(50));
+			m_games[index].AddChosenWord(AddPaidWordInChosenWords(100));
+			m_games[index].AddChosenWord(AddPaidWordInChosenWords(150));
+
 			break;
 		}
+}
+
+std::string http::GameStorage::AddPaidWordInChosenWords(int price)
+{
+
+	std::vector<Word> validWords;
+	for (const auto& word : GameStorage::GetWords()) {
+		if (word.GetPrice() == price) {
+			validWords.push_back(word);
+		}
+	}
+
+	uint16_t min = 1;
+	uint16_t max = validWords.size() - 1;
+
+	uint16_t p = GenerateRandomNumber(min, max);
+	std::string cuv = validWords[p].GetWord();
+
+	return cuv;
+
 }
 
 uint16_t GameStorage::GenerateRandomNumber(uint16_t min, uint16_t max)

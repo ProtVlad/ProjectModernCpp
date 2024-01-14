@@ -59,6 +59,7 @@ namespace http
 			uint8_t brushSize, bool inWindow);
 		void AddWordInChosenWords(std::string& roomcode);
 		uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
+		std::string AddPaidWordInChosenWords(int price);
 
 	private:
 		void PopulateWordsStorage();
