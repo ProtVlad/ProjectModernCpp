@@ -51,7 +51,7 @@ const std::vector<Points>& Game::GetPoints() const
 	return m_points;
 }
 
-const GameTimer& Game::GetTimer() const
+const uint16_t Game::GetTimer() const
 {
 	return m_timer;
 }

@@ -82,6 +82,7 @@ private:
     std::vector<std::string> players;
     bool host = false;
     QString userGuess;
+    int currentTime;
 
 private:
     void colorChange(QMouseEvent* e);
@@ -98,5 +99,6 @@ private:
     void replaceCharacters(std::string& text);
     uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
     std::string GenerateCode();
+    void RunTimer();
 };
 #endif // MAINWINDOW_H

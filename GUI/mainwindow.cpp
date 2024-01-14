@@ -534,6 +534,7 @@ void MainWindow::setVisibilities(GameState state)
 		ui->roomFull->setVisible(false);
 		ui->doesntExist->setVisible(false);
 		ui->notEnoughPlayers->setVisible(false);
+		ui->timerLabel->setVisible(false);
 
 	}
 	if (state == ConvertStringToGameState("LoginOrRegister"))
@@ -603,11 +604,6 @@ void MainWindow::setVisibilities(GameState state)
 	}
 	if (state == ConvertStringToGameState("InGame"))
 	{
-		logo->setGeometry(5, 5, 100, 98);
-		logo->setScaledContents(true);
-		logo->setVisible(true);
-		ui->clearButton->setVisible(true);
-		ui->undoButton->setVisible(true);
 		bigLogo->setVisible(false);
 		ui->roundsChoice->setVisible(false);
 		ui->roundsLabel->setVisible(false);
@@ -626,6 +622,12 @@ void MainWindow::setVisibilities(GameState state)
 		ui->generatedCodeLabel->setVisible(false);
 		ui->enterCodeTextLabel->setVisible(false);
 		ui->notEnoughPlayers->setVisible(false);
+		logo->setGeometry(5, 5, 100, 98);
+		logo->setScaledContents(true);
+		logo->setVisible(true);
+		ui->timerLabel->setVisible(true);
+		ui->clearButton->setVisible(true);
+		ui->undoButton->setVisible(true);
 
 
 	}
@@ -683,14 +685,21 @@ void MainWindow::on_startButton_clicked()
 			ui->noWordsChoice->currentText() != '-' && ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
 		{
 			gameState = ConvertStringToGameState("InGame");
+			setVisibilities(gameState);
+			update();
 			auto response = cpr::Put(
 				cpr::Url{ "http://localhost:13034/modifyGameState" },
 				cpr::Payload{
 					{ "roomcode", roomcode},
 					{ "gameState", ConvertGameStateToString(gameState)}
 				});
-			setVisibilities(gameState);
-			update();
+			QtConcurrent::run([this]() {
+				auto timerResponse = cpr::Put(
+					cpr::Url{ "http://localhost:13034/runTimer" },
+					cpr::Payload{
+						{ "roomcode", roomcode }
+					});
+				});
 		}
 		else
 		{
@@ -805,14 +814,15 @@ void MainWindow::createThread()
 			if (gameState == ConvertStringToGameState("MeetingRoom"))
 			{
 				GetSettings();
-				GetGameState();
 			}
 			if (gameState == ConvertStringToGameState("InGame"))
 				GetDrawing();
 		}
 		GetGuessesInChat();
+		GetGameState();
 		});
 	setVisibilities(gameState);
+	update();
 	/*if (!host)
 	{
 		QtConcurrent::run([this]() {GetSettings(); });
@@ -833,7 +843,6 @@ void MainWindow::GetPlayersInRoom()
 		{
 			std::string key = "user" + std::to_string(index);
 			players.push_back(playerList[key].s());
-			update();
 		}
 }
 
@@ -867,15 +876,13 @@ void MainWindow::GetGuessesInChat()
 
 void MainWindow::GetGameState()
 {
-	auto response = cpr::Get(cpr::Url{ "http://localhost:13034/games" });
-	auto games = crow::json::load(response.text);
-	for (const auto& game : games)
-		if (game["roomcode"] == roomcode)
-		{
-			if (game["gameState"].s() != ConvertGameStateToString(gameState))
-				gameState = ConvertStringToGameState(game["gameState"].s());
-			break;
-		}
+	std::string url = "http://localhost:13034/" + roomcode + "/gameState";
+	auto response = cpr::Get(cpr::Url{ url });
+	auto gameStateJson = crow::json::load(response.text);
+	if (gameStateJson["gameState"].s() != ConvertGameStateToString(gameState))
+		gameState = ConvertStringToGameState(gameStateJson["gameState"].s());
+	currentTime = gameStateJson["timer"].i();
+	ui->timerLabel->setText(QString::number(currentTime));
 }
 
 void MainWindow::GetDrawing()
@@ -977,6 +984,15 @@ std::string MainWindow::GenerateCode()
 			code.push_back(char(GenerateRandomNumber(97, 122)));
 	}
 	return code;
+}
+
+void MainWindow::RunTimer()
+{
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:13034/modifySettings" },
+		cpr::Payload{
+			{ "roomcode", roomcode}
+		});
 }
 
 void MainWindow::on_timeChoice_currentTextChanged()

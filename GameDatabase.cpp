@@ -750,6 +750,26 @@ uint16_t GameStorage::GenerateRandomNumber(uint16_t min, uint16_t max)
 	return randomValue;
 }
 
+void GameStorage::RunTimer(std::string& roomcode)
+{
+	for (int index = 0; index < m_games.size(); index++)
+		if (m_games[index].GetRoomcode() == roomcode)
+		{
+			auto startTime = std::chrono::system_clock::now();
+			auto startTimeMs = std::chrono::time_point_cast<std::chrono::milliseconds>(startTime);
+			auto startTimeMsToInt = startTimeMs.time_since_epoch().count();
+			m_games[index].SetTimer(10 + 10 * m_games[index].GetSettings().GetTime());
+			while (m_games[index].GetTimer() != 0)
+			{
+				auto currentTime = std::chrono::system_clock::now();
+				auto currentTimeMs = std::chrono::time_point_cast<std::chrono::milliseconds>(currentTime);
+				auto currentTimeMsToInt = currentTimeMs.time_since_epoch().count();
+				m_games[index].SetTimer(10 + 10 * m_games[index].GetSettings().GetTime() - (currentTimeMsToInt - startTimeMsToInt) / 1000);
+			}
+			break;
+		}
+}
+
 AddUserHandler::AddUserHandler(GameStorage& storage)
 	: m_db{ storage }
 {
@@ -787,6 +807,11 @@ AddPointsHandler::AddPointsHandler(GameStorage& storage)
 
 http::AddChosenWordsHandler::AddChosenWordsHandler(GameStorage& storage)
 	:m_data{ storage }
+{
+}
+
+RunTimerHandler::RunTimerHandler(GameStorage& storage)
+	:m_games{ storage }
 {
 }
 
@@ -895,4 +920,13 @@ crow::response AddChosenWordsHandler::operator()(const crow::request& req) const
 	return crow::response(201);
 }
 
+crow::response RunTimerHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto roomcodeIter = bodyArgs.find("roomcode");
+	if (roomcodeIter != end)
+		m_games.RunTimer(roomcodeIter->second);
 
+	return crow::response(201);
+}

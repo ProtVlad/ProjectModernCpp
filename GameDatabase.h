@@ -60,6 +60,7 @@ namespace http
 		void AddWordInChosenWords(std::string& roomcode);
 		uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
 		std::string AddPaidWordInChosenWords(int price);
+		void RunTimer(std::string& roomcode);
 
 	private:
 		void PopulateWordsStorage();
@@ -151,6 +152,16 @@ namespace http
 
 	private:
 		GameStorage& m_data;
+	};
+
+	class RunTimerHandler {
+	public:
+		RunTimerHandler(GameStorage& storage);
+
+		crow::response operator() (const crow::request& req) const;
+
+	private:
+		GameStorage& m_games;
 	};
 
 }

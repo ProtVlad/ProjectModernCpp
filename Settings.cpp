@@ -1,7 +1,4 @@
 #include "Settings.h"
-#include <vector>
-
-
 
 Settings::Settings()
 {

@@ -77,14 +77,27 @@ void Routing::Run(GameStorage& storage)
 				for (const auto& game : games)
 				{
 					crow::json::wvalue game_json{
-						{"roomcode",game.GetRoomcode()},
-						{"timer",game.GetTimer().GetDuration()},
-						{"indexDrawer",game.GetIndexDrawer()},
-						{"gameState",game.GetGameState()}
+						{"roomcode",game.GetRoomcode()}
 					};
 					gamesJson.push_back(game_json);
 				}
 				return crow::json::wvalue{ gamesJson };
+			});
+
+		CROW_ROUTE(m_app, "/<string>/gameState")([&storage](std::string roomcode)
+			{
+				auto games = storage.GetGames();
+				for (const auto& game : games)
+					if (game.GetRoomcode() == roomcode)
+					{
+						crow::json::wvalue gameStateJson{
+						{"timer",game.GetTimer()},
+						{"indexDrawer",game.GetIndexDrawer()},
+						{"gameState",game.GetGameState()}
+						};
+						return crow::json::wvalue{ gameStateJson };
+					}
+				return crow::json::wvalue{  };
 			});
 
 		CROW_ROUTE(m_app, "/<string>/players")([&storage](std::string roomcode)
@@ -234,6 +247,10 @@ void Routing::Run(GameStorage& storage)
 		auto& addChosenWords = CROW_ROUTE(m_app, "/addChosenWords")
 			.methods(crow::HTTPMethod::PUT);
 		addChosenWords(AddChosenWordsHandler(storage));
+
+		auto& runTimerPut = CROW_ROUTE(m_app, "/runTimer")
+			.methods(crow::HTTPMethod::PUT);
+		runTimerPut(RunTimerHandler(storage));
 
 
 	m_app.port(13034).multithreaded().run();

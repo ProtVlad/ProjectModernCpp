@@ -1,13 +1,8 @@
 #pragma once
-#include <cstdint>
 #include <vector>
 #include <string>
-#include <fstream>
-#include "Chat.h"
-#include "Player.h"
 #include "Settings.h"
 #include "Points.h"
-#include "GameTimer.h"
 
 class Game
 {
@@ -26,7 +21,7 @@ public:
 	const std::vector<std::string>& GetGuesses() const;
 	const std::string& GetGameState() const;
 	const std::vector<Points>& GetPoints()const; 
-	const GameTimer& GetTimer()const;
+	const uint16_t GetTimer()const;
 	const std::vector<std::string>& GetChosenWords() const;
 	//const std::vector<std::string>& GetWordList();
 	//const std::vector<std::string>& GetWordChoices();
@@ -62,6 +57,6 @@ private:
 	//std::vector<uint16_t> m_wordsChoices;
 	std::string m_gameState;
 	std::vector<Points> m_points;
-	GameTimer m_timer;
+	uint16_t m_timer;
 };
 
