@@ -41,66 +41,92 @@ void MainWindow::mousePressEvent(QMouseEvent* e)
 {
 	if (gameState == ConvertStringToGameState("InGame"))
 	{
-		if (e->button() == Qt::LeftButton && e->pos().x() > xpos && e->pos().x() < xpos + 30 * (colors.size() + 1) && e->pos().y() > ypos && e->pos().y() < ypos + 30)
+		if (!chosen)
 		{
-			if ((e->pos().x() - xpos) / 30 == colors.size())
-				surprise = true;
-			else
-			{
-				color = colors[(e->pos().x() - xpos) / 30];
-				surprise = false;
-			}
-		}
-		if (e->button() == Qt::LeftButton && e->pos().x() > xpos && e->pos().x() < xpos + 30 * (widths.size()) && e->pos().y() > ypos + 30 && e->pos().y() < ypos + 60)
-			size = widths[(e->pos().x() - xpos) / 30];
-		if (e->button() == Qt::LeftButton && e->pos().x() > 100 && e->pos().x() < 900 && e->pos().y() > 100 && e->pos().y() < 500)
-		{
-			leftButton = true;
-
-			if (!surprise)
-			{
-				points[points.size()] = { static_cast<uint16_t>(e->pos().x()), static_cast<uint16_t>(e->pos().y()),
-					static_cast<uint8_t>(color.red()), static_cast<uint8_t>(color.green()),
-					static_cast<uint8_t>(color.blue()), static_cast<uint8_t>(size), true };
-				int lastPoint = points.size() - 1;
-				QtConcurrent::run([this, lastPoint]() {
-					auto response = cpr::Put(
-						cpr::Url{ "http://localhost:13034/addPoints" },
-						cpr::Payload{
-							{ "roomcode", roomcode},
-							{ "xCoord", std::to_string(points[lastPoint].GetX())},
-							{ "yCoord", std::to_string(points[lastPoint].GetY())},
-							{ "rColor", std::to_string(points[lastPoint].GetRed())},
-							{ "gColor", std::to_string(points[lastPoint].GetGreen())},
-							{ "bColor", std::to_string(points[lastPoint].GetBlue())},
-							{ "brushSize", std::to_string(points[lastPoint].GetBrushSize())},
-							{ "inWindow", std::to_string(points[lastPoint].GetInWindow())},
-							{ "indexPoint", std::to_string(lastPoint)}
-						});
+			for (int i = 0; i < words.size(); i++)
+				if (e->button() == Qt::LeftButton && e->pos().x() > wordX + 200 * i && e->pos().x() < wordX + 200 * i + 150 && e->pos().y() > wordY && e->pos().y() < wordY + 30)
+				{
+					chosenWord = words[i];
+					chosen = true;
+				}
+			for (int i = 0; i < customWords.size(); i++)
+				if (e->button() == Qt::LeftButton && e->pos().x() > wordX + 200 * i && e->pos().x() < wordX + 200 * i + 150 && e->pos().y() > wordY+100 && e->pos().y() < wordY + 130)
+				{
+					chosenWord = customWords[i];
+					chosen = true;
+				}
+			QtConcurrent::run([this]() {
+				auto timerResponse = cpr::Put(
+					cpr::Url{ "http://localhost:13034/runTimer" },
+					cpr::Payload{
+						{ "roomcode", roomcode }
 					});
-			}
-			else
-			{
-				colorChange(e);
-				points[points.size() - 1].SetInWindow(true);
-				int lastPoint = points.size() - 1;
-				QtConcurrent::run([this, lastPoint]() {
-					auto response = cpr::Put(
-						cpr::Url{ "http://localhost:13034/addPoints" },
-						cpr::Payload{
-							{ "roomcode", roomcode},
-							{ "xCoord", std::to_string(points[lastPoint].GetX())},
-							{ "yCoord", std::to_string(points[lastPoint].GetY())},
-							{ "rColor", std::to_string(points[lastPoint].GetRed())},
-							{ "gColor", std::to_string(points[lastPoint].GetGreen())},
-							{ "bColor", std::to_string(points[lastPoint].GetBlue())},
-							{ "brushSize", std::to_string(points[lastPoint].GetBrushSize())},
-							{ "inWindow", std::to_string(points[lastPoint].GetInWindow())},
-							{ "indexPoint", std::to_string(lastPoint)}
-						});
-					});
-			}
+				});
 			update();
+		}
+		else
+		{
+			if (e->button() == Qt::LeftButton && e->pos().x() > xpos && e->pos().x() < xpos + 30 * (colors.size() + 1) && e->pos().y() > ypos && e->pos().y() < ypos + 30)
+			{
+				if ((e->pos().x() - xpos) / 30 == colors.size())
+					surprise = true;
+				else
+				{
+					color = colors[(e->pos().x() - xpos) / 30];
+					surprise = false;
+				}
+			}
+			if (e->button() == Qt::LeftButton && e->pos().x() > xpos && e->pos().x() < xpos + 30 * (widths.size()) && e->pos().y() > ypos + 30 && e->pos().y() < ypos + 60)
+				size = widths[(e->pos().x() - xpos) / 30];
+			if (e->button() == Qt::LeftButton && e->pos().x() > 100 && e->pos().x() < 900 && e->pos().y() > 100 && e->pos().y() < 500)
+			{
+				leftButton = true;
+
+				if (!surprise)
+				{
+					points[points.size()] = { static_cast<uint16_t>(e->pos().x()), static_cast<uint16_t>(e->pos().y()),
+						static_cast<uint8_t>(color.red()), static_cast<uint8_t>(color.green()),
+						static_cast<uint8_t>(color.blue()), static_cast<uint8_t>(size), true };
+					int lastPoint = points.size() - 1;
+					QtConcurrent::run([this, lastPoint]() {
+						auto response = cpr::Put(
+							cpr::Url{ "http://localhost:13034/addPoints" },
+							cpr::Payload{
+								{ "roomcode", roomcode},
+								{ "xCoord", std::to_string(points[lastPoint].GetX())},
+								{ "yCoord", std::to_string(points[lastPoint].GetY())},
+								{ "rColor", std::to_string(points[lastPoint].GetRed())},
+								{ "gColor", std::to_string(points[lastPoint].GetGreen())},
+								{ "bColor", std::to_string(points[lastPoint].GetBlue())},
+								{ "brushSize", std::to_string(points[lastPoint].GetBrushSize())},
+								{ "inWindow", std::to_string(points[lastPoint].GetInWindow())},
+								{ "indexPoint", std::to_string(lastPoint)}
+							});
+						});
+				}
+				else
+				{
+					colorChange(e);
+					points[points.size() - 1].SetInWindow(true);
+					int lastPoint = points.size() - 1;
+					QtConcurrent::run([this, lastPoint]() {
+						auto response = cpr::Put(
+							cpr::Url{ "http://localhost:13034/addPoints" },
+							cpr::Payload{
+								{ "roomcode", roomcode},
+								{ "xCoord", std::to_string(points[lastPoint].GetX())},
+								{ "yCoord", std::to_string(points[lastPoint].GetY())},
+								{ "rColor", std::to_string(points[lastPoint].GetRed())},
+								{ "gColor", std::to_string(points[lastPoint].GetGreen())},
+								{ "bColor", std::to_string(points[lastPoint].GetBlue())},
+								{ "brushSize", std::to_string(points[lastPoint].GetBrushSize())},
+								{ "inWindow", std::to_string(points[lastPoint].GetInWindow())},
+								{ "indexPoint", std::to_string(lastPoint)}
+							});
+						});
+				}
+				update();
+			}
 		}
 	}
 }
@@ -121,6 +147,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent* e)
 void MainWindow::mouseMoveEvent(QMouseEvent* e)
 {
 	if (gameState == ConvertStringToGameState("InGame"))
+	{
 		if (leftButton)
 		{
 			if (e->pos().x() > 100 && e->pos().x() < 900 && e->pos().y() > 100 && e->pos().y() < 500)
@@ -173,6 +200,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent* e)
 				verifyOutsideWindow = true;
 			update();
 		}
+	}
 }
 
 void MainWindow::paintEvent(QPaintEvent* e)
@@ -200,81 +228,125 @@ void MainWindow::paintEvent(QPaintEvent* e)
 	}
 	if (gameState == ConvertStringToGameState("InGame"))
 	{
-		for (int i = 0; i < colors.size(); i++)
+		if (!chosen)
 		{
+			for (int index = 0; index < words.size(); index++)
+			{
+				QRect r(wordX, wordY, 150, 30);
+				QString s = QString::fromStdString(words[index]);
+				pen.setWidth(1);
+				pen.setColor({ 0,0,0 });
+				brush.setColor({ 255,255,255 });
+				brush.setStyle(Qt::SolidPattern);
+				p.setBrush(brush);
+				p.setPen(pen);
+				p.drawRect(r);
+				p.drawText(r, Qt::AlignCenter, s);
+				wordX += 200;
+			}
+			wordY += 100;
+			wordX -= 200 * words.size();
+			for (int index = 0; index < 3; index++)
+			{
+				QRect r(wordX, wordY, 150, 30);
+				QString s;
+				pen.setWidth(1);
+				pen.setColor({ 0,0,0 });
+				brush.setColor({ 255,255,255 });
+				brush.setStyle(Qt::SolidPattern);
+				p.setBrush(brush);
+				p.setPen(pen);
+				p.drawRect(r);
+				if (index == 0)
+					s = "Buy word (-50p, hard)";
+				if (index == 1)
+					s = "Buy word (-100p, medium)";
+				if (index == 2)
+					s = "Buy word (-150p, easy)";
+				p.drawText(r, Qt::AlignCenter, s);
+				wordX += 200;
+			}
+			wordX -= 600;
+			wordY -= 100;
+		}
+		else
+		{
+			for (int i = 0; i < colors.size(); i++)
+			{
+				QRect r(xpos, ypos, 30, 30);
+				pen.setWidth(1);
+				pen.setColor({ 0,0,0 });
+				brush.setColor(colors[i]);
+				brush.setStyle(Qt::SolidPattern);
+				p.setBrush(brush);
+				p.setPen(pen);
+				p.drawRect(r);
+				if (i < widths.size())
+				{
+					QRect r(xpos, ypos + 30, 30, 30);
+					pen.setWidth(1);
+					pen.setColor({ 0,0,0 });
+					p.setBrush(Qt::white);
+					p.setPen(pen);
+					p.drawRect(r);
+					r = { xpos + 15 - widths[i] / 2, ypos + 45 - widths[i] / 2, widths[i], widths[i] };
+					p.setBrush(Qt::black);
+					p.setPen(pen);
+					p.drawEllipse(r);
+				}
+				xpos += 30;
+			}
 			QRect r(xpos, ypos, 30, 30);
 			pen.setWidth(1);
 			pen.setColor({ 0,0,0 });
-			brush.setColor(colors[i]);
-			brush.setStyle(Qt::SolidPattern);
-			p.setBrush(brush);
+			p.setBrush(Qt::white);
 			p.setPen(pen);
 			p.drawRect(r);
-			if (i < widths.size())
+			p.drawText(r, Qt::AlignCenter, "?");
+			xpos -= 30 * colors.size();
+			QRect border(borders[0].x(), borders[0].y(), borders[3].x() - borders[0].x(), borders[3].y() - borders[0].y());
+			p.drawRect(border);
+			for (std::pair<int, Points> point : points)
 			{
-				QRect r(xpos, ypos + 30, 30, 30);
-				pen.setWidth(1);
-				pen.setColor({ 0,0,0 });
-				p.setBrush(Qt::white);
-				p.setPen(pen);
-				p.drawRect(r);
-				r = { xpos + 15 - widths[i] / 2, ypos + 45 - widths[i] / 2, widths[i], widths[i] };
-				p.setBrush(Qt::black);
-				p.setPen(pen);
-				p.drawEllipse(r);
-			}
-			xpos += 30;
-		}
-		QRect r(xpos, ypos, 30, 30);
-		pen.setWidth(1);
-		pen.setColor({ 0,0,0 });
-		p.setBrush(Qt::white);
-		p.setPen(pen);
-		p.drawRect(r);
-		p.drawText(r, Qt::AlignCenter, "?");
-		xpos -= 30 * colors.size();
-		QRect border(borders[0].x(), borders[0].y(), borders[3].x() - borders[0].x(), borders[3].y() - borders[0].y());
-		p.drawRect(border);
-		for (std::pair<int, Points> point : points)
-		{
-			Points prevPoint;
-			if (points.find(point.first - 1) != points.end())
-				prevPoint = points[point.first - 1];
-			if (point.first == 0)
-			{
-				pen.setColor(QColor{ point.second.GetRed(), point.second.GetGreen(), point.second.GetBlue() });
-				pen.setWidth(point.second.GetBrushSize());
-				p.setPen(pen);
-				p.drawPoint(QPoint{ point.second.GetX(), point.second.GetY() });
-			}
-			else
-			{
-				if (prevPoint == points[point.first - 1])
+				Points prevPoint;
+				if (points.find(point.first - 1) != points.end())
+					prevPoint = points[point.first - 1];
+				if (point.first == 0)
 				{
-					if (!point.second.SameColor(prevPoint))
+					pen.setColor(QColor{ point.second.GetRed(), point.second.GetGreen(), point.second.GetBlue() });
+					pen.setWidth(point.second.GetBrushSize());
+					p.setPen(pen);
+					p.drawPoint(QPoint{ point.second.GetX(), point.second.GetY() });
+				}
+				else
+				{
+					if (prevPoint == points[point.first - 1])
 					{
-						pen.setColor(QColor{ point.second.GetRed(), point.second.GetGreen(), point.second.GetBlue() });
-						p.setPen(pen);
+						if (!point.second.SameColor(prevPoint))
+						{
+							pen.setColor(QColor{ point.second.GetRed(), point.second.GetGreen(), point.second.GetBlue() });
+							p.setPen(pen);
+						}
+						if (point.second.GetBrushSize() != prevPoint.GetBrushSize())
+						{
+							pen.setWidth(point.second.GetBrushSize());
+							p.setPen(pen);
+						}
+						if (point.second.GetInWindow() == false)
+							p.drawLine(QPoint{ prevPoint.GetX(), prevPoint.GetY() }, QPoint{ point.second.GetX(), point.second.GetY() });
+						else
+							p.drawPoint(QPoint{ point.second.GetX(), point.second.GetY() });
 					}
-					if (point.second.GetBrushSize() != prevPoint.GetBrushSize())
-					{
-						pen.setWidth(point.second.GetBrushSize());
-						p.setPen(pen);
-					}
-					if (point.second.GetInWindow() == false)
-						p.drawLine(QPoint{ prevPoint.GetX(), prevPoint.GetY() }, QPoint{ point.second.GetX(), point.second.GetY() });
-					else
-						p.drawPoint(QPoint{ point.second.GetX(), point.second.GetY() });
 				}
 			}
+			pen.setWidth(17);
+			pen.setColor(Qt::black);
+			p.setPen(pen);
+			p.drawLine(borders[0], borders[1]);
+			p.drawLine(borders[0], borders[2]);
+			p.drawLine(borders[1], borders[3]);
+			p.drawLine(borders[2], borders[3]);
 		}
-		pen.setWidth(17);
-		pen.setColor(Qt::black);
-		p.setPen(pen);
-		p.drawLine(borders[0], borders[1]);
-		p.drawLine(borders[0], borders[2]);
-		p.drawLine(borders[1], borders[3]);
-		p.drawLine(borders[2], borders[3]);
 	}
 }
 
@@ -420,6 +492,16 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 			if (!(ui->guess->text().isEmpty()) && !noText(ui->guess->text()) && ui->guess->hasFocus())
 			{
 				userGuess = QString::fromStdString(username) + ": " + ui->guess->text();
+				int countDifferentLetters = 0;
+				std::string guess = userGuess.toStdString();
+				if (ui->guess->text().size() == chosenWord.size())
+					for (int i = 0; i < chosenWord.size(); i++)
+						if (ui->guess->text().toStdString()[i] != chosenWord[i])
+							countDifferentLetters++;
+				if (countDifferentLetters == 1)
+					userGuess = QString::fromStdString(username) + " is close!";
+				if (ui->guess->text() == QString::fromStdString(chosenWord))
+					userGuess = QString::fromStdString(username) + " guessed the word!";
 				auto response = cpr::Put(
 					cpr::Url{ "http://localhost:13034/addGuess" },
 					cpr::Payload{
@@ -679,33 +761,32 @@ void MainWindow::undo()
 
 void MainWindow::on_startButton_clicked()
 {
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:13034/addChosenWords" },
+		cpr::Payload{
+			{ "roomcode", roomcode}
+		});
+	GetChosenWords();
 	if (players.size() > 1)
 	{
-		if (ui->roundsChoice->currentText() != '-' && ui->hintsChoice->currentText() != '-' && ui->noPlayersChoice->currentText() != '-' &&
-			ui->noWordsChoice->currentText() != '-' && ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
-		{
-			gameState = ConvertStringToGameState("InGame");
-			setVisibilities(gameState);
-			update();
-			auto response = cpr::Put(
-				cpr::Url{ "http://localhost:13034/modifyGameState" },
-				cpr::Payload{
-					{ "roomcode", roomcode},
-					{ "gameState", ConvertGameStateToString(gameState)}
-				});
-			QtConcurrent::run([this]() {
-				auto timerResponse = cpr::Put(
-					cpr::Url{ "http://localhost:13034/runTimer" },
-					cpr::Payload{
-						{ "roomcode", roomcode }
-					});
-				});
-		}
-		else
-		{
-			ui->notEnoughPlayers->setVisible(false);
-			ui->errorLabel->setVisible(true);
-		}
+	if (ui->roundsChoice->currentText() != '-' && ui->hintsChoice->currentText() != '-' && ui->noPlayersChoice->currentText() != '-' &&
+		ui->noWordsChoice->currentText() != '-' && ui->languageChoice->currentText() != '-' && ui->timeChoice->currentText() != '-')
+	{
+		gameState = ConvertStringToGameState("InGame");
+		setVisibilities(gameState);
+		update();
+		auto response = cpr::Put(
+			cpr::Url{ "http://localhost:13034/modifyGameState" },
+			cpr::Payload{
+				{ "roomcode", roomcode},
+				{ "gameState", ConvertGameStateToString(gameState)}
+			});
+	}
+	else
+	{
+		ui->notEnoughPlayers->setVisible(false);
+		ui->errorLabel->setVisible(true);
+	}
 	}
 	else
 		ui->notEnoughPlayers->setVisible(true);
@@ -908,6 +989,30 @@ void MainWindow::GetDrawing()
 						static_cast<uint8_t>(pointsList[keyR].i()), static_cast<uint8_t>(pointsList[keyG].i()), static_cast<uint8_t>(pointsList[keyB].i()),
 						static_cast<uint8_t>(pointsList[keyBrushSize].i()),pointsList[keyInWindow].b() };
 			}
+	}
+}
+
+void MainWindow::GetChosenWords()
+{
+	std::string url = "http://localhost:13034/" + roomcode + "/chosenWords";
+	auto response = cpr::Get(cpr::Url{ url });
+	auto WordList = crow::json::load(response.text);
+	if (ui->guessList->count() != WordList["noWords"].i())
+	{
+		for (int index = words.size(); index < WordList["noWords"].i(); index++)
+		{
+			std::string key = "word" + std::to_string(index);
+			std::string text = WordList[key].s();
+			replaceCharacters(text);
+			words.push_back(text);
+		}
+		for (int index = words.size(); index < words.size()+3; index++)
+		{
+			std::string key = "word" + std::to_string(index);
+			std::string text = WordList[key].s();
+			replaceCharacters(text);
+			customWords.push_back(text);
+		}
 	}
 }
 

@@ -15,7 +15,7 @@
 #include <QtConcurrent>
 #include <random>
 #include <map>
-#include "../Points.h"
+#include "Points.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -83,6 +83,12 @@ private:
     bool host = false;
     QString userGuess;
     int currentTime;
+    bool chosen = false;
+    std::vector<std::string> words;
+    std::vector<std::string> customWords;
+    int wordX = 150;
+    int wordY = 350;
+    std::string chosenWord;
 
 private:
     void colorChange(QMouseEvent* e);
@@ -95,6 +101,7 @@ private:
     void GetGuessesInChat();
     void GetGameState();
     void GetDrawing();
+    void GetChosenWords();
     void modifySettings();
     void replaceCharacters(std::string& text);
     uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
