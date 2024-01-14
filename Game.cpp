@@ -1,6 +1,5 @@
 #include "Game.h"
 #include <random>
-#include "Words.h"
 
 Game::Game()
 {
@@ -55,6 +54,11 @@ const std::vector<Points>& Game::GetPoints() const
 const GameTimer& Game::GetTimer() const
 {
 	return m_timer;
+}
+
+const std::vector<std::string>& Game::GetChosenWords() const
+{
+	return m_chosenWords;
 }
 
 /*const std::vector<std::string>& Game::GetWordList()
@@ -139,6 +143,11 @@ void Game::AddPoint(const Points& point)
 	m_points.push_back(point);
 }
 
+void Game::AddChosenWord(const std::string& word)
+{
+	m_chosenWords.push_back(word);
+}
+
 std::vector<uint16_t> Game::TotalScore(const std::vector<std::vector<uint16_t>>& playerScores)
 {
 	std::vector<uint16_t> scores;
@@ -150,15 +159,6 @@ std::vector<uint16_t> Game::TotalScore(const std::vector<std::vector<uint16_t>>&
 		scores.emplace_back(score);
 	}
 	return scores;
-}
-
-uint16_t Game::NumberLines(std::ifstream& file)
-{
-	uint16_t numLines = 0;
-	std::string line;
-	while (std::getline(file, line))
-		numLines++;
-	return numLines;
 }
 
 uint16_t Game::GenerateRandomNumber(uint16_t min, uint16_t max)

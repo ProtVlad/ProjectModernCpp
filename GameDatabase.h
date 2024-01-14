@@ -5,12 +5,16 @@
 #include <crow.h>
 #include <sqlite_orm/sqlite_orm.h>
 #include "Game.h"
+
+#include <cstdint>
+
+#include <random>
+
 namespace sql = sqlite_orm;
 
 import utils;
 import word;
 import user;
-import chosenwords;
 
 namespace http
 {
@@ -43,7 +47,7 @@ namespace http
 		std::vector<Word> GetWords();
 		std::vector<User> GetUsers();
 		std::vector<Game> GetGames();
-		void AddWordToChosenWords(int id, int numberWords);
+
 		void AddUserToDatabase(std::string& username, std::string& password);
 		void AddGame(std::string& roomcode, std::string& host);
 		void AddPlayerInRoom(std::string& roomcode, std::string& user);
@@ -53,8 +57,8 @@ namespace http
 		void ModifyGameState(std::string& roomcode, std::string& gameState);
 		void AddPointInDrawing(std::string& roomcode, uint16_t x, uint16_t y, uint16_t r, uint16_t g, uint16_t b,
 			uint8_t brushSize, bool inWindow);
-
-		std::vector<std::tuple<std::string, int, int>> GetChosenWords();
+		void AddWordInChosenWords(std::string& roomcode);
+		uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
 
 	private:
 		void PopulateWordsStorage();
@@ -138,14 +142,14 @@ namespace http
 		GameStorage& m_games;
 	};
 
-	//class AddToChosenWordsHandler {
-	//		public:
-	//			AddToChosenWordsHandler(GameStorage& storage);
-	//	
-	//			crow::response operator() (const crow::request& req) const;
-	//	
-	//		private:
-	//			GameStorage& m_db;
-	//		};
-}
+	class AddChosenWordsHandler {
+	public:
+		AddChosenWordsHandler(GameStorage& storage);
 
+		crow::response operator() (const crow::request& req) const;
+
+	private:
+		GameStorage& m_data;
+	};
+
+}

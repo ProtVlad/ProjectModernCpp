@@ -45,13 +45,28 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Words.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Points.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user.cppm">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="word.cppm">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDatabase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Routing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="word.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,13 +92,16 @@
     <ClInclude Include="AnswerChat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Words.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Points.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDatabase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Routing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

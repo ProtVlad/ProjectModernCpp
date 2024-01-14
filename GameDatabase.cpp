@@ -720,6 +720,35 @@ void http::GameStorage::AddPointInDrawing(std::string& roomcode, uint16_t x, uin
 		}
 }
 
+void GameStorage::AddWordInChosenWords(std::string& roomcode)
+{
+	uint16_t max = m_db.count<Word>();
+	uint16_t min = 1;
+
+	for (int index = 0; index < m_games.size(); index++)
+		if (m_games[index].GetRoomcode() == roomcode)
+		{
+			int nr = m_games[index].GetSettings().GetNumberWords();
+			for (uint16_t cuvantAdaugat = 0; cuvantAdaugat < nr; cuvantAdaugat++)
+			{
+				uint16_t p = GenerateRandomNumber(min, max);
+				/*int p1 = std::static_cast<int>(p);*/
+				std::string cuv = GameStorage::GetWords()[p].GetWord();
+				m_games[index].AddChosenWord(cuv);
+			}
+			break;
+		}
+}
+
+uint16_t GameStorage::GenerateRandomNumber(uint16_t min, uint16_t max)
+{
+	std::random_device rd;
+	std::mt19937 generator(rd());
+	std::uniform_int_distribution<uint16_t> distribution(min, max);
+	int randomValue = distribution(generator);
+	return randomValue;
+}
+
 AddUserHandler::AddUserHandler(GameStorage& storage)
 	: m_db{ storage }
 {
@@ -752,6 +781,11 @@ ModifyGameStateHandler::ModifyGameStateHandler(GameStorage& storage)
 
 AddPointsHandler::AddPointsHandler(GameStorage& storage)
 	: m_games{ storage }
+{
+}
+
+http::AddChosenWordsHandler::AddChosenWordsHandler(GameStorage& storage)
+	:m_data{ storage }
 {
 }
 
@@ -849,40 +883,15 @@ crow::response AddPointsHandler::operator()(const crow::request& req) const
 	return crow::response(201);
 }
 
-//crow::response AddToChosenWordsHandler::operator()(const crow::request& req) const
-//{
-//	auto bodyargs = parseUrlArgs(req.body);
-//	auto end = bodyargs.end();
-//	auto productIdIter = bodyargs.find("word");
-//	auto quantityIter = bodyargs.find("price");
-//	if (productIdIter != end && quantityIter != end)
-//	{
-//	/*	word sbrow;
-//		sbrow.word = std::stoi(productiditer->second);
-//		sbrow.price = std::stoi(quantityiter->second);
-//		m_db.insert(sbrow);*/
-//
-//		m_db.AddWordToChosenWords(std::stoi(productIdIter->second), std::stoi(quantityIter->second));
-//	}
-//	return crow::response(201);
-// 
-// 
-// 
-//crow::response AddUserHandler::operator()(const crow::request& req) const
-//{
-//	auto bodyArgs = parseUrlArgs(req.body);
-//	auto end = bodyArgs.end();
-//	auto usernameIter = bodyArgs.find("username");
-//	auto passwordIter = bodyArgs.find("password");
-//	if (usernameIter != end && passwordIter != end)
-//		m_db.AddUserToDatabase(usernameIter->second, passwordIter->second);
-//	//temporary added
-//	else
-//	{
-//		std::cout << "No user found";
-//		exit(1);
-//	}
-//	//
-//	return crow::response(201);
-//}
+crow::response AddChosenWordsHandler::operator()(const crow::request& req) const
+{
+	auto bodyArgs = parseUrlArgs(req.body);
+	auto end = bodyArgs.end();
+	auto roomcodeIter = bodyArgs.find("roomcode");
+	if (roomcodeIter != end)
+		m_data.AddWordInChosenWords(roomcodeIter->second);
+
+	return crow::response(201);
+}
+
 

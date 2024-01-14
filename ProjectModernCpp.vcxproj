@@ -153,27 +153,33 @@
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameDatabase.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Opinion.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Points.cpp" />
+    <ClCompile Include="Routing.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="user.cpp" />
+    <ClCompile Include="user.cppm" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="utils.cppm" />
-    <ClCompile Include="Words.cpp" />
+    <ClCompile Include="word.cpp" />
+    <ClCompile Include="word.cppm" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnswerChat.h" />
     <ClInclude Include="Chat.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameDatabase.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Opinion.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Points.h" />
+    <ClInclude Include="Routing.h" />
     <ClInclude Include="Settings.h" />
-    <ClInclude Include="Words.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

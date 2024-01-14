@@ -27,6 +27,7 @@ public:
 	const std::string& GetGameState() const;
 	const std::vector<Points>& GetPoints()const; 
 	const GameTimer& GetTimer()const;
+	const std::vector<std::string>& GetChosenWords() const;
 	//const std::vector<std::string>& GetWordList();
 	//const std::vector<std::string>& GetWordChoices();
 	//const Chat& GetChat();
@@ -42,11 +43,10 @@ public:
 
 	void AddPlayer(const std::string& user);
 	void AddGuess(const std::string& guess);
-	void AddPoint(const Points& point); 
+	void AddPoint(const Points& point);
+	void AddChosenWord(const std::string& word);
 	//void ReadWordList(std::ifstream& file);
 	std::vector<uint16_t> TotalScore(const std::vector<std::vector<uint16_t>>& scores);
-	uint16_t NumberLines(std::ifstream& file);
-	void ChooseWords();
 
 private:
 	uint16_t GenerateRandomNumber(uint16_t min, uint16_t max);
@@ -57,8 +57,9 @@ private:
 	Settings m_settings;
 	std::vector<std::string> m_users;
 	std::vector<std::string> m_guesses;
-	std::vector<uint16_t> m_anteriorWordsChoices;
-	std::vector<uint16_t> m_wordsChoices;
+	std::vector<std::string> m_chosenWords;
+	//std::vector<uint16_t> m_anteriorWordsChoices;
+	//std::vector<uint16_t> m_wordsChoices;
 	std::string m_gameState;
 	std::vector<Points> m_points;
 	GameTimer m_timer;

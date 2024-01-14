@@ -82,10 +82,6 @@ void Routing::Run(GameStorage& storage)
 						{"indexDrawer",game.GetIndexDrawer()},
 						{"gameState",game.GetGameState()}
 					};
-					/*crow::json::wvalue gameJson;
-					gameJson["roomcode"] = game.GetRoomcode();
-					gameJson["timer"] = game.GetTimer();
-					gameJson["indexDrawer"] = game.GetIndexDrawer();*/
 					gamesJson.push_back(game_json);
 				}
 				return crow::json::wvalue{ gamesJson };
@@ -187,6 +183,24 @@ void Routing::Run(GameStorage& storage)
 				return crow::json::wvalue{  };
 			});
 
+		CROW_ROUTE(m_app, "/<string>/chosenWords")([&storage](std::string roomcode)
+			{
+				auto games = storage.GetGames();
+				for (const auto& game : games)
+					if (game.GetRoomcode() == roomcode)
+					{
+						crow::json::wvalue chosenWordsJson{
+							{"noWords", game.GetSettings().GetNumberWords()}
+						};
+						for (int index = 0; index < game.GetChosenWords().size(); index++)
+						{
+							std::string key = "word" + std::to_string(index);
+							chosenWordsJson[key] = game.GetChosenWords()[index];
+						}
+						return crow::json::wvalue{ chosenWordsJson };
+					}
+				return crow::json::wvalue{  };
+			});
 
 
 		auto& addUserPut = CROW_ROUTE(m_app, "/addUser")
@@ -217,21 +231,11 @@ void Routing::Run(GameStorage& storage)
 			.methods(crow::HTTPMethod::PUT);
 		addPointsPut(AddPointsHandler(storage));
 
+		auto& addChosenWords = CROW_ROUTE(m_app, "/addChosenWords")
+			.methods(crow::HTTPMethod::PUT);
+		addChosenWords(AddChosenWordsHandler(storage));
+
 
 	m_app.port(13034).multithreaded().run();
 
 }
-
-//crow::response Routing::AddWordToChosenWord(GameStorage& storage, const crow::request& req, int productId) const
-//{
-//	
-//	char* quantity_chr = req.url_params.get("numberWords");
-//	int quantity = 1;
-//	if (quantity_chr != nullptr) {
-//		quantity = std::stoi(quantity_chr); 
-//	}
-//
-//	storage.AddWordToChosenWords(productId, quantity);
-//
-//	return crow::response(200);
-//}
